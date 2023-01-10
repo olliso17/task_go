@@ -2,11 +2,18 @@ package create
 
 import (
 	"tasks_go/domain/tasks/entity"
+	"tasks_go/domain/tasks/repository"
 )
 
-func CreateTaskUseCase(input InputTaskDto) (OutPutTaskDto, error) {
-	task := &entity.Task{}
-	newTask, _ := task.NewTask(input.Title, input.Description)
+type UseRepository struct {
+	repository.TaskRepository
+}
 
-	return OutPutTaskDto{Task: *newTask}, nil
+func CreateTaskUseCase(input *InputTaskDto) (*OutPutTaskDto, error) {
+	u := UseRepository{}
+	t := &entity.Task{}
+	task, _ := t.NewTask(input.Title, input.Description)
+	newTask, _ := u.AddTask(task)
+
+	return &OutPutTaskDto{Task: *newTask}, nil
 }

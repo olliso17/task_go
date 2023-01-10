@@ -9,6 +9,7 @@ func main() {
 	input := create.InputTaskDto{
 		Title: "teste", Description: "testando para ver se funciona",
 	}
-	task, _ := create.CreateTaskUseCase(input)
-	fmt.Println(task)
+	task, err := create.CreateTaskUseCase(&input)
+
+	fmt.Println(task, err)
 }
