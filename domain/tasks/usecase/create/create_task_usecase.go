@@ -28,7 +28,7 @@ func CreateTaskUseCase(ctx context.Context, input *dto.InputTaskDto) (*dto.OutPu
 	select {
 	case <-ctx.Done():
 		fmt.Println("Task added successfully")
-	case <-time.After(time.Second * 5):
+	case <-time.After(time.Minute * 2):
 		fmt.Println("Task cancelled")
 		cancel()
 	}

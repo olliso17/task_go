@@ -40,6 +40,10 @@ func (*Task) IsValidTask(t Task) (*Task, error) {
 	if t.Description == "" {
 		return nil, fmt.Errorf("Description is required")
 	}
+	if t.IsConcluded == true {
+		return nil, fmt.Errorf("IsConcluded is finalized")
+
+	}
 	return &t, nil
 
 }

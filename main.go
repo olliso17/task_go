@@ -10,7 +10,7 @@ import (
 func main() {
 	ctx := context.Background()
 	input := dto.InputTaskDto{
-		Title: "Teste", Description: "testando para ver se funciona",
+		Title: "Test", Description: "testando para ver se funciona",
 	}
 	task, err := create.CreateTaskUseCase(ctx, &input)
 	// u := useRepository{}
