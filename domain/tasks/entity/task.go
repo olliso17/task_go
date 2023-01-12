@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -22,5 +23,23 @@ func (*Task) NewTask(title string, description string) (*Task, error) {
 		IsConcluded: false,
 		Created:     time.Now(),
 	}
-	return t, nil
+	isvalid, err := t.IsValidTask(*t)
+	if err != nil {
+		return nil, err
+	}
+	return isvalid, nil
+}
+
+func (*Task) IsValidTask(t Task) (*Task, error) {
+	if t.ID == "" {
+		return nil, fmt.Errorf("ID is required")
+	}
+	if t.Title == "" {
+		return nil, fmt.Errorf("Title is required")
+	}
+	if t.Description == "" {
+		return nil, fmt.Errorf("Description is required")
+	}
+	return &t, nil
+
 }
