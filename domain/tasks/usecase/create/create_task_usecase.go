@@ -1,20 +1,37 @@
 package create
 
 import (
+	"context"
+	"fmt"
 	"tasks_go/domain/tasks/entity"
 	"tasks_go/domain/tasks/repository"
 	"tasks_go/domain/tasks/usecase/create/dto"
+	"time"
 )
 
 type UseRepository struct {
 	repository.TaskRepository
 }
 
-func CreateTaskUseCase(input *dto.InputTaskDto) (*dto.OutPutTaskDto, error) {
+func CreateTaskUseCase(ctx context.Context, input *dto.InputTaskDto) (*dto.OutPutTaskDto, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+	defer cancel()
 	// u := UseRepository{}
 	t := &entity.Task{}
-	task, _ := t.NewTask(input.Title, input.Description)
-	// newTask, _ := u.AddTask(task)
+	task, err := t.NewTask(input.Title, input.Description)
 
-	return &dto.OutPutTaskDto{Task: *task}, nil
+	if err != nil {
+		return nil, err
+	}
+	// newTask, _ := u.AddTask(task)
+	output := &dto.OutPutTaskDto{Task: *task}
+	select {
+	case <-ctx.Done():
+		fmt.Println("Task added successfully")
+	case <-time.After(time.Second * 5):
+		fmt.Println("Task cancelled")
+		cancel()
+	}
+	return output, nil
+
 }
