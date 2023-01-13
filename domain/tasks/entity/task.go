@@ -8,21 +8,28 @@ import (
 )
 
 type Task struct {
-	ID          string
-	Title       string
-	Description string
-	IsConcluded bool
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	IsConcluded bool   `json:"is_concluded"`
 	Created     time.Time
+	Update      time.Time
+	Delete      time.Time
 }
 
 func (*Task) NewTask(title string, description string) (*Task, error) {
+	timeNow := time.Now()
+
 	t := &Task{
 		ID:          uuid.New().String(),
 		Title:       title,
 		Description: description,
 		IsConcluded: false,
-		Created:     time.Now(),
+		Created:     timeNow,
+		Update:      timeNow,
+		Delete:      timeNow,
 	}
+
 	isvalid, err := t.IsValidTask(*t)
 	if err != nil {
 		return nil, err
