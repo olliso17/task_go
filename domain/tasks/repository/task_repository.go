@@ -1,17 +1,11 @@
 package repository
 
-import (
-	"context"
-	"tasks_go/domain/tasks/usecase/create/dto"
-)
+import "tasks_go/domain/tasks/entity"
 
 type TaskRepository interface {
-	AddTask(ctx context.Context, t *dto.InputTaskDto) (*dto.OutPutTaskDto, error)
+	AddTask(t *entity.Task) (*entity.Task, error)
 }
 
-//	type TaskRepository interface {
-//		AddTask(t *entity.Task) (*entity.Task, error)
-//	}
 //
 //	type Service interface {
 //		// CreateTask(task *entity.Task) (*entity.Task, error)

@@ -12,8 +12,12 @@ func main() {
 	input := dto.InputTaskDto{
 		Title: "Test", Description: "testando para ver se funciona",
 	}
-	task, err := create.CreateTaskUseCase(ctx, &input)
-	// u := useRepository{}
-	// u.AddTask(&input)
-	fmt.Println(task, err)
+	task, _ := create.CreateTaskUseCase(ctx, &input)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// u := repository.TaskRepository{}
+	// u.AddTask(ctx, &input)
+	fmt.Println(task, nil)
+
 }
