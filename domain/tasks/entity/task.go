@@ -8,13 +8,13 @@ import (
 )
 
 type Task struct {
-	ID          string `json:"id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	IsConcluded bool   `json:"is_concluded"`
-	Created     time.Time
-	Update      time.Time
-	Delete      time.Time
+	ID          string    `json:"id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	IsConcluded bool      `json:"is_concluded"`
+	Created     time.Time `json:"created"`
+	Update      time.Time `json:"update"`
+	Delete      time.Time `json:"delete"`
 }
 
 func (*Task) NewTask(title string, description string) (*Task, error) {
@@ -34,6 +34,7 @@ func (*Task) NewTask(title string, description string) (*Task, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return isvalid, nil
 }
 
