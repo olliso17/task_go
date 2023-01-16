@@ -16,7 +16,7 @@ func NewCreateTaskUseCase(repository repository.TaskRepository) *CreateTaskUseCa
 	}
 }
 
-func (c *CreateTaskUseCase) Execute(input *dto.DtoCreateTaskInput) *task.Task {
+func (c *CreateTaskUseCase) Execute(input dto.DtoCreateTaskInput) dto.DtoCreateTaskOutput {
 
 	// ts := task.NewTask(newTask.Title, newTask.Description)
 
@@ -25,5 +25,9 @@ func (c *CreateTaskUseCase) Execute(input *dto.DtoCreateTaskInput) *task.Task {
 		Description: input.Description,
 	}
 	newTask := c.TaskRepository.Create(&ts)
-	return newTask
+	dto := dto.DtoCreateTaskOutput{
+		Title:       newTask.Title,
+		Description: newTask.Description,
+	}
+	return dto
 }

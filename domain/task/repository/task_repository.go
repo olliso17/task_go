@@ -9,5 +9,5 @@ import (
 // }
 
 type TaskRepository interface {
-	Create(input *entity.Task) *entity.Task
+	Create(task *entity.Task) *entity.Task
 }

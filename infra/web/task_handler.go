@@ -27,7 +27,7 @@ func (h *TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	createTask := usecase.NewCreateTaskUseCase(h.TaskHandler)
-	output := createTask.Execute(&dto)
+	output := createTask.Execute(dto)
 	err = json.NewEncoder(w).Encode(output)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
