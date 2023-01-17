@@ -10,21 +10,21 @@ import (
 	"github.com/google/wire"
 )
 
-var setTaskRepositoryDependency = wire.NewSet(
+var SetTaskRepositoryDependency = wire.NewSet(
 	database.NewTaskRepository,
 	wire.Bind(new(entity.TaskRepositoryInterface), new(*database.TaskRepository)),
 )
 
 func NewCreateTaskUseCase(db *sql.DB) *usecase.CreateTaskUseCase {
 	wire.Build(
-		setTaskRepositoryDependency,
+		SetTaskRepositoryDependency,
 	)
 	return &usecase.CreateTaskUseCase{}
 }
 
 func NewWebTaskHandler(db *sql.DB) *web.WebTaskHandler {
 	wire.Build(
-		setTaskRepositoryDependency,
+		SetTaskRepositoryDependency,
 	)
 	return &web.WebTaskHandler{}
 }

@@ -35,6 +35,7 @@ func (c *CreateTaskUseCase) Execute(input TaskInputDTO) (TaskOutputDTO, error) {
 		Status:      input.Status,
 		Priority:    input.Priority,
 	}
+
 	if err := c.TaskRepository.Save(&task); err != nil {
 		return TaskOutputDTO{}, err
 	}

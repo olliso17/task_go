@@ -24,7 +24,6 @@ func (r *TaskRepository) Save(task *entity.Task) error {
 	if err != nil {
 		return err
 	}
-	// tasks, err := r.Db.Query("SELECT * FROM tasks")
 
 	return nil
 }
