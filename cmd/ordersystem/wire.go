@@ -12,7 +12,7 @@ import (
 
 var SetTaskRepositoryDependency = wire.NewSet(
 	database.NewTaskRepository,
-	wire.Bind(new(entity.TaskRepositoryInterface), new(*database.TaskRepository)),
+	wire.Bind(new(*entity.TaskRepositoryInterface), new(*database.TaskRepository)),
 )
 
 func NewCreateTaskUseCase(db *sql.DB) *usecase.CreateTaskUseCase {

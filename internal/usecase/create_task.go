@@ -29,14 +29,9 @@ func NewCreateTaskUseCase(taskRepository entity.TaskRepositoryInterface) *Create
 }
 
 func (c *CreateTaskUseCase) Execute(input TaskInputDTO) (TaskOutputDTO, error) {
-	task := entity.Task{
-		Title:       input.Title,
-		Description: input.Description,
-		Status:      input.Status,
-		Priority:    input.Priority,
-	}
+	task, _ := entity.NewTask(input.Title, input.Description, input.Status, input.Priority)
 
-	if err := c.TaskRepository.Save(&task); err != nil {
+	if err := c.TaskRepository.Save(task); err != nil {
 		return TaskOutputDTO{}, err
 	}
 	dto := TaskOutputDTO{

@@ -21,13 +21,15 @@ func NewTaskHandler(taskRepository entity.TaskRepositoryInterface) *WebTaskHandl
 func (h *WebTaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var dto usecase.TaskInputDTO
 	err := json.NewDecoder(r.Body).Decode(&dto)
-	fmt.Println(dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	fmt.Println(dto, json.NewDecoder(r.Body).Decode(&dto))
+
 	createTask := usecase.NewCreateTaskUseCase(h.TaskRepository)
 	output, err := createTask.Execute(dto)
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -38,4 +40,5 @@ func (h *WebTaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	defer r.Body.Close()
 }

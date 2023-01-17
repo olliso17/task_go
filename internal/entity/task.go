@@ -17,7 +17,7 @@ type Task struct {
 	DeletedAt   time.Time
 }
 
-func NewTask(id string, title string, description string, status bool, priority bool) (*Task, error) {
+func NewTask(title string, description string, status bool, priority bool) (*Task, error) {
 	timeNow := time.Now()
 	task := &Task{
 		ID:          uuid.New().String(),
