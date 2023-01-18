@@ -15,7 +15,7 @@ func main() {
 	}
 	defer db.Close()
 	// creatreTaskUseCase := NewCreateTaskUseCase(db)
-	webserver := webserver.NewWebServer(":6060")
+	webserver := webserver.NewWebServer(":8080")
 	newWebTaskHandler := NewWebTaskHandler(db)
 	webserver.AddHandler("/task", newWebTaskHandler.Create)
 	fmt.Println("Starting web server on port", ":8080")
