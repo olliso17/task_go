@@ -2,7 +2,6 @@ package web
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"tasks_go/internal/entity"
 	usecase "tasks_go/internal/usecase"
@@ -19,15 +18,15 @@ func NewTaskHandler(taskRepository entity.TaskRepositoryInterface) *WebTaskHandl
 }
 
 func (h *WebTaskHandler) Create(w http.ResponseWriter, r *http.Request) {
+
 	var dto usecase.TaskInputDTO
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	fmt.Println(dto, json.NewDecoder(r.Body).Decode(&dto))
 
-	createTask := usecase.NewCreateTaskUseCase(h.TaskRepository)
+	createTask := *usecase.NewCreateTaskUseCase(h.TaskRepository)
 	output, err := createTask.Execute(dto)
 
 	if err != nil {
@@ -39,6 +38,5 @@ func (h *WebTaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
-	defer r.Body.Close()
+	// defer r.Body.Close()
 }
