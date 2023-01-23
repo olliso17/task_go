@@ -41,3 +41,15 @@ func (h *WebTaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 	}
 	// defer r.Body.Close()
 }
+
+func (h *WebTaskHandler) FindAll(w http.ResponseWriter, r *http.Request) {
+
+	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+	output, err := createTask.FindAll()
+
+	err = json.NewEncoder(w).Encode(output)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}

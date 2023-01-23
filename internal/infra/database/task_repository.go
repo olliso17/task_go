@@ -29,3 +29,23 @@ func (r *TaskRepository) Create(task *entity.Task) error {
 
 	return nil
 }
+
+func (r *TaskRepository) FindAll() ([]entity.Task, error) {
+
+	rows, err := r.Db.Query("SELECT id, title, description, status, priority, created_at, updated_at, deleted_at FROM tasks")
+	var tasks []entity.Task
+	for rows.Next() {
+		var task entity.Task
+
+		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.Priority, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt); err != nil {
+			return tasks, err
+		}
+		tasks = append(tasks, task)
+	}
+	if err = rows.Err(); err != nil {
+		return tasks, err
+	}
+
+	return tasks, nil
+
+}

@@ -5,9 +5,6 @@ import (
 	"tasks_go/internal/usecase/dto"
 )
 
-type TaskOutputFindAlltDTO struct {
-	Tasks []entity.Task
-}
 type TaskUseCase struct {
 	TaskRepository entity.TaskRepositoryInterface
 }
@@ -32,4 +29,14 @@ func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error)
 	}
 
 	return dto, nil
+}
+
+func (c *TaskUseCase) FindAll() ([]entity.Task, error) {
+	task, err := c.TaskRepository.FindAll()
+
+	if err != nil {
+		return []entity.Task{}, err
+	}
+
+	return task, nil
 }
