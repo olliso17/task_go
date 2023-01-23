@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"tasks_go/internal/entity"
 	usecase "tasks_go/internal/usecase"
+	"tasks_go/internal/usecase/dto"
 )
 
 type WebTaskHandler struct {
@@ -19,7 +20,7 @@ func NewTaskHandler(taskRepository entity.TaskRepositoryInterface) *WebTaskHandl
 
 func (h *WebTaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 
-	var dto usecase.TaskInputDTO
+	var dto dto.TaskInputDTO
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)

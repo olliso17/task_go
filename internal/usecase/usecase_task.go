@@ -2,26 +2,8 @@ package usecase
 
 import (
 	"tasks_go/internal/entity"
+	"tasks_go/internal/usecase/dto"
 )
-
-type TaskInputDTO struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Status      bool   `json:"status"`
-	Priority    bool   `json:"priority"`
-}
-
-type TaskOutputDTO struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Status      bool   `json:"status"`
-	Priority    bool   `json:"priority"`
-}
-
-type TaskInputPutCsvDTO struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-}
 
 type TaskOutputFindAlltDTO struct {
 	Tasks []entity.Task
@@ -36,13 +18,13 @@ func NewTaskUseCase(taskRepository entity.TaskRepositoryInterface) *TaskUseCase 
 	}
 }
 
-func (c *TaskUseCase) Execute(input TaskInputDTO) (TaskOutputDTO, error) {
+func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error) {
 	task, _ := entity.NewTask(input.Title, input.Description, input.Status, input.Priority)
 
 	if err := c.TaskRepository.Create(task); err != nil {
-		return TaskOutputDTO{}, err
+		return dto.TaskOutputDTO{}, err
 	}
-	dto := TaskOutputDTO{
+	dto := dto.TaskOutputDTO{
 		Title:       task.Title,
 		Description: task.Description,
 		Status:      task.Status,

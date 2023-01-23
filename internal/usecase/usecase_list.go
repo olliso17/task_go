@@ -22,12 +22,13 @@ func NewListUsecase(listUsecase entity.ListRepositoryInterface) *ListUsecase {
 	}
 }
 
-func (l *ListUsecase) Execute(input ListInpuntDtO) ListOutputDTO {
-
-	list := entity.NewListEntity(input.Name, input.Tasks)
+func (l *ListUsecase) Execute(input ListInpuntDtO) (ListOutputDTO, error) {
+	meuArrayTask := make([]entity.Task, 1, 1)
+	meuArrayTask = append(meuArrayTask, input.Tasks)
+	list := entity.NewListEntity(input.Name, meuArrayTask)
 
 	if err := l.ListUsecase.Create(list); err != nil {
-		return ListOutputDTO{}
+		return ListOutputDTO{}, err
 	}
 
 	dto := ListOutputDTO{
@@ -35,5 +36,5 @@ func (l *ListUsecase) Execute(input ListInpuntDtO) ListOutputDTO {
 		Tasks: list.Tasks,
 	}
 
-	return dto
+	return dto, nil
 }
