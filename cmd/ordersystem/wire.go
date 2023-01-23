@@ -15,11 +15,11 @@ var SetTaskRepositoryDependency = wire.NewSet(
 	wire.Bind(new(*entity.TaskRepositoryInterface), new(*database.TaskRepository)),
 )
 
-func NewCreateTaskUseCase(db *sql.DB) *usecase.CreateTaskUseCase {
+func NewCreateTaskUseCase(db *sql.DB) *usecase.TaskUseCase {
 	wire.Build(
 		SetTaskRepositoryDependency,
 	)
-	return &usecase.CreateTaskUseCase{}
+	return &usecase.TaskUseCase{}
 }
 
 func NewWebTaskHandler(db *sql.DB) *web.WebTaskHandler {

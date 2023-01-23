@@ -1,12 +1,16 @@
 package usecase
 
-import "tasks_go/internal/entity"
+import (
+	"tasks_go/internal/entity"
+)
 
 type ListInpuntDtO struct {
-	Name string
+	Name  string
+	Tasks entity.Task
 }
 type ListOutputDTO struct {
-	Name string
+	Name  string
+	Tasks []entity.Task
 }
 type ListUsecase struct {
 	ListUsecase entity.ListRepositoryInterface
@@ -19,14 +23,16 @@ func NewListUsecase(listUsecase entity.ListRepositoryInterface) *ListUsecase {
 }
 
 func (l *ListUsecase) Execute(input ListInpuntDtO) ListOutputDTO {
-	list := entity.NewListEntity(input.Name)
 
-	if err := l.ListUsecase.Save(list); err != nil {
+	list := entity.NewListEntity(input.Name, input.Tasks)
+
+	if err := l.ListUsecase.Create(list); err != nil {
 		return ListOutputDTO{}
 	}
 
 	dto := ListOutputDTO{
-		Name: list.Name,
+		Name:  list.Name,
+		Tasks: list.Tasks,
 	}
 
 	return dto

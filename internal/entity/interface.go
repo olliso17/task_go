@@ -1,9 +1,10 @@
 package entity
 
 type TaskRepositoryInterface interface {
-	Save(task *Task) error
+	Create(task *Task) error
+	// CreateCsvTask() ([]*Task, error)
 }
 
 type ListRepositoryInterface interface {
-	Save(list *ListEntity) error
+	Create(list *ListEntity) error
 }

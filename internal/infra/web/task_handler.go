@@ -26,7 +26,7 @@ func (h *WebTaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	createTask := *usecase.NewCreateTaskUseCase(h.TaskRepository)
+	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
 	output, err := createTask.Execute(dto)
 
 	if err != nil {

@@ -16,7 +16,7 @@ func NewTaskRepository(db *sql.DB) *TaskRepository {
 	}
 }
 
-func (r *TaskRepository) Save(task *entity.Task) error {
+func (r *TaskRepository) Create(task *entity.Task) error {
 	stmt, err := r.Db.Prepare("INSERT INTO tasks (id, title, description, status, priority, created_at, updated_at, deleted_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)")
 	if err != nil {
 		fmt.Print("o erro:", err)

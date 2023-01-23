@@ -18,9 +18,9 @@ import (
 
 // Injectors from wire.go:
 
-func NewCreateTaskUseCaseGen(db *sql.DB) *usecase.CreateTaskUseCase {
+func NewCreateTaskUseCaseGen(db *sql.DB) *usecase.TaskUseCase {
 	taskRepository := database.NewTaskRepository(db)
-	createTaskUseCase := usecase.NewCreateTaskUseCase(taskRepository)
+	createTaskUseCase := usecase.NewTaskUseCase(taskRepository)
 	return createTaskUseCase
 }
 
