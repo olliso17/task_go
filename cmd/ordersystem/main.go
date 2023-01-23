@@ -34,7 +34,7 @@ func main() {
 
 	webserver.AddHandler("/task/create", newWebTaskHandler.Create)
 	webserver.AddHandler("/tasks", newWebTaskHandler.FindAll)
-	webserver.AddHandler("/task/:title", newWebTaskHandler.FindTitle)
+	webserver.AddHandler("/task", newWebTaskHandler.FindTitle)
 
 	webserver.Start()
 	// http.HandleFunc("/hello", getHello)
