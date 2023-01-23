@@ -1,5 +1,7 @@
 package dto
 
+import "tasks_go/internal/entity"
+
 type TaskInputDTO struct {
 	Title       string `json:"title"`
 	Description string `json:"description"`
@@ -14,3 +16,10 @@ type TaskOutputDTO struct {
 	Priority    bool   `json:"priority"`
 }
 
+type TaskFindTitleInputDTO struct {
+	Title string `json:"title"`
+}
+
+type TaskOutputFindAlltDTO struct {
+	Tasks []entity.Task
+}

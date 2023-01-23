@@ -31,12 +31,22 @@ func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error)
 	return dto, nil
 }
 
-func (c *TaskUseCase) FindAll() ([]entity.Task, error) {
+func (c *TaskUseCase) FindAll() (dto.TaskOutputFindAlltDTO, error) {
 	task, err := c.TaskRepository.FindAll()
 
 	if err != nil {
-		return []entity.Task{}, err
+		return dto.TaskOutputFindAlltDTO{}, err
 	}
 
-	return task, nil
+	return dto.TaskOutputFindAlltDTO{Tasks: task}, nil
+}
+
+func (c *TaskUseCase) FindTitle(input dto.TaskFindTitleInputDTO) (entity.Task, error) {
+	taskTitle, err := c.TaskRepository.FindTitle(input.Title)
+
+	if err != nil {
+		return entity.Task{}, err
+	}
+
+	return *taskTitle, nil
 }
