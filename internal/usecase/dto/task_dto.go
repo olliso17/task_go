@@ -21,5 +21,5 @@ type TaskFindTitleInputDTO struct {
 }
 
 type TaskOutputFindAlltDTO struct {
-	Tasks []entity.Task
+	Tasks []entity.Task `json:"tasks"`
 }
