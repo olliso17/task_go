@@ -53,7 +53,7 @@ func (r *TaskRepository) FindAll() ([]entity.Task, error) {
 func (r *TaskRepository) FindTitle(title string) (entity.Task, error) {
 	var task entity.Task
 	rows, err := r.Db.Query("SELECT * FROM tasks WHERE title = $1", title)
-	if err := rows.Scan(&task); err != nil {
+	if err := rows.Scan(&task.Title); err != nil {
 		return task, err
 	}
 	if err = rows.Err(); err != nil {
