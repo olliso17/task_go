@@ -53,3 +53,21 @@ func (h *WebTaskHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func (h *WebTaskHandler) FindTitle(w http.ResponseWriter, r *http.Request) {
+	var dto dto.TaskFindTitleInputDTO
+	err := json.NewDecoder(r.Body).Decode(&dto)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+	output, err := createTask.FindTitle(dto)
+
+	err = json.NewEncoder(w).Encode(output)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}

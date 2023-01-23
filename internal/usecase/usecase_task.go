@@ -48,5 +48,5 @@ func (c *TaskUseCase) FindTitle(input dto.TaskFindTitleInputDTO) (entity.Task, e
 		return entity.Task{}, err
 	}
 
-	return *taskTitle, nil
+	return taskTitle, nil
 }

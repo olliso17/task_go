@@ -32,8 +32,9 @@ func main() {
 	webserver := webserver.NewWebServer(":8080")
 	newWebTaskHandler := NewWebTaskHandlerGen(db)
 
-	webserver.AddHandler("/tasks", newWebTaskHandler.Create)
-	webserver.AddHandler("/tasks/list", newWebTaskHandler.FindAll)
+	webserver.AddHandler("/task/create", newWebTaskHandler.Create)
+	webserver.AddHandler("/tasks", newWebTaskHandler.FindAll)
+	webserver.AddHandler("/task/:title", newWebTaskHandler.FindTitle)
 
 	webserver.Start()
 	// http.HandleFunc("/hello", getHello)
