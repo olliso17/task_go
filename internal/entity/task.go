@@ -41,12 +41,12 @@ func NewTask(title string, description string, status bool, priority bool) (*Tas
 func IsValid(task *Task) bool {
 
 	if task.Title == "" {
-		fmt.Printf("Title or Description is empty\n")
+		fmt.Printf("Title is not empty\n")
 		return false
 	}
 
 	if task.Description == "" {
-		fmt.Printf("Title or Description is empty\n")
+		fmt.Printf("Description is not empty\n")
 		return false
 	}
 	return true
