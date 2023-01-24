@@ -10,18 +10,6 @@ import (
 )
 
 func main() {
-	// task := usecase.TaskInputDTO{
-	// 	Title:       "getHello",
-	// 	Description: "get hello",
-	// 	Status:      false,
-	// 	Priority:    false,
-	// }
-	// teste, _ := entity.NewTask(task.Title, task.Description, task.Status, task.Priority)
-
-	// input := entity.NewListEntity("Jack", *teste)
-
-	// fmt.Println(input)
-
 	db, err := sql.Open("postgres", "host=localhost port=5432 user=root password=root dbname=root sslmode=disable")
 	if err != nil {
 		panic(err)
