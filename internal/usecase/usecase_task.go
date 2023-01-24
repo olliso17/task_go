@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"fmt"
 	"tasks_go/internal/entity"
 	"tasks_go/internal/usecase/dto"
 )
@@ -21,6 +22,7 @@ func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error)
 	task, _ := entity.NewTask(input.Title, input.Description, input.Status, input.Priority)
 	for _, v := range taskAll {
 		if task.Title == v.Title {
+			err = fmt.Errorf("task already exist")
 			return dto.TaskOutputDTO{}, err
 
 		}

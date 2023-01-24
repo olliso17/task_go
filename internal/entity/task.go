@@ -35,18 +35,18 @@ func NewTask(title string, description string, status bool, priority bool) (*Tas
 	if isValidate == true {
 		return task, nil
 	}
-	return nil, fmt.Errorf("Invalid Task")
+	return &Task{}, fmt.Errorf("Invalid Task")
 }
 
 func IsValid(task *Task) bool {
 
 	if task.Title == "" {
-		fmt.Printf("Title is not empty\n")
+		fmt.Printf("Title is required\n")
 		return false
 	}
 
 	if task.Description == "" {
-		fmt.Printf("Description is not empty\n")
+		fmt.Printf("Description is required\n")
 		return false
 	}
 	return true
