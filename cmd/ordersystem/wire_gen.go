@@ -11,18 +11,18 @@ import (
 	"tasks_go/internal/entity"
 	"tasks_go/internal/infra/database"
 	"tasks_go/internal/infra/web"
-	"tasks_go/internal/usecase"
+	// "tasks_go/internal/usecase"
 
 	"github.com/google/wire"
 )
 
 // Injectors from wire.go:
 
-func NewCreateTaskUseCaseGen(db *sql.DB) *usecase.TaskUseCase {
-	taskRepository := database.NewTaskRepository(db)
-	createTaskUseCase := usecase.NewTaskUseCase(taskRepository)
-	return createTaskUseCase
-}
+// func NewCreateTaskUseCaseGen(db *sql.DB) *usecase.TaskUseCase {
+// 	taskRepository := database.NewTaskRepository(db)
+// 	createTaskUseCase := usecase.NewTaskUseCase(taskRepository)
+// 	return createTaskUseCase
+// }
 
 func NewWebTaskHandlerGen(db *sql.DB) *web.WebTaskHandler{
 	taskRepository := database.NewTaskRepository(db)

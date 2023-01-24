@@ -5,7 +5,6 @@ import (
 	"tasks_go/internal/entity"
 	"tasks_go/internal/infra/database"
 	"tasks_go/internal/infra/web"
-	"tasks_go/internal/usecase"
 
 	"github.com/google/wire"
 )
@@ -15,12 +14,12 @@ var SetTaskRepositoryDependency = wire.NewSet(
 	wire.Bind(new(*entity.TaskRepositoryInterface), new(*database.TaskRepository)),
 )
 
-func NewCreateTaskUseCase(db *sql.DB) *usecase.TaskUseCase {
-	wire.Build(
-		SetTaskRepositoryDependency,
-	)
-	return &usecase.TaskUseCase{}
-}
+// func NewCreateTaskUseCase(db *sql.DB) *usecase.TaskUseCase {
+// 	wire.Build(
+// 		SetTaskRepositoryDependency,
+// 	)
+// 	return &usecase.TaskUseCase{}
+// }
 
 func NewWebTaskHandler(db *sql.DB) *web.WebTaskHandler {
 	wire.Build(

@@ -41,12 +41,17 @@ func (c *TaskUseCase) FindAll() (dto.TaskOutputFindAlltDTO, error) {
 	return dto.TaskOutputFindAlltDTO{Tasks: task}, nil
 }
 
-func (c *TaskUseCase) FindTitle(input dto.TaskFindTitleInputDTO) (entity.Task, error) {
-	taskTitle, err := c.TaskRepository.FindTitle(input.Title)
-
+func (c *TaskUseCase) FindTitle(title string) (entity.Task, error) {
+	taskAll, err := c.TaskRepository.FindAll()
 	if err != nil {
 		return entity.Task{}, err
 	}
+	for _, v := range taskAll {
+		if title == v.Title {
+			return v, nil
 
-	return taskTitle, nil
+		}
+	}
+	return entity.Task{}, err
+
 }

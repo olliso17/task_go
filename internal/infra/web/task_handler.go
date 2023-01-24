@@ -2,7 +2,6 @@ package web
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"tasks_go/internal/entity"
 	usecase "tasks_go/internal/usecase"
@@ -56,20 +55,15 @@ func (h *WebTaskHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *WebTaskHandler) FindTitle(w http.ResponseWriter, r *http.Request) {
-	// var dto dto.TaskFindTitleInputDTO
-	fmt.Println(w, r)
-	// err := json.NewDecoder(r.Body).Decode(&dto)
-	// if err != nil {
-	// 	http.Error(w, err.Error(), http.StatusBadRequest)
-	// 	return
-	// }
 
-	// createTask := *usecase.NewTaskUseCase(h.TaskRepository)
-	// output, err := createTask.FindTitle(dto)
+	params := r.URL.Query().Get("title")
 
-	// err = json.NewEncoder(w).Encode(output)
-	// if err != nil {
-	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
-	// 	return
-	// }
+	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+	output, err := createTask.FindTitle(params)
+
+	err = json.NewEncoder(w).Encode(output)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
