@@ -16,7 +16,7 @@ type ListEntity struct {
 	Deleted_at time.Time
 }
 
-func NewListEntity(name string, hasTask bool) *ListEntity {
+func NewListEntity(name string, hasTask bool) (*ListEntity, error) {
 	timeNow := time.Now()
 
 	list := &ListEntity{
@@ -29,5 +29,5 @@ func NewListEntity(name string, hasTask bool) *ListEntity {
 		Deleted_at: timeNow,
 	}
 
-	return list
+	return list, nil
 }
