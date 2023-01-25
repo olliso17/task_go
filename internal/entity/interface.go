@@ -4,6 +4,7 @@ type TaskRepositoryInterface interface {
 	Create(task *Task) error
 	FindAll() ([]Task, error)
 	FindTitle(title string) (Task, error)
+	FindByID(id string) (Task, error)
 }
 
 type ListRepositoryInterface interface {

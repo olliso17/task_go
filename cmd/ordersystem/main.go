@@ -23,6 +23,7 @@ func main() {
 	webserver.AddHandler("/task/create", newWebTaskHandler.Create)
 	webserver.AddHandler("/tasks", newWebTaskHandler.FindAll)
 	webserver.AddHandler("/task", newWebTaskHandler.FindTitle)
+	webserver.AddHandler("/task", newWebTaskHandler.FindByID)
 
 	webserver.Start()
 	// http.HandleFunc("/hello", getHello)

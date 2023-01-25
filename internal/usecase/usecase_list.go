@@ -1,19 +1,16 @@
 package usecase
 
 import (
+	"fmt"
 	"tasks_go/internal/entity"
+	"tasks_go/internal/usecase/dto"
 )
 
-type ListInpuntDtO struct {
-	Name  string
-	Tasks entity.Task
-}
-type ListOutputDTO struct {
-	Name  string
-	Tasks []entity.Task
-}
 type ListUsecase struct {
 	ListUsecase entity.ListRepositoryInterface
+}
+type TaskRepository struct {
+	TaskUsecase entity.TaskRepositoryInterface
 }
 
 func NewListUsecase(listUsecase entity.ListRepositoryInterface) *ListUsecase {
@@ -22,18 +19,26 @@ func NewListUsecase(listUsecase entity.ListRepositoryInterface) *ListUsecase {
 	}
 }
 
-func (l *ListUsecase) Execute(input ListInpuntDtO) (ListOutputDTO, error) {
-	meuArrayTask := make([]entity.Task, 1, 1)
-	meuArrayTask = append(meuArrayTask, input.Tasks)
-	list := entity.NewListEntity(input.Name, meuArrayTask)
+func (l *ListUsecase) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error) {
+	repoTaskAll := TaskRepository{}
+	taskAll, err := repoTaskAll.TaskUsecase.FindAll()
+	taskID, err := repoTaskAll.TaskUsecase.FindByID(id)
+	fmt.Println(taskAll)
+	if err != nil {
+		return dto.ListOutputDTO{}, err
+	}
+	list := entity.NewListEntity(input.Name, input.HasTask)
+
+	if input.HasTask == true {
+		dto := dto.ListOutputDTO{
+			Name: list.Name,
+			//Tasks: //passar findId,
+		}
+	}
+	list := entity.NewListEntity(input.Name, input.HasTask)
 
 	if err := l.ListUsecase.Create(list); err != nil {
-		return ListOutputDTO{}, err
-	}
-
-	dto := ListOutputDTO{
-		Name:  list.Name,
-		Tasks: list.Tasks,
+		return dto.ListOutputDTO{}, err
 	}
 
 	return dto, nil

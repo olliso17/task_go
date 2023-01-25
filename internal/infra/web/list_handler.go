@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 	"tasks_go/internal/entity"
-	"tasks_go/internal/usecase"
+	usecase "tasks_go/internal/usecase"
+	"tasks_go/internal/usecase/dto"
 )
 
 type WebListHandler struct {
@@ -18,7 +19,7 @@ func NewWebListHandler(listRepository entity.ListRepositoryInterface) *WebListHa
 }
 
 func (h *WebListHandler) Create(w http.ResponseWriter, r *http.Request) {
-	var dto usecase.ListInpuntDtO
+	var dto dto.ListInpuntDtO
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)

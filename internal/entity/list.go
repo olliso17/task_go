@@ -16,13 +16,13 @@ type ListEntity struct {
 	Deleted_at time.Time
 }
 
-func NewListEntity(name string, tasks []Task) *ListEntity {
+func NewListEntity(name string, hasTask bool) *ListEntity {
 	timeNow := time.Now()
 
 	list := &ListEntity{
 		ID:         uuid.New().String(),
 		Name:       name,
-		Tasks:      tasks,
+		Tasks:      make([]Task, 0),
 		HasTask:    false,
 		Created_at: timeNow,
 		Updated_at: timeNow,

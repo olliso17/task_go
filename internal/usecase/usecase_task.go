@@ -64,3 +64,18 @@ func (c *TaskUseCase) FindTitle(title string) (entity.Task, error) {
 	return entity.Task{}, err
 
 }
+
+func (c *TaskUseCase) FindByID(id string) (entity.Task, error) {
+	taskAll, err := c.TaskRepository.FindAll()
+	if err != nil {
+		return entity.Task{}, err
+	}
+	for _, v := range taskAll {
+		if id == v.ID {
+			return v, nil
+
+		}
+	}
+	return entity.Task{}, err
+
+}
