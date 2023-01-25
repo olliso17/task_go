@@ -2,6 +2,7 @@ package entity
 
 import (
 	"fmt"
+	"regexp"
 	"time"
 
 	"github.com/google/uuid"
@@ -13,9 +14,9 @@ type Task struct {
 	Description string
 	Status      bool
 	Priority    bool
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
-	DeletedAt   time.Time
+	CreatedAt   string
+	UpdatedAt   string
+	DeletedAt   string
 }
 
 func NewTask(title string, description string, status bool, priority bool) (*Task, error) {
@@ -26,9 +27,9 @@ func NewTask(title string, description string, status bool, priority bool) (*Tas
 		Description: description,
 		Status:      status,
 		Priority:    priority,
-		CreatedAt:   timeNow,
-		UpdatedAt:   timeNow,
-		DeletedAt:   timeNow,
+		CreatedAt:   timeNow.Local().String(),
+		UpdatedAt:   timeNow.Local().String(),
+		DeletedAt:   timeNow.Local().String(),
 	}
 	isValidate := IsValid(task)
 
@@ -49,5 +50,27 @@ func IsValid(task *Task) bool {
 		fmt.Printf("Description is required\n")
 		return false
 	}
+	task.IsRegex(map[string]string{
+		"title":       task.Title,
+		"description": task.Description,
+	})
 	return true
+}
+
+func (t *Task) IsRegex(sliceString map[string]string) {
+
+	for k, v := range sliceString {
+		regex, _ := regexp.MatchString("[a-zA-Zà-úÀ-Ú0-9]", v)
+
+		switch regex {
+		case true:
+			continue
+
+		case false:
+			fmt.Println(k, "Is required caracteres A-Z, a-z or 0-9")
+			break
+		}
+
+	}
+
 }
