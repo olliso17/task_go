@@ -1,4 +1,3 @@
-
 CREATE TABLE IF NOT EXISTS public.tasks
 (
     id text COLLATE pg_catalog."default",
@@ -6,9 +5,10 @@ CREATE TABLE IF NOT EXISTS public.tasks
     description text COLLATE pg_catalog."default",
     status boolean,
     priority boolean,
-    created_at date,
-    updated_at date,
-    deleted_at date
+    created_at text COLLATE pg_catalog."default",
+    updated_at text COLLATE pg_catalog."default",
+    deleted_at text COLLATE pg_catalog."default",
+    "isDeleted" boolean
 )
 
 TABLESPACE pg_default;
