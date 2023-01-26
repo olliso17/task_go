@@ -5,8 +5,12 @@ type TaskRepositoryInterface interface {
 	FindAll() ([]Task, error)
 	FindTitle(title string) (Task, error)
 	FindByID(id string) (Task, error)
+	SoftDelete(isDeleted bool) error
 }
 
 type ListRepositoryInterface interface {
 	Create(list *ListEntity) error
+	FindAll() ([]ListEntity, error)
+	FindByID(id string) (ListEntity, error)
+	// CreateListTask() error
 }

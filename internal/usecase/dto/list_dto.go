@@ -1,10 +1,11 @@
 package dto
 
+import "tasks_go/internal/entity"
+
 type ListInpuntDtO struct {
-	Name    string
-	HasTask bool
+	Name string
 }
 type ListOutputDTO struct {
-	Name    string
-	HasTask bool
+	Name  string
+	Tasks []entity.Task
 }

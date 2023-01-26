@@ -37,21 +37,7 @@ func (l *ListUsecase) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error
 	return dto, nil
 }
 
-func (l *ListUsecase) IncludTask(idTask string, idList string) entity.Task {
-	repoTaskAll := TaskRepository{}
-	taskAll, err := repoTaskAll.TaskUsecase.FindAll()
-	if err != nil {
-		panic(err)
-	}
-
-	if 
-	taskID, err := repoTaskAll.TaskUsecase.FindByID(idTask)
-
-	if input.HasTask == true {
-		dto := dto.ListOutputDTO{
-			Name:  list.Name,
-			Tasks: l.IncludTask(),
-		}
-	}
+func (l *ListUsecase) CreateListTask(idTask string, idList string) entity.Task {
+	
 
 }
