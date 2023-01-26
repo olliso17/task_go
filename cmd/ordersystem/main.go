@@ -3,22 +3,22 @@ package main
 import (
 	// _ "github.com/go-sql-driver/mysql"
 
-	"database/sql"
+	db "tasks_go/internal/infra/database/connection_db"
 	"tasks_go/internal/infra/web/webserver"
 
 	_ "github.com/lib/pq"
 )
 
 func main() {
-	db, err := sql.Open("postgres", "host=localhost port=5432 user=root password=root dbname=root sslmode=disable")
+
+	db_postgres, err := db.OpenConnectionPostgres()
 	if err != nil {
 		panic(err)
 	}
 
-	defer db.Close()
 	// creatreTaskUseCase := NewCreateTaskUseCase(db)
 	webserver := webserver.NewWebServer(":8080")
-	newWebTaskHandler := NewWebTaskHandlerGen(db)
+	newWebTaskHandler := NewWebTaskHandlerGen(db_postgres)
 
 	webserver.AddHandler("/task/create", newWebTaskHandler.Create)
 	webserver.AddHandler("/tasks", newWebTaskHandler.FindAll)

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"tasks_go/internal/entity"
 	"tasks_go/internal/usecase/dto"
+	"time"
 )
 
 type TaskUseCase struct {
@@ -73,6 +74,32 @@ func (c *TaskUseCase) FindByID(id string) (entity.Task, error) {
 	for _, v := range taskAll {
 		if id == v.ID {
 			return v, nil
+
+		}
+	}
+	return entity.Task{}, err
+
+}
+
+func (c *TaskUseCase) SoftDelete(id string) (entity.Task, error) {
+	taskAll, err := c.TaskRepository.FindAll()
+	timestamp := time.Now()
+	if err != nil {
+		return entity.Task{}, err
+	}
+	for _, v := range taskAll {
+		if id == v.ID {
+			return entity.Task{
+				ID:          v.ID,
+				Title:       v.Title,
+				Description: v.Description,
+				Status:      v.Status,
+				Priority:    v.Priority,
+				IsDeleted:   true,
+				CreatedAt:   v.CreatedAt,
+				UpdatedAt:   v.UpdatedAt,
+				DeletedAt:   timestamp.Local().String(),
+			}, nil
 
 		}
 	}

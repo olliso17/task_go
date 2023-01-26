@@ -78,3 +78,18 @@ func (r *TaskRepository) FindByID(id string) (entity.Task, error) {
 	}
 	return task, nil
 }
+
+func (r *TaskRepository) SoftDelete(id string) (entity.Task, error) {
+	var task entity.Task
+
+	rows, err := r.Db.Query("SELECT * FROM tasks WHERE id = $1", id)
+	fmt.Print(rows)
+
+	if err := rows.Scan(&task); err != nil {
+		return task, err
+	}
+	if err = rows.Err(); err != nil {
+		return task, err
+	}
+	return task, nil
+}

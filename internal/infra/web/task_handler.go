@@ -81,3 +81,17 @@ func (h *WebTaskHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func (h *WebTaskHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
+
+	params := r.URL.Query().Get("id")
+
+	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+	output, err := createTask.SoftDelete(params)
+
+	err = json.NewEncoder(w).Encode(output)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}

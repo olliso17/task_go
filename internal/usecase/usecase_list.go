@@ -20,7 +20,7 @@ func NewListUsecase(listUsecase entity.ListRepositoryInterface) *ListUsecase {
 
 func (l *ListUsecase) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error) {
 
-	list, err := entity.NewListEntity(input.Name, input.HasTask)
+	list, err := entity.NewListEntity(input.Name)
 
 	if err != nil {
 		return dto.ListOutputDTO{}, err
@@ -30,14 +30,15 @@ func (l *ListUsecase) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error
 		return dto.ListOutputDTO{}, err
 	}
 	dto := dto.ListOutputDTO{
-		Name:    list.Name,
-		HasTask: list.HasTask,
+		Name:  list.Name,
+		Tasks: list.Tasks,
 	}
 
 	return dto, nil
 }
 
-func (l *ListUsecase) CreateListTask(idTask string, idList string) entity.Task {
-	
+// func (l *ListUsecase) CreateListTask(idTask string, idList string) entity.ListEntity {
+// 	repoTask := TaskRepository{}
+// 	task, err := repoTask.TaskUsecase.FindByID(idTask)
 
-}
+// }
