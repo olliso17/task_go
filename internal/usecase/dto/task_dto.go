@@ -25,6 +25,9 @@ type TaskOutputFindAlltDTO struct {
 }
 
 type TaskOutputSoftDeleteDTO struct {
-	IsDeleted bool   `json:"is_deleted"`
-	DeletedAt string `json:"deleted_at"`
+	Task entity.Task `json:"task"`
+}
+
+type TaskInputSoftDeleteDTO struct {
+	ID string `json:"id"`
 }

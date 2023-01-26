@@ -23,9 +23,9 @@ func main() {
 	webserver.AddHandler("/tasks", newWebTaskHandler.FindAll)
 	webserver.AddHandler("/task", newWebTaskHandler.FindTitle)
 	webserver.AddHandler("/task", newWebTaskHandler.FindByID)
-	webserver.AddHandler("/task", newWebTaskHandler.SoftDelete)
-
+	webserver.AddHandler("/task/delete", newWebTaskHandler.SoftDelete)
 	webserver.Start()
+
 	// http.HandleFunc("/hello", getHello)
 
 	// http.ListenAndServe(":8080", nil)

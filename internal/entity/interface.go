@@ -5,7 +5,7 @@ type TaskRepositoryInterface interface {
 	FindAll() ([]Task, error)
 	FindTitle(title string) (Task, error)
 	FindByID(id string) (Task, error)
-	SoftDelete(id string)
+	SoftDelete(task *Task) error
 }
 
 type ListRepositoryInterface interface {

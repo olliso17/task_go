@@ -39,7 +39,7 @@ func (h *WebTaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	// defer r.Body.Close()
+
 }
 
 func (h *WebTaskHandler) FindAll(w http.ResponseWriter, r *http.Request) {
@@ -86,7 +86,20 @@ func (h *WebTaskHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 
 	id := r.URL.Query().Get("id")
 
+	input := dto.TaskInputSoftDeleteDTO{
+		ID: id,
+	}
 	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
-	createTask.SoftDelete(id)
+
+	taskDelete, err := createTask.SoftDelete(input)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	err = json.NewEncoder(w).Encode(taskDelete)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 }
