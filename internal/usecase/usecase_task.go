@@ -1,7 +1,6 @@
 package usecase
 
 import (
-	"fmt"
 	"tasks_go/internal/entity"
 	"tasks_go/internal/usecase/dto"
 	"time"
@@ -18,16 +17,16 @@ func NewTaskUseCase(taskRepository entity.TaskRepositoryInterface) *TaskUseCase 
 }
 
 func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error) {
-	taskAll, err := c.TaskRepository.FindAll()
+	// taskAll, err := c.TaskRepository.FindAll()
 
 	task, _ := entity.NewTask(input.Title, input.Description, input.Status, input.Priority)
-	for _, v := range taskAll {
-		if task.Title == v.Title {
-			err = fmt.Errorf("task already exist")
-			return dto.TaskOutputDTO{}, err
+	// for _, v := range taskAll {
+	// 	if task.Title == v.Title {
+	// 		err = fmt.Errorf("task already exist")
+	// 		return dto.TaskOutputDTO{}, err
 
-		}
-	}
+	// 	}
+	// }
 	if err := c.TaskRepository.Create(task); err != nil {
 		return dto.TaskOutputDTO{}, err
 	}
@@ -81,28 +80,21 @@ func (c *TaskUseCase) FindByID(id string) (entity.Task, error) {
 
 }
 
-func (c *TaskUseCase) SoftDelete(id string) (entity.Task, error) {
-	taskAll, err := c.TaskRepository.FindAll()
+func (c *TaskUseCase) SoftDelete(id string) (dto.TaskOutputSoftDeleteDTO, error) {
 	timestamp := time.Now()
+	task, err := c.TaskRepository.FindByID(id)
 	if err != nil {
-		return entity.Task{}, err
+		return dto.TaskOutputSoftDeleteDTO{}, err
 	}
-	for _, v := range taskAll {
-		if id == v.ID {
-			return entity.Task{
-				ID:          v.ID,
-				Title:       v.Title,
-				Description: v.Description,
-				Status:      v.Status,
-				Priority:    v.Priority,
-				IsDeleted:   true,
-				CreatedAt:   v.CreatedAt,
-				UpdatedAt:   v.UpdatedAt,
-				DeletedAt:   timestamp.Local().String(),
-			}, nil
+	task.IsDeleted = true
+	task.DeletedAt = timestamp.Local().String()
 
-		}
+	if err := c.TaskRepository.SoftDelete(task.ID); err != nil {
+		return dto.TaskOutputSoftDeleteDTO{}, err
 	}
-	return entity.Task{}, err
-
+	dto := dto.TaskOutputSoftDeleteDTO{
+		IsDeleted: task.IsDeleted,
+		DeletedAt: task.DeletedAt,
+	}
+	return dto, nil
 }

@@ -23,3 +23,8 @@ type TaskFindTitleInputDTO struct {
 type TaskOutputFindAlltDTO struct {
 	Tasks []entity.Task `json:"tasks"`
 }
+
+type TaskOutputSoftDeleteDTO struct {
+	IsDeleted bool   `json:"is_deleted"`
+	DeletedAt string `json:"deleted_at"`
+}

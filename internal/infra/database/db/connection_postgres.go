@@ -17,7 +17,5 @@ func OpenConnectionPostgres() (*sql.DB, error) {
 		panic(err)
 	}
 
-	defer db.Close()
-
 	return db, err
 }

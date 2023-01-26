@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"tasks_go/internal/entity"
+	"time"
 )
 
 type TaskRepository struct {
@@ -79,17 +80,17 @@ func (r *TaskRepository) FindByID(id string) (entity.Task, error) {
 	return task, nil
 }
 
-func (r *TaskRepository) SoftDelete(id string) (entity.Task, error) {
+func (r *TaskRepository) SoftDelete(id string) error {
 	var task entity.Task
-
-	rows, err := r.Db.Query("SELECT * FROM tasks WHERE id = $1", id)
-	fmt.Print(rows)
-
-	if err := rows.Scan(&task); err != nil {
-		return task, err
+	stmt, err := r.Db.Prepare("UPDATE tasks SET isDeleted = $2, DeletedAt= $3 WHERE id = $1", id)
+	if err != nil {
+		fmt.Print("o erro:", err)
+		return err
 	}
-	if err = rows.Err(); err != nil {
-		return task, err
+	_, err = stmt.Exec(true, time.Now().Local().String())
+	if err != nil {
+		return err
 	}
-	return task, nil
+
+	return nil
 }
