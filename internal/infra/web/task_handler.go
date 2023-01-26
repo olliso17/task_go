@@ -87,13 +87,6 @@ func (h *WebTaskHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
 
 	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
-	output, err := createTask.SoftDelete(id)
-
-	err = json.NewEncoder(w).Encode(output)
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	createTask.SoftDelete(id)
 
 }

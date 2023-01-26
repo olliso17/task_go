@@ -3,7 +3,6 @@ package usecase
 import (
 	"tasks_go/internal/entity"
 	"tasks_go/internal/usecase/dto"
-	"time"
 )
 
 type TaskUseCase struct {
@@ -80,21 +79,12 @@ func (c *TaskUseCase) FindByID(id string) (entity.Task, error) {
 
 }
 
-func (c *TaskUseCase) SoftDelete(id string) (dto.TaskOutputSoftDeleteDTO, error) {
-	timestamp := time.Now()
+func (c *TaskUseCase) SoftDelete(id string) {
 	task, err := c.TaskRepository.FindByID(id)
 	if err != nil {
-		return dto.TaskOutputSoftDeleteDTO{}, err
+		return
 	}
-	task.IsDeleted = true
-	task.DeletedAt = timestamp.Local().String()
 
-	if err := c.TaskRepository.SoftDelete(task.ID); err != nil {
-		return dto.TaskOutputSoftDeleteDTO{}, err
-	}
-	dto := dto.TaskOutputSoftDeleteDTO{
-		IsDeleted: task.IsDeleted,
-		DeletedAt: task.DeletedAt,
-	}
-	return dto, nil
+	c.TaskRepository.SoftDelete(task.ID)
+
 }

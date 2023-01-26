@@ -80,14 +80,19 @@ func (r *TaskRepository) FindByID(id string) (entity.Task, error) {
 	return task, nil
 }
 
-func (r *TaskRepository) SoftDelete(id string) error {
+func (r *TaskRepository) SoftDelete(id string) {
 	timestamp := time.Now().Local().String()
-	softDelete := `UPDATE tasks SET isDeleted = true, DeletedAt= timestamp WHERE id = $1;`
+	softDelete := `UPDATE tasks SET isDeleted = $2, DeletedAt= $3 WHERE id = $1;`
 
-	_, err := r.Db.Exec(softDelete, id, true, timestamp)
-
+	row, err := r.Db.Prepare(softDelete)
+	res, err := row.Exec(id, true, timestamp)
 	if err != nil {
 		panic(err)
 	}
-	return nil
+	row.Close()
+	affect, err := res.RowsAffected()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Records affected", affect)
 }
