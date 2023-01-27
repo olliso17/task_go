@@ -42,27 +42,28 @@ func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error)
 }
 
 func (c *TaskUseCase) FindAll() (dto.TaskOutputFindAlltDTO, error) {
-	task, err := c.TaskRepository.FindAll()
+	tasks, err := c.TaskRepository.FindAll()
 
-	if err != nil {
-		return dto.TaskOutputFindAlltDTO{}, err
+	var taskTitle []entity.Task
+	for _, v := range tasks {
+		if v.IsDeleted != true {
+			taskTitle = append(taskTitle, v)
+			return dto.TaskOutputFindAlltDTO{Tasks: v}, nil
+		}
+
 	}
-
-	return dto.TaskOutputFindAlltDTO{Tasks: task}, nil
+	return dto.TaskOutputFindAlltDTO{}, err
 }
 
-func (c *TaskUseCase) FindTitle(title string) (entity.Task, error) {
+func (c *TaskUseCase) FindTitle(title string) ([]entity.Task, error) {
 	taskAll, err := c.TaskRepository.FindAll()
-	if err != nil {
-		return entity.Task{}, err
-	}
-	for _, v := range taskAll {
-		if title == v.Title {
-			return v, nil
 
-		}
+	if err != nil {
+		return []entity.Task{}, err
 	}
-	return entity.Task{}, err
+	isdelete := IsDeletedFromTitle(taskAll, title)
+
+	return *isdelete, nil
 
 }
 
@@ -73,7 +74,8 @@ func (c *TaskUseCase) FindByID(id string) (entity.Task, error) {
 	}
 	for _, v := range taskAll {
 		if id == v.ID {
-			return v, nil
+			isdelete := IsDeletedFromID(&v)
+			return *isdelete, nil
 
 		}
 	}
@@ -106,4 +108,29 @@ func IsValidDelete(task *entity.Task) dto.TaskOutputMessageDTO {
 
 	return output
 
+}
+
+func IsDeletedFromID(task *entity.Task) *entity.Task {
+
+	if task.IsDeleted != true {
+
+		return task
+	}
+
+	return &entity.Task{}
+}
+
+func IsDeletedFromTitle(tasks []entity.Task, title string) *[]entity.Task {
+
+	var taskTitle []entity.Task
+	for _, v := range tasks {
+		if title == v.Title {
+			if v.IsDeleted != true {
+				taskTitle = append(taskTitle, v)
+				return &taskTitle
+			}
+		}
+	}
+
+	return &[]entity.Task{}
 }

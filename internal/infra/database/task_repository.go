@@ -37,7 +37,7 @@ func (r *TaskRepository) FindAll() ([]entity.Task, error) {
 	for rows.Next() {
 		var task entity.Task
 
-		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.Priority, &task.CreatedAt, &task.CreatedAt, &task.DeletedAt, &task.IsDeleted); err != nil {
+		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.Priority, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt, &task.IsDeleted); err != nil {
 			return tasks, err
 		}
 		tasks = append(tasks, task)
@@ -55,7 +55,7 @@ func (r *TaskRepository) FindTitle(title string) (entity.Task, error) {
 	rows, err := r.Db.Query("SELECT * FROM tasks WHERE title = $1", title)
 
 	for rows.Next() {
-		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.Priority, &task.CreatedAt, &task.CreatedAt, &task.DeletedAt, &task.IsDeleted); err != nil {
+		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.Priority, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt, &task.IsDeleted); err != nil {
 			return task, err
 		}
 	}
@@ -70,7 +70,7 @@ func (r *TaskRepository) FindByID(id string) (entity.Task, error) {
 
 	rows, err := r.Db.Query("SELECT * FROM tasks WHERE id = $1", id)
 	for rows.Next() {
-		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.Priority, &task.CreatedAt, &task.CreatedAt, &task.DeletedAt, &task.IsDeleted); err != nil {
+		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.Priority, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt, &task.IsDeleted); err != nil {
 			return task, err
 		}
 	}
