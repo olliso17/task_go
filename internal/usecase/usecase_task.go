@@ -81,18 +81,29 @@ func (c *TaskUseCase) FindByID(id string) (entity.Task, error) {
 
 }
 
-func (c *TaskUseCase) SoftDelete(input dto.TaskInputSoftDeleteDTO) (dto.TaskOutputSoftDeleteDTO, error) {
+func (c *TaskUseCase) SoftDelete(input dto.TaskInputSoftDeleteDTO) (dto.TaskOutputMessageDTO, error) {
 	task, err := c.TaskRepository.FindByID(input.ID)
 	timestamp := time.Now()
-	output := dto.TaskOutputSoftDeleteDTO{}
 	if err != nil {
-		return output, errors.New(err.Error())
+		return dto.TaskOutputMessageDTO{}, errors.New(err.Error())
 	}
 	task.IsDeleted = true
 	task.DeletedAt = timestamp.Local().String()
-	output.Message = "Deleted task sucessfully"
 	c.TaskRepository.SoftDelete(&task)
 
-	return output, nil
+	return IsValidDelete(&task), nil
+
+}
+
+func IsValidDelete(task *entity.Task) dto.TaskOutputMessageDTO {
+
+	output := dto.TaskOutputMessageDTO{}
+	if task.IsDeleted != true {
+		output.Message = "Could not delete"
+		return output
+	}
+	output.Message = "Deleted task sucessfully"
+
+	return output
 
 }
