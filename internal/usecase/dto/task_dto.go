@@ -25,7 +25,7 @@ type TaskOutputFindAlltDTO struct {
 }
 
 type TaskOutputSoftDeleteDTO struct {
-	Task entity.Task `json:"task"`
+	Message string `json:"mensage"`
 }
 
 type TaskInputSoftDeleteDTO struct {

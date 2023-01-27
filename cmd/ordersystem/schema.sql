@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS public.tasks
     created_at text COLLATE pg_catalog."default",
     updated_at text COLLATE pg_catalog."default",
     deleted_at text COLLATE pg_catalog."default",
-    "isDeleted" boolean
+    isDeleted boolean
 )
 
 TABLESPACE pg_default;

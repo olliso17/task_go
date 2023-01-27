@@ -96,7 +96,7 @@ func (h *WebTaskHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	err = json.NewEncoder(w).Encode(taskDelete)
+	json.NewEncoder(w).Encode(taskDelete)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

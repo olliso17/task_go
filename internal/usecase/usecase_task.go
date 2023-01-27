@@ -90,7 +90,8 @@ func (c *TaskUseCase) SoftDelete(input dto.TaskInputSoftDeleteDTO) (dto.TaskOutp
 	}
 	task.IsDeleted = true
 	task.DeletedAt = timestamp.Local().String()
-	output.Task = task
+	output.Message = "Deleted task sucessfully"
+	c.TaskRepository.SoftDelete(&task)
 
 	return output, nil
 

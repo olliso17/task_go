@@ -14,10 +14,10 @@ type Task struct {
 	Description string
 	Status      bool
 	Priority    bool
-	IsDeleted   bool
 	CreatedAt   string
 	UpdatedAt   string
 	DeletedAt   string
+	IsDeleted   bool
 }
 
 func NewTask(title string, description string, status bool, priority bool) (*Task, error) {
@@ -28,10 +28,10 @@ func NewTask(title string, description string, status bool, priority bool) (*Tas
 		Description: description,
 		Status:      status,
 		Priority:    priority,
-		IsDeleted:   false,
 		CreatedAt:   timeNow.Local().String(),
 		UpdatedAt:   timeNow.Local().String(),
 		DeletedAt:   timeNow.Local().String(),
+		IsDeleted:   false,
 	}
 	isValidate := IsValid(task)
 
