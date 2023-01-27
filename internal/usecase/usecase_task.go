@@ -41,18 +41,20 @@ func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error)
 	return dto, nil
 }
 
-func (c *TaskUseCase) FindAll() (dto.TaskOutputFindAlltDTO, error) {
+func (c *TaskUseCase) FindAll() ([]entity.Task, error) {
 	tasks, err := c.TaskRepository.FindAll()
-
+	if err != nil {
+		return []entity.Task{}, err
+	}
 	var taskTitle []entity.Task
 	for _, v := range tasks {
 		if v.IsDeleted != true {
 			taskTitle = append(taskTitle, v)
-			return dto.TaskOutputFindAlltDTO{Tasks: v}, nil
+
 		}
 
 	}
-	return dto.TaskOutputFindAlltDTO{}, err
+	return taskTitle, nil
 }
 
 func (c *TaskUseCase) FindTitle(title string) ([]entity.Task, error) {
@@ -127,10 +129,10 @@ func IsDeletedFromTitle(tasks []entity.Task, title string) *[]entity.Task {
 		if title == v.Title {
 			if v.IsDeleted != true {
 				taskTitle = append(taskTitle, v)
-				return &taskTitle
 			}
 		}
 	}
 
-	return &[]entity.Task{}
+	return &taskTitle
+
 }
