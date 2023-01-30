@@ -16,7 +16,7 @@ func NewListRepository(db *sql.DB) *ListRepository {
 	}
 }
 
-func (l *ListRepository) Save(list *entity.ListEntity) error {
+func (l *ListRepository) Create(list *entity.ListEntity) error {
 	stmt, err := l.Db.Prepare("INSERT INTO lists (id, name, created_at, updated_at, deleted_at, isDeleted) VALUES ($1, $2, $3, $4, $5, $6)")
 	if err != nil {
 		fmt.Print("o erro:", err)

@@ -29,7 +29,12 @@ func NewWebTaskHandlerGen(db *sql.DB) *web.WebTaskHandler{
 	webTaskHandler := web.NewTaskHandler(taskRepository)
 	return webTaskHandler
 }
-
+func NewWebListHandlerGen(db *sql.DB) *web.WebListHandler{
+	listRepository := database.NewListRepository(db)
+	webListHandler := web.NewListHandler(listRepository)
+	return webListHandler
+}
 // wire.go:
 
 var setTaskRepositoryDependency = wire.NewSet(database.NewTaskRepository, wire.Bind(new(entity.TaskRepositoryInterface), new(*database.TaskRepository)))
+var setListRepositoryDependency = wire.NewSet(database.NewListRepository, wire.Bind(new(entity.ListRepositoryInterface), new(*database.ListRepository)))

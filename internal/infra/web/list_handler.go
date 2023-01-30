@@ -12,7 +12,7 @@ type WebListHandler struct {
 	ListRepository entity.ListRepositoryInterface
 }
 
-func NewWebListHandler(listRepository entity.ListRepositoryInterface) *WebListHandler {
+func NewListHandler(listRepository entity.ListRepositoryInterface) *WebListHandler {
 	return &WebListHandler{
 		ListRepository: listRepository,
 	}
