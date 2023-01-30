@@ -29,3 +29,24 @@ func (l *ListRepository) Create(list *entity.ListEntity) error {
 
 	return nil
 }
+
+func (l *ListRepository) FindAll() ([]entity.ListEntity, error) {
+
+	rows, err := l.Db.Query("SELECT id, name, created_at, updated_at, deleted_at, isDeleted FROM lists")
+
+	var lists []entity.ListEntity
+	for rows.Next() {
+		var list entity.ListEntity
+
+		if err := rows.Scan(&list.ID, &list.Name, &list.CreatedAt, &list.UpdatedAt, &list.DeletedAt, &list.IsDeleted); err != nil {
+			return lists, err
+		}
+		lists = append(lists, list)
+	}
+	if err = rows.Err(); err != nil {
+		return lists, err
+	}
+
+	return lists, nil
+
+}

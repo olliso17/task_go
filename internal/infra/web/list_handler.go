@@ -38,3 +38,15 @@ func (h *WebListHandler) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+func (h *WebListHandler) FindAll(w http.ResponseWriter, r *http.Request) {
+
+	createList := *usecase.NewListUsecase(h.ListRepository)
+	output, err := createList.FindAll()
+
+	err = json.NewEncoder(w).Encode(output)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}

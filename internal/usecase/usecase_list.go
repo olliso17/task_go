@@ -30,14 +30,23 @@ func (l *ListUsecase) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error
 		return dto.ListOutputDTO{}, err
 	}
 	dto := dto.ListOutputDTO{
-		Name:  list.Name,
+		Name: list.Name,
 	}
 
 	return dto, nil
 }
 
-// func (l *ListUsecase) CreateListTask(idTask string, idList string) entity.ListEntity {
-// 	repoTask := TaskRepository{}
-// 	task, err := repoTask.TaskUsecase.FindByID(idTask)
+func (l *ListUsecase) FindAll() ([]entity.ListEntity, error) {
+	lists, err := l.ListUsecase.FindAll()
 
-// }
+	if err != nil {
+		return []entity.ListEntity{}, err
+	}
+	var listAll []entity.ListEntity
+	for _, v := range lists {
+
+		listAll = append(listAll, v)
+
+	}
+	return listAll, nil
+}

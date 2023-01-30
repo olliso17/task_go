@@ -10,9 +10,9 @@ type ListEntity struct {
 	ID        string
 	Name      string
 	Tasks     []*Task
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt time.Time
+	CreatedAt string
+	UpdatedAt string
+	DeletedAt string
 	IsDeleted bool
 }
 
@@ -22,9 +22,9 @@ func NewListEntity(name string) (*ListEntity, error) {
 	list := &ListEntity{
 		ID:        uuid.New().String(),
 		Name:      name,
-		CreatedAt: timeNow,
-		UpdatedAt: timeNow,
-		DeletedAt: timeNow,
+		CreatedAt: timeNow.Local().String(),
+		UpdatedAt: timeNow.Local().String(),
+		DeletedAt: timeNow.Local().String(),
 		IsDeleted: false,
 	}
 
