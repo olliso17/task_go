@@ -7,24 +7,25 @@ import (
 )
 
 type ListEntity struct {
-	ID         string
-	Name       string
-	Tasks      []Task
-	Created_at time.Time
-	Updated_at time.Time
-	Deleted_at time.Time
+	ID        string
+	Name      string
+	Tasks     []*Task
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt time.Time
+	IsDeleted bool
 }
 
 func NewListEntity(name string) (*ListEntity, error) {
 	timeNow := time.Now()
 
 	list := &ListEntity{
-		ID:         uuid.New().String(),
-		Name:       name,
-		Tasks:      make([]Task, 0),
-		Created_at: timeNow,
-		Updated_at: timeNow,
-		Deleted_at: timeNow,
+		ID:        uuid.New().String(),
+		Name:      name,
+		CreatedAt: timeNow,
+		UpdatedAt: timeNow,
+		DeletedAt: timeNow,
+		IsDeleted: false,
 	}
 
 	return list, nil

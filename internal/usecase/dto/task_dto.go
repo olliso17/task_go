@@ -5,6 +5,7 @@ type TaskInputDTO struct {
 	Description string `json:"description"`
 	Status      bool   `json:"status"`
 	Priority    bool   `json:"priority"`
+	ListID      string `json:"list_id"`
 }
 
 type TaskOutputDTO struct {
@@ -12,6 +13,7 @@ type TaskOutputDTO struct {
 	Description string `json:"description"`
 	Status      bool   `json:"status"`
 	Priority    bool   `json:"priority"`
+	ListID      string `json:"list_id"`
 }
 
 type TaskFindTitleInputDTO struct {

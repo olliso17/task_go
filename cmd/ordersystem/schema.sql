@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS public.tasks
     description text COLLATE pg_catalog."default",
     status boolean,
     priority boolean,
+    list_id text COLLATE pg_catalog."default",
     created_at text COLLATE pg_catalog."default",
     updated_at text COLLATE pg_catalog."default",
     deleted_at text COLLATE pg_catalog."default",

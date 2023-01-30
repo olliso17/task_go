@@ -14,13 +14,14 @@ type Task struct {
 	Description string
 	Status      bool
 	Priority    bool
+	ListID      string
 	CreatedAt   string
 	UpdatedAt   string
 	DeletedAt   string
 	IsDeleted   bool
 }
 
-func NewTask(title string, description string, status bool, priority bool) (*Task, error) {
+func NewTask(title string, description string, status bool, priority bool, listId string) (*Task, error) {
 	timeNow := time.Now()
 	task := &Task{
 		ID:          uuid.New().String(),
@@ -28,6 +29,7 @@ func NewTask(title string, description string, status bool, priority bool) (*Tas
 		Description: description,
 		Status:      status,
 		Priority:    priority,
+		ListID:      listId,
 		CreatedAt:   timeNow.Local().String(),
 		UpdatedAt:   timeNow.Local().String(),
 		DeletedAt:   timeNow.Local().String(),
