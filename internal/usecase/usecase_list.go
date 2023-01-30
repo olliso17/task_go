@@ -31,7 +31,6 @@ func (l *ListUsecase) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error
 	}
 	dto := dto.ListOutputDTO{
 		Name:  list.Name,
-		Tasks: list.Tasks,
 	}
 
 	return dto, nil
