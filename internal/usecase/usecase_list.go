@@ -1,14 +1,13 @@
 package usecase
 
 import (
+	"fmt"
 	"tasks_go/internal/entity"
 	"tasks_go/internal/usecase/dto"
 )
 
 type ListUsecase struct {
 	ListUsecase entity.ListRepositoryInterface
-}
-type TaskRepository struct {
 	TaskUsecase entity.TaskRepositoryInterface
 }
 
@@ -38,13 +37,13 @@ func (l *ListUsecase) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error
 
 func (l *ListUsecase) FindAll() ([]entity.ListEntity, error) {
 	lists, err := l.ListUsecase.FindAll()
-	tasks, err := TaskUseCase.TaskRepository.FindAll()
+	tasks, err := l.TaskUsecase.FindAll()
 	if err != nil {
 		return []entity.ListEntity{}, err
 	}
 	var listAll []entity.ListEntity
 	for _, v := range lists {
-
+		fmt.Println(lists, tasks)
 		listAll = append(listAll, v)
 
 	}
