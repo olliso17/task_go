@@ -10,6 +10,7 @@ type ListEntity struct {
 	ID        string
 	Name      string
 	CreatedAt string
+	Tasks     []*Task
 	UpdatedAt string
 	DeletedAt string
 	IsDeleted bool
