@@ -30,7 +30,7 @@ func (l *ListRepository) Create(list *entity.ListEntity) error {
 	return nil
 }
 
-func (l *ListRepository) FindAll() ([]entity.ListEntity, error) {
+func (l *ListRepository) FindAll() ([]entity.ListEntity, []entity.Task, error) {
 
 	listSelec, err := l.Db.Query("SELECT * FROM lists")
 	taskSelec, err := l.Db.Query("SELECT * FROM tasks")
@@ -41,14 +41,14 @@ func (l *ListRepository) FindAll() ([]entity.ListEntity, error) {
 		var list entity.ListEntity
 
 		if err := listSelec.Scan(&list.ID, &list.Name, &list.CreatedAt, &list.UpdatedAt, &list.DeletedAt, &list.IsDeleted); err != nil {
-			return lists, err
+			return lists, tasks, err
 		}
 
 		lists = append(lists, list)
 
 	}
 	if err = listSelec.Err(); err != nil {
-		return lists, err
+		return lists, tasks, err
 	}
 
 	for taskSelec.Next() {
@@ -56,21 +56,17 @@ func (l *ListRepository) FindAll() ([]entity.ListEntity, error) {
 		var task entity.Task
 
 		if err := taskSelec.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.Priority, &task.ListID, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt, &task.IsDeleted); err != nil {
-			return nil, err
+			return lists, tasks, err
 		}
-	
+
 		tasks = append(tasks, task)
 
 	}
 
 	if err = taskSelec.Err(); err != nil {
-		return nil, err
+		return lists, tasks, err
 	}
-	for i, _ := range lists {
-		
-		fmt.Println(lists[i])
 
-	}
-	return lists, nil
+	return lists, tasks, nil
 
 }

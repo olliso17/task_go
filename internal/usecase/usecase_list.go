@@ -38,7 +38,7 @@ func (l *ListUsecase) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error
 
 func (l *ListUsecase) FindAll() ([]entity.ListEntity, error) {
 	lists, err := l.ListUsecase.FindAll()
-
+	tasks, err := TaskUseCase.TaskRepository.FindAll()
 	if err != nil {
 		return []entity.ListEntity{}, err
 	}
