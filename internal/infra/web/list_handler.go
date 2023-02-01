@@ -45,6 +45,7 @@ func (h *WebListHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 	output, err := createList.FindAll()
 
 	err = json.NewEncoder(w).Encode(output)
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

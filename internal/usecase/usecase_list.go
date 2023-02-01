@@ -8,7 +8,6 @@ import (
 
 type ListUsecase struct {
 	ListUsecase entity.ListRepositoryInterface
-	TaskUsecase entity.TaskRepositoryInterface
 }
 
 func NewListUsecase(listUsecase entity.ListRepositoryInterface) *ListUsecase {
@@ -37,15 +36,16 @@ func (l *ListUsecase) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error
 
 func (l *ListUsecase) FindAll() ([]entity.ListEntity, error) {
 	lists, err := l.ListUsecase.FindAll()
-	tasks, err := l.TaskUsecase.FindAll()
 	if err != nil {
 		return []entity.ListEntity{}, err
 	}
 	var listAll []entity.ListEntity
-	for _, v := range lists {
-		fmt.Println(lists, tasks)
+
+	for k, v := range lists {
+		fmt.Println("list---->", k, lists[k].ID)
 		listAll = append(listAll, v)
 
 	}
-	return listAll, nil
+
+	return lists, nil
 }
