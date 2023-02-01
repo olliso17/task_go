@@ -53,3 +53,17 @@ func (l *ListRepository) FindAll() ([]entity.ListEntity, error) {
 	return lists, nil
 
 }
+func (l *ListRepository) FindByID(id string) (entity.ListEntity, error) {
+	var list entity.ListEntity
+
+	rows, err := l.Db.Query("SELECT * FROM lists WHERE id = $1", id)
+	for rows.Next() {
+		if err := rows.Scan(&list.ID, &list.Name, &list.CreatedAt, &list.UpdatedAt, &list.DeletedAt, &list.IsDeleted); err != nil {
+			return list, err
+		}
+	}
+	if err = rows.Err(); err != nil {
+		return list, err
+	}
+	return list, nil
+}

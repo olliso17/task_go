@@ -28,6 +28,7 @@ func main() {
 
 	webserver.AddHandler("/list/create", newWebListHandler.Create)
 	webserver.AddHandler("/lists", newWebListHandler.FindAll)
+	webserver.AddHandler("/list/id", newWebListHandler.FindByID)
 
 	webserver.Start()
 

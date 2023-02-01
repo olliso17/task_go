@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"fmt"
 	"tasks_go/internal/entity"
 	"tasks_go/internal/usecase/dto"
 )
@@ -57,4 +58,20 @@ func (l *ListUsecase) FindAll() ([]entity.ListEntity, error) {
 	}
 
 	return lists, nil
+}
+
+func (l *ListUsecase) FindByID(id string) (entity.ListEntity, error) {
+	list, err := l.ListUsecase.FindByID(id)
+	tasks, err := l.TaskUseCase.FindAll()
+	fmt.Println(list)
+	if err != nil {
+		return entity.ListEntity{}, err
+	}
+	for positionTask, valueTask := range tasks {
+		if tasks[positionTask].ListID == list.ID {
+			list.Tasks = append(list.Tasks, valueTask)
+		}
+	}
+	return list, err
+
 }

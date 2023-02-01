@@ -53,3 +53,17 @@ func (h *WebListHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func (h *WebListHandler) FindByID(w http.ResponseWriter, r *http.Request) {
+
+	params := r.URL.Query().Get("id")
+
+	createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
+	output, err := createList.FindByID(params)
+
+	err = json.NewEncoder(w).Encode(output)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}

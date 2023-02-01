@@ -11,6 +11,6 @@ type TaskRepositoryInterface interface {
 type ListRepositoryInterface interface {
 	Create(list *ListEntity) error
 	FindAll() ([]ListEntity, error)
-	// FindByID(id string) (ListEntity, error)
+	FindByID(id string) (ListEntity, error)
 	// CreateListTask() error
 }
