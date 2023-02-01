@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"errors"
+	"fmt"
 	"tasks_go/internal/entity"
 	"tasks_go/internal/usecase/dto"
 	"time"
@@ -18,16 +19,16 @@ func NewTaskUseCase(taskRepository entity.TaskRepositoryInterface) *TaskUseCase 
 }
 
 func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error) {
-	// taskAll, err := c.TaskRepository.FindAll()
+	taskAll, err := c.TaskRepository.FindAll()
 
 	task, _ := entity.NewTask(input.Title, input.Description, input.Status, input.Priority, input.ListID)
-	// for _, v := range taskAll {
-	// 	if task.Title == v.Title {
-	// 		err = fmt.Errorf("task already exist")
-	// 		return dto.TaskOutputDTO{}, err
+	for _, v := range taskAll {
+		if task.Title == v.Title {
+			err = fmt.Errorf("task already exist")
+			return dto.TaskOutputDTO{}, err
 
-	// 	}
-	// }
+		}
+	}
 	if err := c.TaskRepository.Create(task); err != nil {
 		return dto.TaskOutputDTO{}, err
 	}
