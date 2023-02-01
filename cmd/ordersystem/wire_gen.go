@@ -31,7 +31,8 @@ func NewWebTaskHandlerGen(db *sql.DB) *web.WebTaskHandler{
 }
 func NewWebListHandlerGen(db *sql.DB) *web.WebListHandler{
 	listNewRepository := database.NewListRepository(db)
-	webListHandler := web.NewListHandler(listNewRepository)
+	taskRepository := database.NewTaskRepository(db)
+	webListHandler := web.NewListHandler(listNewRepository, taskRepository)
 	return webListHandler
 }
 // wire.go:

@@ -10,11 +10,13 @@ import (
 
 type WebListHandler struct {
 	ListRepository entity.ListRepositoryInterface
+	TaskRepository entity.TaskRepositoryInterface
 }
 
-func NewListHandler(listRepository entity.ListRepositoryInterface) *WebListHandler {
+func NewListHandler(listRepository entity.ListRepositoryInterface, taskUsecase entity.TaskRepositoryInterface) *WebListHandler {
 	return &WebListHandler{
 		ListRepository: listRepository,
+		TaskRepository: taskUsecase,
 	}
 }
 
@@ -25,7 +27,7 @@ func (h *WebListHandler) Create(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	createList := *usecase.NewListUsecase(h.ListRepository)
+	createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
 	output, err := createList.Execute(dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -41,7 +43,7 @@ func (h *WebListHandler) Create(w http.ResponseWriter, r *http.Request) {
 
 func (h *WebListHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 
-	createList := *usecase.NewListUsecase(h.ListRepository)
+	createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
 	output, err := createList.FindAll()
 
 	err = json.NewEncoder(w).Encode(output)

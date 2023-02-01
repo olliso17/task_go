@@ -32,18 +32,18 @@ func (l *ListRepository) Create(list *entity.ListEntity) error {
 
 func (l *ListRepository) FindAll() ([]entity.ListEntity, error) {
 
-	listSelec, err := l.Db.Query("SELECT * FROM lists, tasks")
+	listSelec, err := l.Db.Query("SELECT * FROM lists")
 
 	var lists []entity.ListEntity
-	var tasks []entity.Task
+
 	for listSelec.Next() {
+
 		var list entity.ListEntity
-		var task entity.Task
-		if err := listSelec.Scan(&list.ID, &list.Name, &list.CreatedAt, &list.UpdatedAt, &list.DeletedAt, &list.IsDeleted, &task.ID, &task.Title, &task.Description, &task.Status, &task.Priority, &task.ListID, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt, &task.IsDeleted); err != nil {
+
+		if err := listSelec.Scan(&list.ID, &list.Name, &list.CreatedAt, &list.UpdatedAt, &list.DeletedAt, &list.IsDeleted); err != nil {
 			return lists, err
 		}
 
-		list.Tasks = append(tasks, task)
 		lists = append(lists, list)
 	}
 	if err = listSelec.Err(); err != nil {
