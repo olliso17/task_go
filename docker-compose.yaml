@@ -1,6 +1,6 @@
 version: '3'
 services:
-  api:
+  back_end:
     build:
       context: ./back_end
       dockerfile: DockerFile
@@ -27,5 +27,16 @@ services:
       PGADMIN_DEFAULT_PASSWORD: "task"
     ports:
       - "54322:80"
+    depends_on:
+      - postgres
+  front_end:
+    build:
+      context: ./front_end
+      dockerfile: DockerFile
+    command: node_modules/.bin/nodemon --exec npm start
+    ports:
+      - "3000:3000"
+    volumes:
+      - /front_end/node_modules
     depends_on:
       - postgres
