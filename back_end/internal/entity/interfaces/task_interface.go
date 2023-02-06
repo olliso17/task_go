@@ -1,5 +1,7 @@
 package interfaces
 
+import "tasks_go/back_end/internal/entity"
+
 type TaskRepositoryInterface interface {
 	Create(task *entity.Task) error
 	FindAll() ([]entity.Task, error)
