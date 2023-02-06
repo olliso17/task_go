@@ -2,9 +2,9 @@ package main
 
 import (
 	"database/sql"
-	"tasks_go/internal/entity/interfaces"
-	"tasks_go/internal/infra/database"
-	"tasks_go/internal/infra/web"
+	"tasks_go/back_end/internal/entity/interfaces"
+	"tasks_go/back_end/internal/infra/database"
+	"tasks_go/back_end/internal/infra/web"
 
 	"github.com/google/wire"
 )
