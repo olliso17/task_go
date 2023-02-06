@@ -1,11 +1,11 @@
 package web
 
 import (
+	"back_end/internal/entity/interfaces"
+	usecase "back_end/internal/usecase"
+	"back_end/internal/usecase/dto"
 	"encoding/json"
 	"net/http"
-	"tasks_go/back_end/internal/entity/interfaces"
-	usecase "tasks_go/back_end/internal/usecase"
-	"tasks_go/back_end/internal/usecase/dto"
 )
 
 type WebListHandler struct {

@@ -1,9 +1,9 @@
 package database
 
 import (
+	"back_end/internal/entity"
 	"database/sql"
 	"fmt"
-	"tasks_go/back_end/internal/entity"
 )
 
 type TaskRepository struct {

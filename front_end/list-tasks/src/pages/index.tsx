@@ -16,7 +16,9 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
-            <p>List Task</p>
+            <p className={styles.title}>List Task</p>
+            <span>Nome da Lista: <input type="text" /></span>
+            
         </div>
       </main>
     </>

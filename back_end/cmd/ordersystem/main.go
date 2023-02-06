@@ -3,8 +3,8 @@ package main
 import (
 	// _ "github.com/go-sql-driver/mysql"
 
-	db "tasks_go/back_end/internal/infra/database/db"
-	"tasks_go/back_end/internal/infra/web/webserver"
+	db "back_end/internal/infra/database/db"
+	"back_end/internal/infra/web/webserver"
 
 	_ "github.com/lib/pq"
 )

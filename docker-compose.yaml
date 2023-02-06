@@ -1,5 +1,14 @@
 version: '3'
 services:
+  api:
+    build:
+      context: ./back_end
+      dockerfile: DockerFile
+    command: go run *.go
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
   postgres:
     image: "postgres"
     environment:

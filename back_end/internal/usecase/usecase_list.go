@@ -1,10 +1,10 @@
 package usecase
 
 import (
+	"back_end/internal/entity"
+	"back_end/internal/entity/interfaces"
+	"back_end/internal/usecase/dto"
 	"fmt"
-	"tasks_go/back_end/internal/entity"
-	"tasks_go/back_end/internal/entity/interfaces"
-	"tasks_go/back_end/internal/usecase/dto"
 )
 
 type ListUsecase struct {

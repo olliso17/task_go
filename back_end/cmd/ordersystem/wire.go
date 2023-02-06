@@ -1,10 +1,10 @@
 package main
 
 import (
+	"back_end/internal/entity/interfaces"
+	"back_end/internal/infra/database"
+	"back_end/internal/infra/web"
 	"database/sql"
-	"tasks_go/back_end/internal/entity/interfaces"
-	"tasks_go/back_end/internal/infra/database"
-	"tasks_go/back_end/internal/infra/web"
 
 	"github.com/google/wire"
 )
