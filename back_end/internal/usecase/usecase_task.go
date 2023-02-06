@@ -22,7 +22,7 @@ func NewTaskUseCase(taskRepository interfaces.TaskRepositoryInterface) *TaskUseC
 func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error) {
 	taskAll, err := c.TaskRepository.FindAll()
 
-	task, _ := entity.NewTask(input.Title, input.Description, input.Status, input.Priority, input.ListID)
+	task, _ := entity.NewTask(input.Title, input.Description, input.Status, input.Priority, input.ListID, input.TimeSelect)
 	for _, v := range taskAll {
 		if task.Title == v.Title {
 			err = fmt.Errorf("task already exist")
@@ -39,6 +39,7 @@ func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error)
 		Status:      task.Status,
 		Priority:    task.Priority,
 		ListID:      task.ListID,
+		TimeSelect:  task.TimeSelect,
 	}
 
 	return dto, nil
