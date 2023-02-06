@@ -3,15 +3,16 @@ package usecase
 import (
 	"fmt"
 	"tasks_go/internal/entity"
+	"tasks_go/internal/entity/interfaces"
 	"tasks_go/internal/usecase/dto"
 )
 
 type ListUsecase struct {
-	ListUsecase entity.ListRepositoryInterface
-	TaskUseCase entity.TaskRepositoryInterface
+	ListUsecase interfaces.ListRepositoryInterface
+	TaskUseCase interfaces.TaskRepositoryInterface
 }
 
-func NewListUsecase(listUsecase entity.ListRepositoryInterface, taskUsecase entity.TaskRepositoryInterface) *ListUsecase {
+func NewListUsecase(listUsecase interfaces.ListRepositoryInterface, taskUsecase interfaces.TaskRepositoryInterface) *ListUsecase {
 	return &ListUsecase{
 		ListUsecase: listUsecase,
 		TaskUseCase: taskUsecase,

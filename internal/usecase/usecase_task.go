@@ -4,15 +4,16 @@ import (
 	"errors"
 	"fmt"
 	"tasks_go/internal/entity"
+	"tasks_go/internal/entity/interfaces"
 	"tasks_go/internal/usecase/dto"
 	"time"
 )
 
 type TaskUseCase struct {
-	TaskRepository entity.TaskRepositoryInterface
+	TaskRepository interfaces.TaskRepositoryInterface
 }
 
-func NewTaskUseCase(taskRepository entity.TaskRepositoryInterface) *TaskUseCase {
+func NewTaskUseCase(taskRepository interfaces.TaskRepositoryInterface) *TaskUseCase {
 	return &TaskUseCase{
 		TaskRepository: taskRepository,
 	}

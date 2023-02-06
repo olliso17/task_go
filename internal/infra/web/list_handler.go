@@ -3,17 +3,17 @@ package web
 import (
 	"encoding/json"
 	"net/http"
-	"tasks_go/internal/entity"
+	"tasks_go/internal/entity/interfaces"
 	usecase "tasks_go/internal/usecase"
 	"tasks_go/internal/usecase/dto"
 )
 
 type WebListHandler struct {
-	ListRepository entity.ListRepositoryInterface
-	TaskRepository entity.TaskRepositoryInterface
+	ListRepository interfaces.ListRepositoryInterface
+	TaskRepository interfaces.TaskRepositoryInterface
 }
 
-func NewListHandler(listRepository entity.ListRepositoryInterface, taskUsecase entity.TaskRepositoryInterface) *WebListHandler {
+func NewListHandler(listRepository interfaces.ListRepositoryInterface, taskUsecase interfaces.TaskRepositoryInterface) *WebListHandler {
 	return &WebListHandler{
 		ListRepository: listRepository,
 		TaskRepository: taskUsecase,

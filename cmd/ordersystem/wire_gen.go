@@ -8,7 +8,7 @@ package main
 
 import (
 	"database/sql"
-	"tasks_go/internal/entity"
+	"tasks_go/internal/entity/interfaces"
 	"tasks_go/internal/infra/database"
 	"tasks_go/internal/infra/web"
 	// "tasks_go/internal/usecase"
@@ -37,5 +37,5 @@ func NewWebListHandlerGen(db *sql.DB) *web.WebListHandler{
 }
 // wire.go:
 
-var setTaskRepositoryDependency = wire.NewSet(database.NewTaskRepository, wire.Bind(new(entity.TaskRepositoryInterface), new(*database.TaskRepository)))
-var setListRepositoryDependency = wire.NewSet(database.NewListRepository, wire.Bind(new(entity.ListRepositoryInterface), new(*database.ListRepository)))
+var setTaskRepositoryDependency = wire.NewSet(database.NewTaskRepository, wire.Bind(new(interfaces.TaskRepositoryInterface), new(*database.TaskRepository)))
+var setListRepositoryDependency = wire.NewSet(database.NewListRepository, wire.Bind(new(interfaces.ListRepositoryInterface), new(*database.ListRepository)))

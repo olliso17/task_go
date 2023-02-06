@@ -2,7 +2,7 @@ package main
 
 import (
 	"database/sql"
-	"tasks_go/internal/entity"
+	"tasks_go/internal/entity/interfaces"
 	"tasks_go/internal/infra/database"
 	"tasks_go/internal/infra/web"
 
@@ -11,12 +11,12 @@ import (
 
 var SetTaskRepositoryDependency = wire.NewSet(
 	database.NewTaskRepository,
-	wire.Bind(new(*entity.TaskRepositoryInterface), new(*database.TaskRepository)),
+	wire.Bind(new(*interfaces.TaskRepositoryInterface), new(*database.TaskRepository)),
 )
 
 var SetListRepositoryDependency = wire.NewSet(
 	database.NewListRepository,
-	wire.Bind(new(*entity.ListRepositoryInterface), new(*database.ListRepository)),
+	wire.Bind(new(*interfaces.ListRepositoryInterface), new(*database.ListRepository)),
 )
 
 // func NewCreateTaskUseCase(db *sql.DB) *usecase.TaskUseCase {
