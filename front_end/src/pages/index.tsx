@@ -18,19 +18,16 @@ export default function Home() {
           <h1 className={styles.title}>
             List Tasks
           </h1>
-          <div>
+          <div className={styles.addlist}>
             <h3>List</h3>
             <span>Name: <input type="text" /></span>
-          </div>
-          <div>
             <h3>Tasks</h3>
             <span>Title: <input type="text" /></span> 
             <span>Description: <input type="text" /></span>
             <span>Concluído: <input type="checkbox" /></span>
             <span>Prioridade: <input type="checkbox" /></span>
             <span>Tempo: <input type="time" min="00:00" max="23:00"/></span>
-
-
+            <button>Salvar</button>
           </div>
         </div>
       </main>

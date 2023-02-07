@@ -7,17 +7,31 @@
 }
 
 .description {
+  display: flex;
   width: 90vw;
   height: 90vh;
+  flex-direction: column;
   background-color: white;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-around;
+  align-items: initial;
   z-index: 2;
   font-family: var(--font-mono);
+  padding: 2vw;
 
 }
 
 .title{
   font-size: 2vw;
   text-align: center;  
+}
+
+.addlist{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: cornsilk;
+  width: 20vw;
+  height: 60vh;
+
 }
