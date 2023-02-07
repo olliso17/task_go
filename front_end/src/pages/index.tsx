@@ -18,8 +18,8 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.description}>
           <div className={styles.addlist}>
-            <Title text='Add List' />
-            <InputTask text='Name: ' typeInput="text"/>
+            <Title text='Register your to-do list' />
+            <InputTask text='Name List: ' typeInput="text"/>
             <Title text='Add Task' />
             <InputTask text='Title: ' typeInput="text"/>
             <InputTask text='Description: ' typeInput="text"/>
