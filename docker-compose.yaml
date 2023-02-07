@@ -29,6 +29,8 @@ services:
       - "54322:80"
     depends_on:
       - postgres
+  node:
+    image: "node:latest"
   front_end:
     build:
       context: ./front_end
