@@ -1,26 +1,23 @@
 .main {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 6rem;
   min-height: 100vh;
 }
 
 .description {
-  width: 80vw;
-  height: 80vh;
-  background: white;
+  width: 90vw;
+  height: 90vh;
+  background-color: white;
   justify-content: center;
   align-items: center;
-  
+  z-index: 2;
+  font-family: var(--font-mono);
+
 }
 
 .title{
-  text-align: center;
   font-size: 2vw;
-}
-.inputs{
-  text-align: center;
-  font-size: 0.5vw;
+  text-align: center;  
 }
