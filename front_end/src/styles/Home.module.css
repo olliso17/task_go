@@ -1,42 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
 .main {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 6rem;
   min-height: 100vh;
 }
 
 .description {
   display: flex;
-  width: 90vw;
-  height: 90vh;
+  width: 95vw;
+  height: 95vh;
   flex-direction: row;
   background-color: white;
   justify-content: space-around;
   align-items: initial;
   z-index: 2;
-  font-family: var(--font-mono);
+  font-family: 'Caveat', cursive;
   padding: 2vw;
-
-}
-
-.title{
-  font-size: 2vw;
-  text-align: center;  
+  
 }
 
 .addlist{
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   background-color: cornsilk;
   width: 20vw;
   height: 60vh;
 
 }
+.titleDescription{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: bisque;
+  width: 20vw;
+  height: 5vh;
+  font-size: 1.5vw;
 
+}
 .list{
   display: flex;
   flex-direction: column;

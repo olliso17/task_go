@@ -14,26 +14,28 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          List Tasks
-        </h1>
         <div className={styles.description}>
           <div className={styles.addlist}>
-            <h3>Add List</h3>
+            <div className={styles.titleDescription}>
+              <h3>Add List</h3>
+            </div>
             <span>Name: <input type="text" /></span>
-            <h3>Add Tasks</h3>
-            <span>Title: <input type="text" /></span>
-            <span>Description: <input type="text" /></span>
-            <span>Concluído: <input type="checkbox" /></span>
-            <span>Prioridade: <input type="checkbox" /></span>
-            <span>Tempo: <input type="time" min="00:00" max="23:00" /></span>
-            <button>Salvar</button>
-          </div>
-          <div className={styles.list}>
+            <div className={styles.titleDescription}>
+              <h3>Add Tasks</h3>
+            </div>
 
-          </div>
+          <span>Title: <input type="text" /></span>
+          <span>Description: <input type="text" /></span>
+          <span>Concluded: <input type="checkbox" /></span>
+          <span>Priority: <input type="checkbox" /></span>
+          <span>Time: <input type="time" min="00:00" max="23:00" /></span>
+          <button>Save</button>
         </div>
-      </main>
+        <div className={styles.list}>
+
+        </div>
+      </div>
+    </main>
     </>
   )
 }
