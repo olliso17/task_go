@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
+import styles from '@/styles/Home.module.scss'
 import Title from '@/components/Title'
 import InputTask from '@/components/Input'
+import TableListTask from '@/components/Table/table'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,7 +31,7 @@ export default function Home() {
             <button >Save</button>
           </div>
           <div className={styles.list}>
-
+            <TableListTask/>
           </div>
         </div>
       </main>
