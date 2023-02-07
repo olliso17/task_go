@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
+import Title from '@/components/Title'
+import InputTask from '@/components/Input'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,26 +18,22 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.description}>
           <div className={styles.addlist}>
-            <div className={styles.titleDescription}>
-              <h3>Add List</h3>
-            </div>
-            <span>Name: <input type="text" /></span>
-            <div className={styles.titleDescription}>
-              <h3>Add Tasks</h3>
-            </div>
+            <Title text='Add List' />
+            <InputTask text='Name: ' typeInput="text"/>
+            <Title text='Add Task' />
+            <InputTask text='Title: ' typeInput="text"/>
+            <InputTask text='Description: ' typeInput="text"/>
+            <InputTask text='Concluded: ' typeInput="checkbox"/>
+            <InputTask text='Priority:' typeInput="checkbox"/>
+            <InputTask text='Time:' typeInput="time"/>
 
-          <span>Title: <input type="text" /></span>
-          <span>Description: <input type="text" /></span>
-          <span>Concluded: <input type="checkbox" /></span>
-          <span>Priority: <input type="checkbox" /></span>
-          <span>Time: <input type="time" min="00:00" max="23:00" /></span>
-          <button>Save</button>
-        </div>
-        <div className={styles.list}>
+            <button >Save</button>
+          </div>
+          <div className={styles.list}>
 
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
     </>
   )
 }
