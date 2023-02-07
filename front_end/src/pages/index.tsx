@@ -19,9 +19,9 @@ export default function Home() {
         </h1>
         <div className={styles.description}>
           <div className={styles.addlist}>
-            <h3>List</h3>
+            <h3>Add List</h3>
             <span>Name: <input type="text" /></span>
-            <h3>Tasks</h3>
+            <h3>Add Tasks</h3>
             <span>Title: <input type="text" /></span>
             <span>Description: <input type="text" /></span>
             <span>Concluído: <input type="checkbox" /></span>
