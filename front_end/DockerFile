@@ -4,6 +4,7 @@ WORKDIR /front_end
 
 COPY package*.json ./
 
+RUN npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 RUN npm install -g npm@9.4.1
 COPY . .
 
