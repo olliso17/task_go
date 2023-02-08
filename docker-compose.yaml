@@ -39,6 +39,6 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - /front_end/node_modules
+      - /front_end
     depends_on:
       - postgres
