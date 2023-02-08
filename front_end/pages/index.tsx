@@ -1,4 +1,4 @@
-import ListTask from '../components/Table/index'
+import TableTask from '../components/Table/index'
 import Head from 'next/head'
 
 export default function Home() {
@@ -13,7 +13,7 @@ export default function Home() {
       <main className="w-screen h-screen flex flex-col justify-center items-center">
         <h1 className='text-3xl'>Register your to-do list </h1>
         <div className="bg-blue-200 w-11/12 h-5/6">
-            <ListTask></ListTask>
+            <TableTask></TableTask>
         </div>
       </main>
     </>
