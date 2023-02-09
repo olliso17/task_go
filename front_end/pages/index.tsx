@@ -3,6 +3,7 @@ import Inputs from '@/components/Input'
 import DialogTask from '../components/TaskAdd/index';
 import CardStylePhone from '@/components/CardStylePhone';
 import CardAllAdd from '@/components/CardAll';
+import TitleList from '@/components/Title';
 
 
 export default function Home() {
@@ -19,8 +20,8 @@ export default function Home() {
           <CardStylePhone content={
             <CardAllAdd/>
           } />
-          <CardStylePhone content={<div>Lista De tasks ativas</div>} />
-          <CardStylePhone content={<div>Lista de tasks concluídas</div>} />
+          <CardStylePhone content={<TitleList titleList='List'/>} />
+          <CardStylePhone content={<TitleList titleList='Concluded'/>} />
         </div>
 
       </main>
