@@ -1,27 +1,15 @@
 import React from 'react';
+import Inputs from '../Input';
+import TitleList from '../Title';
 
 
 const TaskAdd = () => (
   <div>
-    <h1 className='text-center m-1'>Tasks</h1>
-    <fieldset className="w-full p-2 flex flex-col justify-start">
-      <label className="mb-3 text-sm mt-0" htmlFor="titleTask">
-        Title
-      </label>
-      <input className="h-9 p-2 text-sm text-violet-400 focus:bg-violet-50" id="titleTask" defaultValue="Add Title Task" />
-    </fieldset>
-    <fieldset className="w-full p-2 flex flex-col justify-start">
-      <label className="mb-3 text-sm mt-0" htmlFor="descriptionTask">
-        Description
-      </label>
-      <input className="h-9 p-2 text-sm text-violet-400 focus:bg-violet-50" id="descriptionTask" defaultValue="Add Description Task" />
-    </fieldset>
-    <fieldset className="w-1/3 p-2 flex flex-row justify-between">
-      <label className="mb-3 text-sm mt-0" htmlFor="priorityTask">
-        Priority
-      </label>
-      <input className="h-5 text-sm text-violet-400 focus:bg-violet-50" id="priorityTask" type="checkbox" />
-    </fieldset>
+    <TitleList titleList='Task'/>
+    <Inputs style="w-full p-2 flex flex-col justify-start" type='text' nameList='Title' defaultValue='Add Title Task' htmlFor='titleTask' id='titleTask'/>
+    <Inputs style="w-full p-2 flex flex-col justify-start" type='text' nameList='Description' defaultValue='Add Description Task' htmlFor='descriptionTask' id='descriptionTask'/>
+    <Inputs style="w-1/3 p-2 flex flex-row justify-between " type='checkbox' nameList='Priority' defaultValue='Add Description Task' htmlFor='descriptionTask' id='descriptionTask'/>
+
     {/* <fieldset className="w-1/3 p-2 flex flex-row justify-between">
                 <label className="mb-3 text-sm mt-0" htmlFor="concludedTask">
                    Concluded
@@ -34,7 +22,12 @@ const TaskAdd = () => (
       </label>
       <input className="h-5 w-2/4 text-sm text-violet-400 focus:bg-violet-50" id="timeTask" type="time" />
     </fieldset>
-
+    <div className='flex justify-end'>
+        <button className='bg-violet-700 p-2 m-2 rounded-md'>
+          <p className='text-white font-bold'>Save</p></button>
+    </div>
+  
+ 
   </div>
 
 
