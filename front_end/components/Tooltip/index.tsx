@@ -11,7 +11,7 @@ const TooltipTask = ({onClick}:Props) => {
         <Tooltip.Provider>
             <Tooltip.Root>
                 <Tooltip.Trigger asChild>
-                    <button onClick={onClick} className="rounded-full bg-white w-9 h-9  inline-flex justify-center items-center text-violet-900 hover:bg-violet-500 hover:text-white">
+                    <button onClick={onClick} className="rounded-full m-2 bg-white w-9 h-9  inline-flex justify-center items-center text-violet-900 hover:bg-violet-500 hover:text-white">
                         <PlusIcon />
                     </button>
                 </Tooltip.Trigger>
