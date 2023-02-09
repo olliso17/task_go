@@ -1,5 +1,8 @@
-import TableTask from '../components/Table/index'
 import Head from 'next/head'
+import Inputs from '@/components/Input'
+import DialogTask from '../components/TaskAdd/index';
+import CardStylePhone from '@/components/CardStylePhone';
+
 
 export default function Home() {
   return (
@@ -11,10 +14,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="w-screen h-screen flex flex-col justify-center items-center">
-        <h1 className='text-3xl'>Register your to-do list </h1>
-        <div className="bg-blue-200 w-11/12 h-5/6">
-            <TableTask></TableTask>
+        <div className='flex flex-row w-11/12 h-full bg-violet-200 items-center justify-around'>
+          <CardStylePhone content={
+            <Inputs type='text' titleList='Add List' nameList="Name List" htmlFor="nameList" id="nameList" defaultValue='"Add Name List"' />
+          } />
+          <CardStylePhone content={<div>Lista De tasks ativas</div>} />
+          <CardStylePhone content={<div>Lista de tasks concluídas</div>} />
         </div>
+
       </main>
     </>
   )
