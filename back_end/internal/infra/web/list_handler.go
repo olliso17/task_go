@@ -21,49 +21,60 @@ func NewListHandler(listRepository interfaces.ListRepositoryInterface, taskUseca
 }
 
 func (h *WebListHandler) Create(w http.ResponseWriter, r *http.Request) {
-	var dto dto.ListInpuntDtO
-	err := json.NewDecoder(r.Body).Decode(&dto)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+	if r.Method == http.MethodPost {
+		var dto dto.ListInpuntDtO
+		err := json.NewDecoder(r.Body).Decode(&dto)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
+		output, err := createList.Execute(dto)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		err = json.NewEncoder(w).Encode(output)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
-	createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
-	output, err := createList.Execute(dto)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	err = json.NewEncoder(w).Encode(output)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+
+	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 
 }
 
 func (h *WebListHandler) FindAll(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
+		output, err := createList.FindAll()
 
-	createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
-	output, err := createList.FindAll()
+		err = json.NewEncoder(w).Encode(output)
 
-	err = json.NewEncoder(w).Encode(output)
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
+
+	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+
 }
 
 func (h *WebListHandler) FindByID(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		params := r.URL.Query().Get("id")
 
-	params := r.URL.Query().Get("id")
+		createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
+		output, err := createList.FindByID(params)
 
-	createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
-	output, err := createList.FindByID(params)
-
-	err = json.NewEncoder(w).Encode(output)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		err = json.NewEncoder(w).Encode(output)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
+
+	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 }
