@@ -20,26 +20,39 @@ func NewTaskHandler(taskRepository interfaces.TaskRepositoryInterface) *WebTaskH
 
 func (h *WebTaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 
-	var dto dto.TaskInputDTO
-	err := json.NewDecoder(r.Body).Decode(&dto)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+	switch r.Method {
+	case http.MethodGet:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	case http.MethodPost:
+		var dto dto.TaskInputDTO
+		err := json.NewDecoder(r.Body).Decode(&dto)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+		output, err := createTask.Execute(dto)
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		err = json.NewEncoder(w).Encode(output)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+	case http.MethodPut:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	case http.MethodDelete:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	default:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 
-	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
-	output, err := createTask.Execute(dto)
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	err = json.NewEncoder(w).Encode(output)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
+	return
 }
 
 func (h *WebTaskHandler) FindAll(w http.ResponseWriter, r *http.Request) {
@@ -52,6 +65,9 @@ func (h *WebTaskHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	return
+
 }
 
 func (h *WebTaskHandler) FindTitle(w http.ResponseWriter, r *http.Request) {
@@ -102,4 +118,11 @@ func (h *WebTaskHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+}
+
+
+func VerifyMethod(req *http.Request, res ){
+	switch req.Method {
+		res
+	}
 }

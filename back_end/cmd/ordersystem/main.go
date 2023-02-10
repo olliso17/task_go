@@ -20,15 +20,15 @@ func main() {
 	newWebTaskHandler := NewWebTaskHandlerGen(db_postgres)
 	newWebListHandler := NewWebListHandlerGen(db_postgres)
 
-	webserver.AddHandler("/task/create", newWebTaskHandler.Create, "Post")
-	webserver.AddHandler("/tasks", newWebTaskHandler.FindAll, "Get")
-	webserver.AddHandler("/task/title", newWebTaskHandler.FindTitle, "Get")
-	webserver.AddHandler("/task/id", newWebTaskHandler.FindByID, "Get")
-	webserver.AddHandler("/task/delete", newWebTaskHandler.SoftDelete, "Delete")
+	webserver.AddHandler("/task/create", newWebTaskHandler.Create)
+	webserver.AddHandler("/tasks", newWebTaskHandler.FindAll)
+	webserver.AddHandler("/task/title", newWebTaskHandler.FindTitle)
+	webserver.AddHandler("/task/id", newWebTaskHandler.FindByID)
+	webserver.AddHandler("/task/delete", newWebTaskHandler.SoftDelete)
 
-	webserver.AddHandler("/list/create", newWebListHandler.Create, "Post")
-	webserver.AddHandler("/lists", newWebListHandler.FindAll, "Get")
-	webserver.AddHandler("/list/id", newWebListHandler.FindByID, "Get")
+	webserver.AddHandler("/list/create", newWebListHandler.Create)
+	webserver.AddHandler("/lists", newWebListHandler.FindAll)
+	webserver.AddHandler("/list/id", newWebListHandler.FindByID)
 
 	webserver.Start()
 
