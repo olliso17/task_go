@@ -19,11 +19,7 @@ func NewTaskHandler(taskRepository interfaces.TaskRepositoryInterface) *WebTaskH
 }
 
 func (h *WebTaskHandler) Create(w http.ResponseWriter, r *http.Request) {
-
-	switch r.Method {
-	case http.MethodGet:
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-	case http.MethodPost:
+	if r.Method == http.MethodPost {
 		var dto dto.TaskInputDTO
 		err := json.NewDecoder(r.Body).Decode(&dto)
 		if err != nil {
@@ -43,79 +39,81 @@ func (h *WebTaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-
-	case http.MethodPut:
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-	case http.MethodDelete:
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-	default:
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 
-	return
+	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 }
 
 func (h *WebTaskHandler) FindAll(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+		output, err := createTask.FindAll()
 
-	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
-	output, err := createTask.FindAll()
-
-	err = json.NewEncoder(w).Encode(output)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		err = json.NewEncoder(w).Encode(output)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 
-	return
-
+	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 }
 
 func (h *WebTaskHandler) FindTitle(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		params := r.URL.Query().Get("title")
 
-	params := r.URL.Query().Get("title")
+		createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+		output, err := createTask.FindTitle(params)
 
-	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
-	output, err := createTask.FindTitle(params)
-
-	err = json.NewEncoder(w).Encode(output)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		err = json.NewEncoder(w).Encode(output)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
+
+	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 }
 
 func (h *WebTaskHandler) FindByID(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		params := r.URL.Query().Get("id")
 
-	params := r.URL.Query().Get("id")
+		createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+		output, err := createTask.FindByID(params)
 
-	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
-	output, err := createTask.FindByID(params)
-
-	err = json.NewEncoder(w).Encode(output)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		err = json.NewEncoder(w).Encode(output)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
+
+	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 }
 
 func (h *WebTaskHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodDelete {
+		id := r.URL.Query().Get("id")
 
-	id := r.URL.Query().Get("id")
+		input := dto.TaskInputSoftDeleteDTO{
+			ID: id,
+		}
+		createTask := *usecase.NewTaskUseCase(h.TaskRepository)
 
-	input := dto.TaskInputSoftDeleteDTO{
-		ID: id,
+		taskDelete, err := createTask.SoftDelete(input)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		json.NewEncoder(w).Encode(taskDelete)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
 	}
-	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
 
-	taskDelete, err := createTask.SoftDelete(input)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	json.NewEncoder(w).Encode(taskDelete)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
+	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 }
