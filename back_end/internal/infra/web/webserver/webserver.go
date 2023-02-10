@@ -11,6 +11,7 @@ type WebServer struct {
 	Router        chi.Router
 	Handlers      map[string]http.HandlerFunc
 	WebServerPort string
+	Verb          string
 }
 
 func NewWebServer(serverPort string) *WebServer {
@@ -21,8 +22,9 @@ func NewWebServer(serverPort string) *WebServer {
 	}
 }
 
-func (s *WebServer) AddHandler(path string, handler http.HandlerFunc) {
+func (s *WebServer) AddHandler(path string, handler http.HandlerFunc, verb string) {
 	s.Handlers[path] = handler
+	s.Verb = verb
 }
 
 // loop through the handlers and add them to the router
@@ -31,7 +33,20 @@ func (s *WebServer) AddHandler(path string, handler http.HandlerFunc) {
 func (s *WebServer) Start() {
 	s.Router.Use(middleware.Logger)
 	for path, handler := range s.Handlers {
-		s.Router.Handle(path, handler)
+		switch s.Verb {
+		case "Get":
+			s.Router.Get(path, handler)
+		case "Post":
+			s.Router.Post(path, handler)
+		case "Put":
+			s.Router.Put(path, handler)
+		case "Patch":
+			s.Router.Patch(path, handler)
+		case "Delete":
+			s.Router.Delete(path, handler)
+		default:
+			s.Router.Handle(path, handler)
+		}
 	}
 
 	http.ListenAndServe(s.WebServerPort, s.Router)
