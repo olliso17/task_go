@@ -119,10 +119,3 @@ func (h *WebTaskHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
-
-
-func VerifyMethod(req *http.Request, res ){
-	switch req.Method {
-		res
-	}
-}
