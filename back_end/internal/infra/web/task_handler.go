@@ -94,15 +94,15 @@ func (h *WebTaskHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *WebTaskHandler) UpdateTask(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPatch {
-		var dto dto.TaskUpdateInputDTO
-		err := json.NewDecoder(r.Body).Decode(&dto)
+	if r.Method == http.MethodPut {
+		var input dto.TaskUpdateInputDTO
+		err := json.NewDecoder(r.Body).Decode(&input)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 		createTask := *usecase.NewTaskUseCase(h.TaskRepository)
-		output, err := createTask.UpdateTask(dto)
+		output, err := createTask.UpdateTask(input)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
