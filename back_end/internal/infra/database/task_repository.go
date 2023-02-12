@@ -80,6 +80,20 @@ func (r *TaskRepository) FindByID(id string) (entity.Task, error) {
 	return task, nil
 }
 
+func (r *TaskRepository) UpdateTask(task *entity.Task) error {
+	stmt, err := r.Db.Prepare("UPDATE tasks SET title= $1, description=$2, list_id=$3, priority=$5, time_select=$6, update_at=$7 WHERE id = $8")
+
+	if err != nil {
+		fmt.Print(err)
+		return err
+	}
+	_, err = stmt.Exec(task.Title, task.Description, task.ListID, task.Priority, task.TimeSelect, task.UpdatedAt, task.ID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (r *TaskRepository) SoftDelete(task *entity.Task) error {
 	stmt, err := r.Db.Prepare("UPDATE tasks SET isdeleted= $1, deleted_at=$2 WHERE id = $3")
 	if err != nil {

@@ -93,6 +93,30 @@ func (h *WebTaskHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 }
 
+func (h *WebTaskHandler) UpdateTask(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPatch {
+		var dto dto.TaskUpdateInputDTO
+		err := json.NewDecoder(r.Body).Decode(&dto)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+		output, err := createTask.UpdateTask(dto)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		err = json.NewEncoder(w).Encode(output)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+
+}
+
 func (h *WebTaskHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodDelete {
 		id := r.URL.Query().Get("id")

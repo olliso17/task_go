@@ -25,6 +25,7 @@ func main() {
 	webserver.AddHandler("/task/title", newWebTaskHandler.FindTitle)
 	webserver.AddHandler("/task/id", newWebTaskHandler.FindByID)
 	webserver.AddHandler("/task/delete", newWebTaskHandler.SoftDelete)
+	webserver.AddHandler("/task/update", newWebTaskHandler.UpdateTask)
 
 	webserver.AddHandler("/list/create", newWebListHandler.Create)
 	webserver.AddHandler("/lists", newWebListHandler.FindAll)

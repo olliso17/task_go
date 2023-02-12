@@ -88,6 +88,30 @@ func (c *TaskUseCase) FindByID(id string) (entity.Task, error) {
 	return entity.Task{}, err
 
 }
+func (c *TaskUseCase) UpdateTask(task dto.TaskUpdateInputDTO) (dto.TaskUpdateOutputDTO, error) {
+	taskEdit, err := c.TaskRepository.FindByID(task.ID)
+	timesTamp := time.Now()
+	if err != nil {
+		return dto.TaskUpdateOutputDTO{}, errors.New(err.Error())
+	}
+	taskEdit.Title = task.Title
+	taskEdit.Description = task.Description
+	taskEdit.ListID = task.ListID
+	taskEdit.Priority = task.Priority
+	taskEdit.UpdatedAt = timesTamp.Local().String()
+	taskEdit.TimeSelect = task.TimeSelect
+	c.TaskRepository.UpdateTask(&taskEdit)
+	dto := dto.TaskUpdateOutputDTO{
+		Title:       taskEdit.Title,
+		Description: taskEdit.Description,
+		Priority:    taskEdit.Priority,
+		ListID:      taskEdit.ListID,
+		TimeSelect:  taskEdit.TimeSelect,
+		UpdatedAt:   taskEdit.UpdatedAt,
+	}
+
+	return dto, err
+}
 
 func (c *TaskUseCase) SoftDelete(input dto.TaskInputSoftDeleteDTO) (dto.TaskOutputMessageDTO, error) {
 	task, err := c.TaskRepository.FindByID(input.ID)
