@@ -46,14 +46,14 @@ func (h *WebTaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (h *WebTaskHandler) FindAll(w http.ResponseWriter, r *http.Request) {
+func (h *WebTaskHandler) FindExceptDeleted(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
-	output, err := createTask.FindAll()
+	output, err := createTask.FindExceptDeleted()
 
 	err = json.NewEncoder(w).Encode(output)
 	if err != nil {

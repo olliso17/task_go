@@ -24,7 +24,7 @@ func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error)
 
 	task, _ := entity.NewTask(input.Title, input.Description, input.Status, input.Priority, input.ListID, input.TimeSelect)
 	for _, v := range taskAll {
-		if task.Title == v.Title {
+		if task.Title == v.Title && v.IsDeleted == false {
 			err = fmt.Errorf("task already exist")
 			return dto.TaskOutputDTO{}, err
 
@@ -50,7 +50,7 @@ func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error)
 	return dto, nil
 }
 
-func (c *TaskUseCase) FindAll() ([]entity.Task, error) {
+func (c *TaskUseCase) FindExceptDeleted() ([]entity.Task, error) {
 	tasks, err := c.TaskRepository.FindAll()
 	if err != nil {
 		return []entity.Task{}, err
@@ -64,6 +64,15 @@ func (c *TaskUseCase) FindAll() ([]entity.Task, error) {
 
 	}
 	return taskTitle, nil
+}
+
+func (c *TaskUseCase) FindAll() ([]entity.Task, error) {
+	tasks, err := c.TaskRepository.FindAll()
+	if err != nil {
+		return []entity.Task{}, err
+	}
+
+	return tasks, nil
 }
 
 func (c *TaskUseCase) FindTitle(title string) ([]entity.Task, error) {

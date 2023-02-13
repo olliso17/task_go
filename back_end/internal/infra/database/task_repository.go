@@ -49,6 +49,25 @@ func (r *TaskRepository) FindAll() ([]entity.Task, error) {
 	return tasks, nil
 
 }
+func (r *TaskRepository) FindExceptDeleted() ([]entity.Task, error) {
+
+	rows, err := r.Db.Query("SELECT id, title, description, status, priority, list_id, created_at, updated_at, deleted_at, isdeleted, time_select FROM tasks")
+	var tasks []entity.Task
+	for rows.Next() {
+		var task entity.Task
+
+		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.Priority, &task.ListID, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt, &task.IsDeleted, &task.TimeSelect); err != nil {
+			return tasks, err
+		}
+		tasks = append(tasks, task)
+	}
+	if err = rows.Err(); err != nil {
+		return tasks, err
+	}
+
+	return tasks, nil
+
+}
 func (r *TaskRepository) FindTitle(title string) (entity.Task, error) {
 	var task entity.Task
 
