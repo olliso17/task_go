@@ -4,7 +4,7 @@ import (
 	// _ "github.com/go-sql-driver/mysql"
 
 	db "back_end/internal/infra/database/db"
-	"back_end/internal/infra/web/webserver"
+	"back_end/internal/infra/web/routes"
 
 	_ "github.com/lib/pq"
 )
@@ -16,23 +16,10 @@ func main() {
 		panic(err)
 	}
 	// creatreTaskUseCase := NewCreateTaskUseCase(db)
-	webserver := webserver.NewWebServer(":8080")
 	newWebTaskHandler := NewWebTaskHandlerGen(db_postgres)
 	newWebListHandler := NewWebListHandlerGen(db_postgres)
 
-	webserver.AddHandler("/task/create", newWebTaskHandler.Create)
-	webserver.AddHandler("/tasks", newWebTaskHandler.FindExceptDeleted)
-	webserver.AddHandler("/task/title", newWebTaskHandler.FindTitle)
-	webserver.AddHandler("/task/id", newWebTaskHandler.FindByID)
-	webserver.AddHandler("/task/delete", newWebTaskHandler.SoftDelete)
-	webserver.AddHandler("/task/edit", newWebTaskHandler.EditTask)
-	webserver.AddHandler("/task/completed", newWebTaskHandler.TaskCompleted)
-
-	webserver.AddHandler("/list/create", newWebListHandler.Create)
-	webserver.AddHandler("/lists", newWebListHandler.FindAll)
-	webserver.AddHandler("/list/id", newWebListHandler.FindByID)
-
-	webserver.Start()
+	routes.RoutesAll(":8080", newWebTaskHandler, newWebListHandler)
 
 	// http.HandleFunc("/hello", getHello)
 
