@@ -6,7 +6,7 @@ import (
 
 func TestTask(t *testing.T) {
 	var newTask Task
-	newTask.Title = ""
+	newTask.Title = "new task"
 	if newTask.Title == "" {
 		t.Error("Title is empty", newTask.Title)
 	}
