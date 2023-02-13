@@ -89,17 +89,29 @@ func (c *TaskUseCase) FindByID(id string) (entity.Task, error) {
 
 }
 func (c *TaskUseCase) UpdateTask(task dto.TaskUpdateInputDTO) (dto.TaskUpdateOutputDTO, error) {
-	taskEdit, err := c.TaskRepository.FindByID(task.ID)
-	timesTamp := time.Now()
+	taskAll, err := c.TaskRepository.FindAll()
+
 	if err != nil {
-		return dto.TaskUpdateOutputDTO{}, errors.New(err.Error())
+		return dto.TaskUpdateOutputDTO{}, err
 	}
-	taskEdit.Title = task.Title
-	taskEdit.Description = task.Description
-	taskEdit.ListID = task.ListID
-	taskEdit.Priority = task.Priority
-	taskEdit.UpdatedAt = timesTamp.Local().String()
-	taskEdit.TimeSelect = task.TimeSelect
+	var taskEdit entity.Task
+	timesTamp := time.Now()
+	for _, v := range taskAll {
+		if task.ID == v.ID {
+			v.Title = task.Title
+			v.Description = task.Description
+			v.ListID = task.ListID
+			v.Priority = task.Priority
+			v.UpdatedAt = timesTamp.Local().String()
+			v.TimeSelect = task.TimeSelect
+			taskEdit = v
+		}
+	}
+	fmt.Println(taskEdit)
+	// if err != nil {
+	// 	return dto.TaskUpdateOutputDTO{}, errors.New(err.Error())
+	// }
+
 	c.TaskRepository.UpdateTask(&taskEdit)
 	dto := dto.TaskUpdateOutputDTO{
 		Title:       taskEdit.Title,

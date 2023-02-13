@@ -14,12 +14,12 @@ type Task struct {
 	Description string
 	Status      bool
 	Priority    bool
-	TimeSelect  string
 	ListID      string
 	CreatedAt   string
 	UpdatedAt   string
 	DeletedAt   string
 	IsDeleted   bool
+	TimeSelect  string
 }
 
 func NewTask(title string, description string, status bool, priority bool, listId string, timeSelect string) (*Task, error) {
@@ -31,11 +31,11 @@ func NewTask(title string, description string, status bool, priority bool, listI
 		Status:      status,
 		Priority:    priority,
 		ListID:      listId,
-		TimeSelect:  timeSelect,
 		CreatedAt:   timeNow.Local().String(),
 		UpdatedAt:   timeNow.Local().String(),
 		DeletedAt:   timeNow.Local().String(),
 		IsDeleted:   false,
+		TimeSelect:  timeSelect,
 	}
 	isValidate := IsValid(task)
 

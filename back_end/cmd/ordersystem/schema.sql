@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS public.tasks
     created_at text COLLATE pg_catalog."default",
     updated_at text COLLATE pg_catalog."default",
     deleted_at text COLLATE pg_catalog."default",
-    isDeleted boolean
+    isDeleted boolean,
+    time_select text COLLATE pg_catalog."default"
 )
 
 TABLESPACE pg_default;
@@ -34,3 +35,4 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.lists
     OWNER to root;
+
