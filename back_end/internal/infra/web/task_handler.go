@@ -117,20 +117,23 @@ func (h *WebTaskHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (h *WebTaskHandler) UpdateTask(w http.ResponseWriter, r *http.Request) {
+func (h *WebTaskHandler) EditTask(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPatch {
 
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	var input dto.TaskUpdateInputDTO
+	id := r.URL.Query().Get("id")
+	input := dto.TaskEditInputDTO{
+		ID: id,
+	}
 	err := json.NewDecoder(r.Body).Decode(&input)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
-	output, err := createTask.UpdateTask(input)
+	output, err := createTask.EditTask(input)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

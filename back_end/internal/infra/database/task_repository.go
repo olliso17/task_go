@@ -99,7 +99,7 @@ func (r *TaskRepository) FindByID(id string) (entity.Task, error) {
 	return task, nil
 }
 
-func (r *TaskRepository) UpdateTask(task *entity.Task) error {
+func (r *TaskRepository) EditTask(task *entity.Task) error {
 	stmt, err := r.Db.Prepare("UPDATE tasks SET title= $1, description=$2, priority=$3, list_id=$4,  time_select=$5, updated_at=$6 WHERE id = $7")
 
 	if err != nil {

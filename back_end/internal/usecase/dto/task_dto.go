@@ -33,7 +33,7 @@ type TaskInputCompletedDTO struct {
 	ID string `json:"id"`
 }
 
-type TaskUpdateInputDTO struct {
+type TaskEditInputDTO struct {
 	ID          string `json:"id"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
@@ -42,7 +42,7 @@ type TaskUpdateInputDTO struct {
 	TimeSelect  string `json:"time_select"`
 }
 
-type TaskUpdateOutputDTO struct {
+type TaskEditOutputDTO struct {
 	Title       string `json:"title"`
 	Description string `json:"description"`
 	Priority    bool   `json:"priority"`

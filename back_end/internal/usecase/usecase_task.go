@@ -102,11 +102,11 @@ func (c *TaskUseCase) FindByID(id string) (entity.Task, error) {
 	return entity.Task{}, err
 
 }
-func (c *TaskUseCase) UpdateTask(task dto.TaskUpdateInputDTO) (dto.TaskUpdateOutputDTO, error) {
+func (c *TaskUseCase) EditTask(task dto.TaskEditInputDTO) (dto.TaskEditOutputDTO, error) {
 	taskAll, err := c.TaskRepository.FindAll()
 
 	if err != nil {
-		return dto.TaskUpdateOutputDTO{}, err
+		return dto.TaskEditOutputDTO{}, err
 	}
 	var taskEdit entity.Task
 	timesTamp := time.Now()
@@ -114,7 +114,7 @@ func (c *TaskUseCase) UpdateTask(task dto.TaskUpdateInputDTO) (dto.TaskUpdateOut
 
 		if task.Title == v.Title && task.ID != v.ID && v.IsDeleted == false {
 			err = fmt.Errorf("task already exist")
-			return dto.TaskUpdateOutputDTO{}, err
+			return dto.TaskEditOutputDTO{}, err
 
 		}
 		if task.ID == v.ID {
@@ -128,8 +128,8 @@ func (c *TaskUseCase) UpdateTask(task dto.TaskUpdateInputDTO) (dto.TaskUpdateOut
 		}
 	}
 
-	c.TaskRepository.UpdateTask(&taskEdit)
-	dto := dto.TaskUpdateOutputDTO{
+	c.TaskRepository.EditTask(&taskEdit)
+	dto := dto.TaskEditOutputDTO{
 		Title:       taskEdit.Title,
 		Description: taskEdit.Description,
 		Priority:    taskEdit.Priority,
