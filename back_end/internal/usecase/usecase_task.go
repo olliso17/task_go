@@ -29,6 +29,11 @@ func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error)
 			return dto.TaskOutputDTO{}, err
 
 		}
+		if task.ID == v.ID {
+			err = fmt.Errorf("task already exist")
+			return dto.TaskOutputDTO{}, err
+
+		}
 	}
 	if err := c.TaskRepository.Create(task); err != nil {
 		return dto.TaskOutputDTO{}, err
@@ -97,6 +102,11 @@ func (c *TaskUseCase) UpdateTask(task dto.TaskUpdateInputDTO) (dto.TaskUpdateOut
 	var taskEdit entity.Task
 	timesTamp := time.Now()
 	for _, v := range taskAll {
+		if task.Title == v.Title && task.ID != v.ID {
+			err = fmt.Errorf("task already exist")
+			return dto.TaskUpdateOutputDTO{}, err
+
+		}
 		if task.ID == v.ID {
 			v.Title = task.Title
 			v.Description = task.Description
@@ -107,10 +117,6 @@ func (c *TaskUseCase) UpdateTask(task dto.TaskUpdateInputDTO) (dto.TaskUpdateOut
 			taskEdit = v
 		}
 	}
-	fmt.Println(taskEdit)
-	// if err != nil {
-	// 	return dto.TaskUpdateOutputDTO{}, errors.New(err.Error())
-	// }
 
 	c.TaskRepository.UpdateTask(&taskEdit)
 	dto := dto.TaskUpdateOutputDTO{
