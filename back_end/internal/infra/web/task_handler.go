@@ -63,6 +63,22 @@ func (h *WebTaskHandler) FindExceptDeleted(w http.ResponseWriter, r *http.Reques
 
 }
 
+func (h *WebTaskHandler) FindAll(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+	output, err := createTask.FindAll()
+
+	err = json.NewEncoder(w).Encode(output)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+}
 func (h *WebTaskHandler) FindTitle(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 
@@ -139,6 +155,31 @@ func (h *WebTaskHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
 
 	taskDelete, err := createTask.SoftDelete(input)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(taskDelete)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+}
+
+func (h *WebTaskHandler) TaskCompleted(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPatch {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	id := r.URL.Query().Get("id")
+
+	input := dto.TaskInputCompletedDTO{
+		ID: id,
+	}
+	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+
+	taskDelete, err := createTask.TaskCompleted(input)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

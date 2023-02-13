@@ -29,6 +29,9 @@ type TaskOutputMessageDTO struct {
 type TaskInputSoftDeleteDTO struct {
 	ID string `json:"id"`
 }
+type TaskInputCompletedDTO struct {
+	ID string `json:"id"`
+}
 
 type TaskUpdateInputDTO struct {
 	ID          string `json:"id"`

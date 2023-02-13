@@ -8,6 +8,7 @@ type TaskRepositoryInterface interface {
 	FindAll() ([]entity.Task, error)
 	FindTitle(title string) (entity.Task, error)
 	FindByID(id string) (entity.Task, error)
+	TaskCompleted(task *entity.Task) error
 	UpdateTask(task *entity.Task) error
 	SoftDelete(task *entity.Task) error
 }

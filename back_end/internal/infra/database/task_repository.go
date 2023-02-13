@@ -125,3 +125,16 @@ func (r *TaskRepository) SoftDelete(task *entity.Task) error {
 	}
 	return nil
 }
+
+func (r *TaskRepository) TaskCompleted(task *entity.Task) error {
+	stmt, err := r.Db.Prepare("UPDATE tasks SET status= $1, updated_at=$2 WHERE id = $3")
+	if err != nil {
+		fmt.Print(err)
+		return err
+	}
+	_, err = stmt.Exec(task.Status, task.UpdatedAt, task.ID)
+	if err != nil {
+		return err
+	}
+	return nil
+}

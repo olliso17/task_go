@@ -111,7 +111,8 @@ func (c *TaskUseCase) UpdateTask(task dto.TaskUpdateInputDTO) (dto.TaskUpdateOut
 	var taskEdit entity.Task
 	timesTamp := time.Now()
 	for _, v := range taskAll {
-		if task.Title == v.Title && task.ID != v.ID {
+
+		if task.Title == v.Title && task.ID != v.ID && v.IsDeleted == false {
 			err = fmt.Errorf("task already exist")
 			return dto.TaskUpdateOutputDTO{}, err
 
@@ -138,6 +139,20 @@ func (c *TaskUseCase) UpdateTask(task dto.TaskUpdateInputDTO) (dto.TaskUpdateOut
 	}
 
 	return dto, err
+}
+
+func (c *TaskUseCase) TaskCompleted(input dto.TaskInputCompletedDTO) (dto.TaskOutputMessageDTO, error) {
+	task, err := c.TaskRepository.FindByID(input.ID)
+	timestamp := time.Now()
+	if err != nil {
+		return dto.TaskOutputMessageDTO{}, errors.New(err.Error())
+	}
+	task.Status = true
+	task.UpdatedAt = timestamp.Local().String()
+	c.TaskRepository.TaskCompleted(&task)
+
+	return IsValidDelete(&task), nil
+
 }
 
 func (c *TaskUseCase) SoftDelete(input dto.TaskInputSoftDeleteDTO) (dto.TaskOutputMessageDTO, error) {
