@@ -21,8 +21,4 @@ func main() {
 
 	routes.RoutesAll(":8080", newWebTaskHandler, newWebListHandler)
 
-	// http.HandleFunc("/hello", getHello)
-
-	// http.ListenAndServe(":8080", nil)
-
 }
