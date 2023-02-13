@@ -16,9 +16,9 @@ func main() {
 		panic(err)
 	}
 	// creatreTaskUseCase := NewCreateTaskUseCase(db)
-	newWebTaskHandler := NewWebTaskHandlerGen(db_postgres)
-	newWebListHandler := NewWebListHandlerGen(db_postgres)
+	newWebTaskHandlerPostgres := NewWebTaskHandlerGen(db_postgres)
+	newWebListHandlerPostgres := NewWebListHandlerGen(db_postgres)
 
-	routes.RoutesAll(":8080", newWebTaskHandler, newWebListHandler)
+	routes.RoutesAll(":8080", newWebTaskHandlerPostgres, newWebListHandlerPostgres)
 
 }
