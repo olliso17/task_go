@@ -76,7 +76,7 @@ func (c *TaskUseCase) FindAll() ([]entity.Task, error) {
 }
 
 func (c *TaskUseCase) FindTitle(title string) ([]entity.Task, error) {
-	taskAll, err := c.TaskRepository.FindAll()
+	taskAll, err := c.TaskRepository.FindExceptDeleted()
 
 	if err != nil {
 		return []entity.Task{}, err
@@ -88,7 +88,7 @@ func (c *TaskUseCase) FindTitle(title string) ([]entity.Task, error) {
 }
 
 func (c *TaskUseCase) FindByID(id string) (entity.Task, error) {
-	taskAll, err := c.TaskRepository.FindAll()
+	taskAll, err := c.TaskRepository.FindExceptDeleted()
 	if err != nil {
 		return entity.Task{}, err
 	}
