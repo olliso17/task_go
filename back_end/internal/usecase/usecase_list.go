@@ -49,7 +49,7 @@ func (l *ListUsecase) FindAll() ([]entity.ListEntity, error) {
 
 	for positionList, valueList := range lists {
 		for positionTask, valueTask := range tasks {
-			if lists[positionList].ID == tasks[positionTask].ListID {
+			if lists[positionList].ID == tasks[positionTask].ListID && tasks[positionTask].IsDeleted != true {
 				lists[positionList].Tasks = append(lists[positionList].Tasks, valueTask)
 			}
 
