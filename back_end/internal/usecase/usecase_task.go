@@ -147,7 +147,7 @@ func (c *TaskUseCase) TaskCompleted(input dto.TaskInputCompletedDTO) (dto.TaskOu
 	if err != nil {
 		return dto.TaskOutputMessageDTO{}, errors.New(err.Error())
 	}
-	task.Status = true
+	task.Status = input.Status
 	task.UpdatedAt = timestamp.Local().String()
 	c.TaskRepository.TaskCompleted(&task)
 

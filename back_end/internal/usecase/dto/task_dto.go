@@ -30,7 +30,8 @@ type TaskInputSoftDeleteDTO struct {
 	ID string `json:"id"`
 }
 type TaskInputCompletedDTO struct {
-	ID string `json:"id"`
+	ID     string `json:"id"`
+	Status bool   `json:"status"`
 }
 
 type TaskEditInputDTO struct {

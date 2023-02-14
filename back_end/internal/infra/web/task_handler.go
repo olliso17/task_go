@@ -176,9 +176,11 @@ func (h *WebTaskHandler) TaskCompleted(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	id := r.URL.Query().Get("id")
+	status := r.URL.Query().Has("status")
 
 	input := dto.TaskInputCompletedDTO{
-		ID: id,
+		ID:     id,
+		Status: status,
 	}
 	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
 
