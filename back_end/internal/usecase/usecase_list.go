@@ -76,3 +76,16 @@ func (l *ListUsecase) FindByID(id string) (entity.ListEntity, error) {
 	return list, err
 
 }
+
+func (l *ListUsecase) EditList(input dto.ListInpuntEditDtO) (entity.ListEntity, error) {
+	list, err := l.ListUsecase.FindByID(input.ID)
+	tasks, err := l.TaskUseCase.FindAll()
+
+	list.Name = input.Name
+	for positionTask, valueTask := range tasks {
+		if tasks[positionTask].ListID == list.ID && tasks[positionTask].IsDeleted != true {
+			list.Tasks = append(list.Tasks, valueTask)
+		}
+	}
+	return list, err
+}
