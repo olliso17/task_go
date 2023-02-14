@@ -24,7 +24,7 @@ func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error)
 
 	task, _ := entity.NewTask(input.Title, input.Description, input.Status, input.Priority, input.ListID, input.TimeSelect)
 	for _, v := range taskAll {
-		if task.Title == v.Title && v.IsDeleted == false {
+		if task.Title == v.Title && v.IsDeleted == false && v.Status != true {
 			err = fmt.Errorf("task already exist")
 			return dto.TaskOutputDTO{}, err
 
@@ -81,9 +81,17 @@ func (c *TaskUseCase) FindTitle(title string) ([]entity.Task, error) {
 	if err != nil {
 		return []entity.Task{}, err
 	}
-	isdelete := IsDeletedFromTitle(taskAll, title)
+	var taskTitle []entity.Task
+	for _, v := range taskAll {
+		if title == v.Title {
 
-	return *isdelete, nil
+			taskTitle = append(taskTitle, v)
+			return taskTitle, nil
+
+		}
+	}
+
+	return []entity.Task{}, nil
 
 }
 
@@ -94,8 +102,8 @@ func (c *TaskUseCase) FindByID(id string) (entity.Task, error) {
 	}
 	for _, v := range taskAll {
 		if id == v.ID {
-			isdelete := IsDeletedFromID(&v)
-			return *isdelete, nil
+
+			return v, nil
 
 		}
 	}
@@ -112,7 +120,7 @@ func (c *TaskUseCase) EditTask(task dto.TaskEditInputDTO) (dto.TaskEditOutputDTO
 	timesTamp := time.Now()
 	for _, v := range taskAll {
 
-		if task.Title == v.Title && task.ID != v.ID && v.IsDeleted == false {
+		if task.Title == v.Title && task.ID != v.ID && v.IsDeleted == false && v.Status != true {
 			err = fmt.Errorf("task already exist")
 			return dto.TaskEditOutputDTO{}, err
 
@@ -190,19 +198,4 @@ func IsDeletedFromID(task *entity.Task) *entity.Task {
 	}
 
 	return &entity.Task{}
-}
-
-func IsDeletedFromTitle(tasks []entity.Task, title string) *[]entity.Task {
-
-	var taskTitle []entity.Task
-	for _, v := range tasks {
-		if title == v.Title {
-			if v.IsDeleted != true {
-				taskTitle = append(taskTitle, v)
-			}
-		}
-	}
-
-	return &taskTitle
-
 }
