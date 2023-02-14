@@ -69,7 +69,7 @@ func (l *ListUsecase) FindByID(id string) (entity.ListEntity, error) {
 		return entity.ListEntity{}, err
 	}
 	for positionTask, valueTask := range tasks {
-		if tasks[positionTask].ListID == list.ID {
+		if tasks[positionTask].ListID == list.ID && tasks[positionTask].IsDeleted != true {
 			list.Tasks = append(list.Tasks, valueTask)
 		}
 	}
