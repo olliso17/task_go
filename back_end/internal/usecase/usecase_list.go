@@ -8,14 +8,14 @@ import (
 )
 
 type ListUsecase struct {
-	ListUsecase interfaces.ListRepositoryInterface
-	TaskUseCase interfaces.TaskRepositoryInterface
+	ListRepository interfaces.ListRepositoryInterface
+	TaskRepository interfaces.TaskRepositoryInterface
 }
 
-func NewListUsecase(listUsecase interfaces.ListRepositoryInterface, taskUsecase interfaces.TaskRepositoryInterface) *ListUsecase {
+func NewListUsecase(listRepository interfaces.ListRepositoryInterface, taskRepository interfaces.TaskRepositoryInterface) *ListUsecase {
 	return &ListUsecase{
-		ListUsecase: listUsecase,
-		TaskUseCase: taskUsecase,
+		ListRepository: listRepository,
+		TaskRepository: taskRepository,
 	}
 }
 
@@ -27,7 +27,7 @@ func (l *ListUsecase) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error
 		return dto.ListOutputDTO{}, err
 	}
 
-	if err := l.ListUsecase.Create(list); err != nil {
+	if err := l.ListRepository.Create(list); err != nil {
 		return dto.ListOutputDTO{}, err
 	}
 	dto := dto.ListOutputDTO{
@@ -38,9 +38,9 @@ func (l *ListUsecase) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error
 }
 
 func (l *ListUsecase) FindAll() ([]entity.ListEntity, error) {
-	lists, err := l.ListUsecase.FindAll()
+	lists, err := l.ListRepository.FindAll()
 
-	tasks, err := l.TaskUseCase.FindAll()
+	tasks, err := l.TaskRepository.FindAll()
 
 	if err != nil {
 		return []entity.ListEntity{}, err
@@ -62,8 +62,8 @@ func (l *ListUsecase) FindAll() ([]entity.ListEntity, error) {
 }
 
 func (l *ListUsecase) FindByID(id string) (entity.ListEntity, error) {
-	list, err := l.ListUsecase.FindByID(id)
-	tasks, err := l.TaskUseCase.FindAll()
+	list, err := l.ListRepository.FindByID(id)
+	tasks, err := l.TaskRepository.FindAll()
 	if err != nil {
 		return entity.ListEntity{}, err
 	}
@@ -77,8 +77,8 @@ func (l *ListUsecase) FindByID(id string) (entity.ListEntity, error) {
 }
 
 func (l *ListUsecase) EditList(list dto.EditListEntityInputDto) (dto.EditListEntityOutputDto, error) {
-	listEntity, err := l.ListUsecase.FindByID(list.ID)
-	tasks, err := l.TaskUseCase.FindAll()
+	listEntity, err := l.ListRepository.FindByID(list.ID)
+	tasks, err := l.TaskRepository.FindAll()
 	timesTamp := time.Now()
 	for positionTask, valueTask := range tasks {
 		if tasks[positionTask].ListID == listEntity.ID && tasks[positionTask].IsDeleted != true {
@@ -86,7 +86,7 @@ func (l *ListUsecase) EditList(list dto.EditListEntityInputDto) (dto.EditListEnt
 		}
 	}
 	listEntity.Name = list.Name
-	l.ListUsecase.EditList(&listEntity)
+	l.ListRepository.EditList(&listEntity)
 	dto := dto.EditListEntityOutputDto{
 		ID:        listEntity.ID,
 		Name:      listEntity.Name,
