@@ -4,7 +4,7 @@ import (
 	"back_end/internal/entity"
 	"back_end/internal/entity/interfaces"
 	"back_end/internal/usecase/dto"
-	"fmt"
+	"time"
 )
 
 type ListUsecase struct {
@@ -64,7 +64,6 @@ func (l *ListUsecase) FindAll() ([]entity.ListEntity, error) {
 func (l *ListUsecase) FindByID(id string) (entity.ListEntity, error) {
 	list, err := l.ListUsecase.FindByID(id)
 	tasks, err := l.TaskUseCase.FindAll()
-	fmt.Println(list)
 	if err != nil {
 		return entity.ListEntity{}, err
 	}
@@ -77,15 +76,22 @@ func (l *ListUsecase) FindByID(id string) (entity.ListEntity, error) {
 
 }
 
-func (l *ListUsecase) EditList(input dto.ListInpuntEditDtO) (entity.ListEntity, error) {
-	list, err := l.ListUsecase.FindByID(input.ID)
+func (l *ListUsecase) EditList(list dto.EditListEntityInputDto) (dto.EditListEntityOutputDto, error) {
+	listEntity, err := l.ListUsecase.FindByID(list.ID)
 	tasks, err := l.TaskUseCase.FindAll()
-
-	list.Name = input.Name
+	timesTamp := time.Now()
 	for positionTask, valueTask := range tasks {
-		if tasks[positionTask].ListID == list.ID && tasks[positionTask].IsDeleted != true {
-			list.Tasks = append(list.Tasks, valueTask)
+		if tasks[positionTask].ListID == listEntity.ID && tasks[positionTask].IsDeleted != true {
+			listEntity.Tasks = append(listEntity.Tasks, valueTask)
 		}
 	}
-	return list, err
+	listEntity.Name = list.Name
+	l.ListUsecase.EditList(&listEntity)
+	dto := dto.EditListEntityOutputDto{
+		ID:        listEntity.ID,
+		Name:      listEntity.Name,
+		Tasks:     listEntity.Tasks,
+		UpdatedAt: timesTamp.Local().String(),
+	}
+	return dto, err
 }

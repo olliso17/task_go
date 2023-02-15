@@ -80,3 +80,28 @@ func (h *WebListHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+func (h *WebListHandler) EditList(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPatch {
+
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	input := dto.EditListEntityInputDto{}
+	err := json.NewDecoder(r.Body).Decode(&input)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
+	output, err := createList.EditList(input)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	err = json.NewEncoder(w).Encode(output)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}

@@ -119,14 +119,10 @@ func (h *WebTaskHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 
 func (h *WebTaskHandler) EditTask(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPatch {
-
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	id := r.URL.Query().Get("id")
-	input := dto.TaskEditInputDTO{
-		ID: id,
-	}
+	input := dto.TaskEditInputDTO{}
 	err := json.NewDecoder(r.Body).Decode(&input)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -175,13 +171,8 @@ func (h *WebTaskHandler) TaskCompleted(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	id := r.URL.Query().Get("id")
-	status := r.URL.Query().Has("status")
 
-	input := dto.TaskInputCompletedDTO{
-		ID:     id,
-		Status: status,
-	}
+	input := dto.TaskInputCompletedDTO{}
 	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
 
 	taskDelete, err := createTask.TaskCompleted(input)

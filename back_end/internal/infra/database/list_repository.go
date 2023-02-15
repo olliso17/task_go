@@ -67,3 +67,17 @@ func (l *ListRepository) FindByID(id string) (entity.ListEntity, error) {
 	}
 	return list, nil
 }
+
+func (l *ListRepository) EditList(list *entity.ListEntity) error {
+	stmt, err := l.Db.Prepare("UPDATE lists SET name= $1,  updated_at=$2 WHERE id = $3")
+
+	if err != nil {
+		fmt.Print(err)
+		return err
+	}
+	_, err = stmt.Exec(list.Name, list.UpdatedAt, list.ID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
