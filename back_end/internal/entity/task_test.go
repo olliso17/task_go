@@ -1,13 +1,12 @@
-package main
+package entity
 
 import (
-	"back_end/internal/entity"
 	"testing"
 )
 
 func TestTask(t *testing.T) {
-	var newTask entity.Task
-	var segTask entity.Task
+	var newTask Task
+	var segTask Task
 	newTask.Title = "new task"
 	newTask.ID = "akdashdahs"
 	newTask.Description = "asdasd"
