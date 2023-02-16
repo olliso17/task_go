@@ -159,7 +159,7 @@ func (c *TaskUseCase) TaskCompleted(input dto.TaskInputCompletedDTO) (dto.TaskOu
 	task.UpdatedAt = timestamp.Local().String()
 	c.TaskRepository.TaskCompleted(&task)
 
-	return dto.TaskOutputMessageDTO{Message: "task successfully completed "}, nil
+	return dto.TaskOutputMessageDTO{Message: "successfully edited status"}, nil
 
 }
 
