@@ -180,22 +180,12 @@ func (c *TaskUseCase) SoftDelete(input dto.TaskInputSoftDeleteDTO) (dto.TaskOutp
 func IsValidDelete(task *entity.Task) dto.TaskOutputMessageDTO {
 
 	output := dto.TaskOutputMessageDTO{}
-	if task.IsDeleted != true {
-		output.Message = "Could not delete"
+	if task.IsDeleted == true {
+		output.Message = "task already deleted"
 		return output
 	}
 	output.Message = "Deleted task sucessfully"
 
 	return output
 
-}
-
-func IsDeletedFromID(task *entity.Task) *entity.Task {
-
-	if task.IsDeleted != true {
-
-		return task
-	}
-
-	return &entity.Task{}
 }

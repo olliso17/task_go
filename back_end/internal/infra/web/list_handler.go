@@ -105,3 +105,29 @@ func (h *WebListHandler) EditList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+func (h *WebListHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	input := dto.ListInputSoftDeleteDTO{}
+	err := json.NewDecoder(r.Body).Decode(&input)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
+
+	ListDelete, err := createList.SoftDelete(input)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(ListDelete)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+}

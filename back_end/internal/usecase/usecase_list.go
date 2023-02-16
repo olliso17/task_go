@@ -77,9 +77,9 @@ func (l *ListUsecase) FindByID(id string) (entity.ListEntity, error) {
 }
 
 func (l *ListUsecase) EditList(list dto.EditListEntityInputDto) (dto.EditListEntityOutputDto, error) {
+	timesTamp := time.Now().Local().String()
 	listEntity, err := l.ListRepository.FindByID(list.ID)
 	tasks, err := l.TaskRepository.FindAll()
-	timesTamp := time.Now()
 	for positionTask, valueTask := range tasks {
 		if tasks[positionTask].ListID == listEntity.ID && tasks[positionTask].IsDeleted != true {
 			listEntity.Tasks = append(listEntity.Tasks, valueTask)
@@ -91,7 +91,43 @@ func (l *ListUsecase) EditList(list dto.EditListEntityInputDto) (dto.EditListEnt
 		ID:        listEntity.ID,
 		Name:      listEntity.Name,
 		Tasks:     listEntity.Tasks,
-		UpdatedAt: timesTamp.Local().String(),
+		UpdatedAt: timesTamp,
 	}
 	return dto, err
+}
+
+func (l *ListUsecase) SoftDelete(input dto.ListInputSoftDeleteDTO) (dto.ListOutputMessageDTO, error) {
+	timestamp := time.Now().Local().String()
+	list, err := l.ListRepository.FindByID(input.ID)
+	tasks, err := l.TaskRepository.FindAll()
+	if err != nil {
+		return dto.ListOutputMessageDTO{}, err
+	}
+	for positionTask, valueTask := range tasks {
+		if tasks[positionTask].ListID == list.ID && tasks[positionTask].IsDeleted != true {
+			tasks[positionTask].IsDeleted = true
+			tasks[positionTask].DeletedAt = timestamp
+			l.TaskRepository.SoftDelete(&tasks[positionTask])
+			list.Tasks = append(list.Tasks, valueTask)
+		}
+
+	}
+	list.IsDeleted = true
+	list.DeletedAt = timestamp
+	l.ListRepository.SoftDelete(&list)
+	return IsValidDeleteList(&list), nil
+
+}
+
+func IsValidDeleteList(list *entity.ListEntity) dto.ListOutputMessageDTO {
+
+	output := dto.ListOutputMessageDTO{}
+	if list.IsDeleted == true {
+		output.Message = "list already deleted"
+		return output
+	}
+	output.Message = "Deleted list sucessfully"
+
+	return output
+
 }
