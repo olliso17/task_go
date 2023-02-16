@@ -173,6 +173,11 @@ func (h *WebTaskHandler) TaskCompleted(w http.ResponseWriter, r *http.Request) {
 	}
 
 	input := dto.TaskInputCompletedDTO{}
+	err := json.NewDecoder(r.Body).Decode(&input)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
 
 	taskDelete, err := createTask.TaskCompleted(input)
