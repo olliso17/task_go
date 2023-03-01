@@ -6,38 +6,22 @@ import CardAllAdd from '@/components/CardAll';
 import TitleList from '@/components/Title';
 import { useState, useEffect } from 'react';
 import axios from "axios";
+import Task from '@/components/Task';
+import { OutputTaskDto } from '@/services/dto/task_dto';
 // import { useSelector, useDispatch } from "react-redux";
 
 export default function Home() {
 
-  const [loading, setloading] = useState(false)
-  const [list, setList] = useState([])
-
-  const fetchAllData = async () => {
-    try {
-      setloading(true)
-      fetch('http://localhost:8080/lists', 
-      {
-          method: 'GET',
-        
-      })
-      
-        .then(response => response.json())    // passo extra
-        .then(data => {
-          setList(data)
-          console.log(data)
-        })
-        .catch(error => console.error(error));
-
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setloading(false)
-    }
+  const task: OutputTaskDto = {
+    id: '21631616',
+    title: 'adas',
+    description: 'string',
+    status: false,
+    priority: false,
+    list_id: 'string',
+    time_select: 'string',
+    is_deleted: false,
   }
-  useEffect(() => {
-    fetchAllData()
-  }, [])
   return (
     <>
       <Head>
@@ -51,7 +35,7 @@ export default function Home() {
           <CardStylePhone content={
             <CardAllAdd />
           } />
-          <CardStylePhone content={
+          {/* <CardStylePhone content={
             <div className='flex flex-col justify-between items-center'>
               <TitleList titleList="All Lists" />
               {list.map((li) => <div className='w-11/12 p-2 m-1 bg-white flex flex-col'>
@@ -59,8 +43,14 @@ export default function Home() {
                   <h1>{li['name']}</h1>
                 </button>
 
-              </div>)}</div>} />
-          <CardStylePhone content={<TitleList titleList='Concluded' />} />
+              </div>)}</div>} /> */}
+          <CardStylePhone content={
+            <div>
+              <TitleList titleList='Concluded' />
+              <Task task={task} />
+
+            </div>
+          } />
         </div>
 
       </main>
