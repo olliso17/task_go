@@ -16,7 +16,12 @@ export default function Home() {
   const fetchAllData = async () => {
     try {
       setloading(true)
-      fetch('http://localhost:8080/lists')
+      fetch('http://localhost:8080/lists', 
+      {
+          method: 'GET',
+        
+      })
+      
         .then(response => response.json())    // passo extra
         .then(data => {
           setList(data)
