@@ -45,4 +45,4 @@ const getTasks = async () => {
     return data;
 };
 
-export { postTask, getTaskId, getTaskTitle, getTasks, getTaskCompleted };
+export { postTask, getTaskId, getTaskTitle, getTasks};

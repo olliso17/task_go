@@ -1,7 +1,5 @@
 import api from "../backend";
-import { CreateListInputDto, ListIdInputDto, OutputCreateListDto } from "../dto/list_dto";
-import { IList } from "../model/list_type";
-
+import { CreateListInputDto, ListIdInputDto, OutputListDto } from "../dto/list_dto";
 
 
 const getListAll = async () => {
@@ -15,7 +13,7 @@ const getListAll = async () => {
 
 }
 
-const getListId = async (input: ListIdInputDto):Promise<IList> => {
+const getListId = async (input: ListIdInputDto):Promise<OutputListDto> => {
 
     const url = `list/${input}`
 
@@ -27,7 +25,7 @@ const getListId = async (input: ListIdInputDto):Promise<IList> => {
 };
 
 
-const postList = async (input: CreateListInputDto): Promise<OutputCreateListDto> => {
+const postList = async (input: CreateListInputDto): Promise<OutputListDto> => {
     const url = `list/create`
 
     const res = await api.post(url, input);
