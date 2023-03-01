@@ -1,21 +1,8 @@
-import api from "./backend";
-import { ITask } from "./task";
+import api from "../backend";
+import { CreateListInputDto, ListIdInputDto, OutputCreateListDto } from "../dto/list_dto";
+import { IList } from "../model/list_type";
 
-export type IList = {
-    id: string;
-    name: string;
-    tasks: ITask[];
-};
 
-export interface CreateListInputDto {
-    name: string
-}
-
-export interface OutputCreateListDto {
-    id: string
-    name: string
- 
-}
 
 const getListAll = async () => {
     const url = `lists`
@@ -28,7 +15,7 @@ const getListAll = async () => {
 
 }
 
-const getListId = async (input: string):Promise<IList> => {
+const getListId = async (input: ListIdInputDto):Promise<IList> => {
 
     const url = `list/${input}`
 
