@@ -20,6 +20,7 @@ func RoutesAll(serverPort string, newWebTaskHandler *web.WebTaskHandler, newWebL
 	webserver.AddHandler("/lists", newWebListHandler.FindAll)
 	webserver.AddHandler("/list/id", newWebListHandler.FindByID)
 	webserver.AddHandler("/list/edit", newWebListHandler.EditList)
+	webserver.AddHandler("/list/delete", newWebListHandler.SoftDelete)
 
 	webserver.Start()
 }

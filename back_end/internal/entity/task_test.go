@@ -10,8 +10,8 @@ func TestTask(t *testing.T) {
 	newTask.Title = "new task"
 	newTask.ID = "akdashdahs"
 	newTask.Description = "asdasd"
-	segTask.Title = "new task"
-	segTask.ID = "akdashdahs"
+	segTask.Title = "new tas"
+	segTask.ID = "akd"
 
 	if newTask.Title == "" {
 		t.Error("Title is empty", newTask.Title)

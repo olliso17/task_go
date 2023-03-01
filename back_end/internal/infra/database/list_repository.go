@@ -81,3 +81,15 @@ func (l *ListRepository) EditList(list *entity.ListEntity) error {
 	}
 	return nil
 }
+func (l *ListRepository) SoftDelete(list *entity.ListEntity) error {
+	stmt, err := l.Db.Prepare("UPDATE lists SET isdeleted= $1, deleted_at=$2 WHERE id = $3")
+	if err != nil {
+		fmt.Print(err)
+		return err
+	}
+	_, err = stmt.Exec(list.IsDeleted, list.DeletedAt, list.ID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
