@@ -42,3 +42,5 @@ const postList = async (input: CreateListInputDto): Promise<OutputCreateListDto>
 
     return res.data
 }
+
+export {getListId, postList, getListAll};

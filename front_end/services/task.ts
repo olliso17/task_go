@@ -55,3 +55,5 @@ const getTasks = async () => {
 
     return data;
 };
+
+export {getTask, postTask, getTasks};
