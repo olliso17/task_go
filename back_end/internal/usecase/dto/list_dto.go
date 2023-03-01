@@ -25,3 +25,12 @@ type EditListEntityOutputDto struct {
 	Tasks     []entity.Task
 	UpdatedAt string `json:"updated_at"`
 }
+type ListAllOutputDTO struct {
+	ID    string          `json:"id"`
+	Name  string          `json:"name"`
+	Tasks []TaskOutputDTO `json:"tasks"`
+}
+
+type ListEntityAllOutputDto struct {
+	Lists ListAllOutputDTO
+}

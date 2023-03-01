@@ -4,7 +4,7 @@ import TitleList from '../Title';
 
 
 const TaskAdd = () => (
-  <div>
+  <form action='/task/create' method='post'>
     <TitleList titleList='Task' />
     <Inputs style="w-full p-2 flex flex-col justify-start" type='text' nameList='Title' defaultValue='Add Title Task' htmlFor='titleTask' id='titleTask' />
     <Inputs style="w-full p-2 flex flex-col justify-start" type='text' nameList='Description' defaultValue='Add Description Task' htmlFor='descriptionTask' id='descriptionTask' />
@@ -21,12 +21,12 @@ const TaskAdd = () => (
                 <input className="h-5 text-sm text-violet-400 focus:bg-violet-50" id="concludedTask" type="checkbox" />
             </fieldset> */}
     <div className='flex justify-end'>
-      <button className='bg-violet-700 p-2 m-2 rounded-md'>
+      <button className='bg-violet-700 p-2 m-2 rounded-md' type='submit'>
         <p className='text-white font-bold'>Save</p></button>
     </div>
 
 
-  </div>
+  </form>
 
 
 );

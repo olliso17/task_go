@@ -37,28 +37,44 @@ func (l *ListUsecase) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error
 	return dto, nil
 }
 
-func (l *ListUsecase) FindAll() ([]entity.ListEntity, error) {
+func (l *ListUsecase) FindAll() ([]dto.ListAllOutputDTO, error) {
 	lists, err := l.ListRepository.FindAll()
 
 	tasks, err := l.TaskRepository.FindAll()
 
 	if err != nil {
-		return []entity.ListEntity{}, err
+		return []dto.ListAllOutputDTO{}, err
 	}
-	var listAll []entity.ListEntity
-
+	var listAll []dto.ListAllOutputDTO
+	var tasksList []dto.TaskOutputDTO
 	for positionList, valueList := range lists {
+
 		for positionTask, valueTask := range tasks {
 			if lists[positionList].ID == tasks[positionTask].ListID && tasks[positionTask].IsDeleted != true {
 				lists[positionList].Tasks = append(lists[positionList].Tasks, valueTask)
+				tasksList = append(tasksList, dto.TaskOutputDTO{
+					Title:       valueTask.Title,
+					Description: valueTask.Description,
+					Status:      valueTask.Status,
+					Priority:    valueTask.Priority,
+					ListID:      valueTask.ListID,
+					TimeSelect:  valueTask.TimeSelect,
+					IsDeleted:   valueTask.IsDeleted,
+				})
 			}
 
 		}
-		listAll = append(listAll, valueList)
+
+		list := dto.ListAllOutputDTO{
+			ID:    valueList.ID,
+			Name:  valueList.Name,
+			Tasks: tasksList,
+		}
+		listAll = append(listAll, list)
 
 	}
 
-	return lists, nil
+	return listAll, nil
 }
 
 func (l *ListUsecase) FindByID(id string) (entity.ListEntity, error) {

@@ -4,9 +4,35 @@ import DialogTask from '../components/TaskAdd/index';
 import CardStylePhone from '@/components/CardStylePhone';
 import CardAllAdd from '@/components/CardAll';
 import TitleList from '@/components/Title';
-
+import { useState, useEffect } from 'react';
+import axios from "axios";
+// import { useSelector, useDispatch } from "react-redux";
 
 export default function Home() {
+
+  const [loading, setloading] = useState(false)
+  const [list, setList] = useState([])
+
+  const fetchAllData = async () => {
+    try {
+      setloading(true)
+      fetch('http://localhost:8080/lists')
+        .then(response => response.json())    // passo extra
+        .then(data => {
+          setList(data)
+          console.log(data)
+        })
+        .catch(error => console.error(error));
+
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setloading(false)
+    }
+  }
+  useEffect(() => {
+    fetchAllData()
+  }, [])
   return (
     <>
       <Head>
@@ -18,10 +44,18 @@ export default function Home() {
       <main className="w-screen h-screen flex flex-col justify-center items-center">
         <div className='flex flex-row w-11/12 h-full bg-violet-200 items-center justify-around'>
           <CardStylePhone content={
-            <CardAllAdd/>
+            <CardAllAdd />
           } />
-          <CardStylePhone content={<TitleList titleList='List'/>} />
-          <CardStylePhone content={<TitleList titleList='Concluded'/>} />
+          <CardStylePhone content={
+            <div className='flex flex-col justify-between items-center'>
+              <TitleList titleList="All Lists" />
+              {list.map((li) => <div className='w-11/12 p-2 m-1 bg-white flex flex-col'>
+                <button className='w-full p-2 hover:bg-violet-400' >
+                  <h1>{li['name']}</h1>
+                </button>
+
+              </div>)}</div>} />
+          <CardStylePhone content={<TitleList titleList='Concluded' />} />
         </div>
 
       </main>
