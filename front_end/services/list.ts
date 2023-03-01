@@ -1,6 +1,11 @@
 import api from "./backend";
+import { ITask } from "./task";
 
-
+export type IList = {
+    id: string;
+    name: string;
+    tasks: ITask[];
+};
 
 export interface CreateListInputDto {
     name: string
@@ -23,9 +28,9 @@ const getListAll = async () => {
 
 }
 
-const getListId = async (listId: string) => {
+const getListId = async (input: string):Promise<IList> => {
 
-    const url = `list/${listId}`
+    const url = `list/${input}`
 
     const res = await api.get(url);
 
