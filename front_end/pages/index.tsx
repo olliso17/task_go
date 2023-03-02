@@ -15,7 +15,7 @@ import { OutputTaskDto, TaskIdInputDto } from '@/services/dto/task_dto';
 
 export default function Home() {
   const { data, status } = useQuery("tasks", getTasks);
-  console.log(data, status);
+
 
   return (
     <>
@@ -40,10 +40,11 @@ export default function Home() {
 
               </div>)}</div>} /> */}
           <CardStylePhone content={
-            <div>
-              <TitleList titleList='Concluded' />
+            <div className='flex flex-col justify-around items-center'>
+              <TitleList titleList='AllTasks' />
               {
-                data?.map((task: OutputTaskDto) => (<Task task={task} index={task.id} />))
+                data?.map((task: OutputTaskDto) => (
+                  <Task task={task} index={task.id} />))
               }
 
             </div>
