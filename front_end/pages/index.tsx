@@ -25,9 +25,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="w-screen h-screen flex flex-col justify-center items-center">
+      <main className="w-screen h-screen flex   flex-col justify-center items-center">
         <div className='flex flex-row w-11/12 h-full bg-violet-200 items-center justify-around'>
-          <CardStylePhone content={
+          <CardStylePhone contentButton1={<TitleList titleList="Create List"/>} contentButton2={<TitleList titleList="ListAll"/>}  content={
             <CardAllAdd />
           } />
           {/* <CardStylePhone content={
@@ -39,7 +39,7 @@ export default function Home() {
                 </button>
 
               </div>)}</div>} /> */}
-          <CardStylePhone content={
+          <CardStylePhone contentButton1={<TitleList titleList="ListAll"/>} contentButton2={<TitleList titleList="Create List"/>}  content={
             <div className='flex flex-col justify-around items-center'>
               <TitleList titleList='AllTasks' />
               {
