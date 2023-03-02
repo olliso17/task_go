@@ -2,10 +2,11 @@ import { OutputTaskDto } from "@/services/dto/task_dto"
 
 type ITask={
     task: OutputTaskDto
+    index: string
 }
 
-const Task = ({task}: ITask) =>(
-  <div key={task.id}>
+const Task = ({task, index}: ITask) =>(
+  <div key={index}>
     <li>{task.title}</li>
     <li>{task.description}</li>
     <li>{task.status==false?'false':'true'}</li>

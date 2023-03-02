@@ -5,33 +5,33 @@ import { useState, useEffect } from 'react';
 import axios from "axios";
 
 const TaskAdd = () => {
-  const [loading, setloading] = useState(false)
-  const [task, settask] = useState([])
+  // const [loading, setloading] = useState(false)
+  // const [task, settask] = useState([])
 
-  const fetchAllData = async () => {
-    try {
-      setloading(true)
-      fetch('http://localhost:8080/task/create',
-        {
-          method: 'POST',
-          body: JSON.stringify(task),
-        })
+  // const fetchAllData = async () => {
+  //   try {
+  //     setloading(true)
+  //     fetch('http://localhost:8080/task/create',
+  //       {
+  //         method: 'POST',
+  //         body: JSON.stringify(task),
+  //       })
 
-        .then(response => response.json())    // passo extra
-        .then(data => {
-          console.log(data)
-        })
-        .catch(error => console.error(error));
+  //       .then(response => response.json())    // passo extra
+  //       .then(data => {
+  //         console.log(data)
+  //       })
+  //       .catch(error => console.error(error));
 
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setloading(false)
-    }
-  }
-  useEffect(() => {
-    fetchAllData()
-  }, [])
+  //   } catch (err) {
+  //     console.log(err);
+  //   } finally {
+  //     setloading(false)
+  //   }
+  // }
+  // useEffect(() => {
+  //   fetchAllData()
+  // }, [])
 
     return (
 

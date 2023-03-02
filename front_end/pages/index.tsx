@@ -7,21 +7,16 @@ import TitleList from '@/components/Title';
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import Task from '@/components/Task';
-import { OutputTaskDto } from '@/services/dto/task_dto';
+import { useRouter } from "next/router";
+import { QueryClient, useMutation, useQuery } from 'react-query';
+import { getTaskId, getTasks } from '@/services/handler/task_handler';
+import { OutputTaskDto, TaskIdInputDto } from '@/services/dto/task_dto';
 // import { useSelector, useDispatch } from "react-redux";
 
 export default function Home() {
+  const { data, status } = useQuery("tasks", getTasks);
+  console.log(data, status);
 
-  const task: OutputTaskDto = {
-    id: '21631616',
-    title: 'adas',
-    description: 'string',
-    status: false,
-    priority: false,
-    list_id: 'string',
-    time_select: 'string',
-    is_deleted: false,
-  }
   return (
     <>
       <Head>
@@ -47,7 +42,9 @@ export default function Home() {
           <CardStylePhone content={
             <div>
               <TitleList titleList='Concluded' />
-              <Task task={task} />
+              {
+                data?.map((task: OutputTaskDto) => (<Task task={task} index={task.id} />))
+              }
 
             </div>
           } />

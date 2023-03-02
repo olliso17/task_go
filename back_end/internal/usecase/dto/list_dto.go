@@ -8,8 +8,16 @@ type ListInpuntDtO struct {
 type ListInpuntEditDtO struct {
 	ID string `json:"id"`
 }
+
+type ListInputSoftDeleteDTO struct {
+	ID string `json:"id"`
+}
 type ListOutputDTO struct {
 	Name string `json:"name"`
+}
+
+type ListOutputMessageDTO struct {
+	Message string `json:"mensage"`
 }
 
 type EditListEntityInputDto struct {
