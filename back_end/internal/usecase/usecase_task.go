@@ -50,33 +50,17 @@ func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error)
 	return dto, nil
 }
 
-func (c *TaskUseCase) FindExceptDeleted() ([]entity.Task, error) {
-	tasks, err := c.TaskRepository.FindAll()
-	if err != nil {
-		return []entity.Task{}, err
-	}
-	var taskTitle []entity.Task
-	for _, v := range tasks {
-		if v.IsDeleted != true {
-			taskTitle = append(taskTitle, v)
-
-		}
-
-	}
-	return taskTitle, nil
-}
-
-func (c *TaskUseCase) FindAll() ([]dto.TaskOutputDTO, error) {
+func (c *TaskUseCase) FindExceptDeleted() ([]dto.TaskOutputDTO, error) {
 	tasks, err := c.TaskRepository.FindAll()
 	if err != nil {
 		return []dto.TaskOutputDTO{}, err
 	}
-
 	var listTaskAll []dto.TaskOutputDTO
 
 	for positionTask, valueTask := range tasks {
 		if tasks[positionTask].IsDeleted != true {
 			listTaskAll = append(listTaskAll, dto.TaskOutputDTO{
+				ID:          valueTask.ID,
 				Title:       valueTask.Title,
 				Description: valueTask.Description,
 				Status:      valueTask.Status,
@@ -90,6 +74,15 @@ func (c *TaskUseCase) FindAll() ([]dto.TaskOutputDTO, error) {
 	}
 
 	return listTaskAll, nil
+}
+
+func (c *TaskUseCase) FindAll() ([]entity.Task, error) {
+	tasks, err := c.TaskRepository.FindAll()
+	if err != nil {
+		return []entity.Task{}, err
+	}
+
+	return tasks, nil
 }
 
 func (c *TaskUseCase) FindTitle(title string) ([]entity.Task, error) {
