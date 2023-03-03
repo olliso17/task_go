@@ -1,6 +1,6 @@
 import React from 'react';
-import Inputs from '../Input';
-import TitleList from '../Title';
+import Inputs from '../../components/Input';
+import TitleList from '../../components/Title';
 import { useState, useEffect } from 'react';
 import axios from "axios";
 

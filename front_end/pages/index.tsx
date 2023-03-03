@@ -1,16 +1,9 @@
 import Head from 'next/head'
-import Inputs from '@/components/Input'
-import DialogTask from '../components/TaskAdd/index';
 import CardStylePhone from '@/components/CardStylePhone';
-import CardAllAdd from '@/components/CardAll';
 import TitleList from '@/components/Title';
-import { useState, useEffect } from 'react';
-import axios from "axios";
-import Task from '@/components/Task';
-import { useRouter } from "next/router";
-import { QueryClient, useMutation, useQuery } from 'react-query';
-import { getTaskId, getTasks } from '@/services/handler/task_handler';
-import { OutputTaskDto, TaskIdInputDto } from '@/services/dto/task_dto';
+import { useQuery } from 'react-query';
+import {getTasks } from '@/services/handler/task_handler';
+import Createlist from '../components/CreateList';
 // import { useSelector, useDispatch } from "react-redux";
 
 export default function Home() {
@@ -27,9 +20,7 @@ export default function Home() {
       </Head>
       <main className="w-screen h-screen flex   flex-col justify-center items-center">
         <div className='flex flex-row w-11/12 h-full bg-violet-200 items-center justify-around'>
-          <CardStylePhone contentButton1={<TitleList titleList="Create List"/>} contentButton2={<TitleList titleList="ListAll"/>}  content={
-            <CardAllAdd />
-          } />
+          <Createlist/>
           {/* <CardStylePhone content={
             <div className='flex flex-col justify-between items-center'>
               <TitleList titleList="All Lists" />
@@ -39,13 +30,13 @@ export default function Home() {
                 </button>
 
               </div>)}</div>} /> */}
-          <CardStylePhone contentButton1={<TitleList titleList="ListAll"/>} contentButton2={<TitleList titleList="Create List"/>}  content={
+          <CardStylePhone styleCss="bg-violet-500 w-full h-full rounded-2xl" contentButton1={<TitleList titleList="ListAll"/>} contentButton2={<TitleList titleList="Create List"/>}  content={
             <div className='flex flex-col justify-around items-center'>
               <TitleList titleList='AllTasks' />
-              {
+              {/* {
                 data?.map((task: OutputTaskDto) => (
                   <Task task={task} index={task.id} />))
-              }
+              } */}
 
             </div>
           } />

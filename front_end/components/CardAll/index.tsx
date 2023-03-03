@@ -1,6 +1,4 @@
 import Inputs from "../Input"
-import TaskAdd from "../TaskAdd"
-import TitleList from "../Title"
 import TooltipTask from "../Tooltip"
 
 
