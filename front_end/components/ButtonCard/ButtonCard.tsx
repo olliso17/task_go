@@ -4,13 +4,13 @@ import ListAll from "../ListAll";
 type Props = {
     content:JSX.Element
     styleCss: string
-    tipoVoid: () => JSX.Element
+    tipoButton: MouseEventHandler<HTMLButtonElement>
     
 }
 
 
-const ButtonCard = ({tipoVoid, content, styleCss}:Props)=>(
-    <button onClick={()=>tipoVoid} className={styleCss}>{content}</button >
+const ButtonCard = ({tipoButton, content, styleCss}:Props)=>(
+    <button onClick={tipoButton} className={styleCss}>{content}</button >
 )
 
 export default ButtonCard;

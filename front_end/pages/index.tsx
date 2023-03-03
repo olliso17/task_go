@@ -3,16 +3,16 @@ import CardStylePhone from '@/components/CardStylePhone';
 import TitleList from '@/components/Title';
 import { useQuery } from 'react-query';
 import { getTasks } from '@/services/handler/task_handler';
-import Createlist from '../components/CreateList';
 import CardAllAdd from '@/components/CardAll';
+import ButtonCard from '@/components/ButtonCard/ButtonCard';
+import { useState } from 'react';
+import ListAll from '@/components/ListAll';
 // import { useSelector, useDispatch } from "react-redux";
 
 export default function Home() {
   const { data, status } = useQuery("tasks", getTasks);
-  function teste() {
-    return <CardAllAdd />
+  const [contentView, setContetView] = useState(<></>);
 
-  }
   return (
     <>
       <Head>
@@ -23,10 +23,18 @@ export default function Home() {
       </Head>
       <main className="w-screen h-screen flex   flex-col justify-center items-center">
         <div className='flex flex-row w-11/12 h-full bg-violet-200 items-center justify-around'>
-          <CardStylePhone tipoVoid={teste} contentButton1={<TitleList titleList='Create List'/>} contentButton2={<TitleList titleList='ListAll'/>} styleCss="bg-violet-500 w-full h-full rounded-2xl" content={
-            <div></div>
+          <CardStylePhone styleCss="bg-violet-500 w-full h-full rounded-2xl" content={
+            <>
+              <div className="flex">
+                <ButtonCard tipoButton={()=>setContetView(<CardAllAdd/>)} styleCss="w-48 h-20 bg-violet-300 hover:bg-violet-400 border-violet-400 border-solid border-l-0 border-b-0 border-r border-t-0 rounded-t-lg" content={<TitleList titleList='Create List' />} />
+                <ButtonCard tipoButton={()=>setContetView(<ListAll/>)} styleCss="w-48 h-20 bg-violet-500 hover:bg-violet-400 border-violet-400 border-solid border-l-0 border-b-0 border-r border-t-0 rounded-t-lg" content={<TitleList titleList='ListAll' />} />
+
+              </div>
+              {contentView}
+
+            </>
           } />
-          <CardStylePhone tipoVoid={teste} contentButton1={<TitleList titleList='Create List'/>} contentButton2={<TitleList titleList='ListAll'/>} styleCss="bg-violet-500 w-full h-full rounded-2xl" content={
+          <CardStylePhone styleCss="bg-violet-500 w-full h-full rounded-2xl" content={
             <div className='flex flex-col justify-around items-center'>
               <TitleList titleList='AllTasks' />
               {/* {
