@@ -2,14 +2,17 @@ import Head from 'next/head'
 import CardStylePhone from '@/components/CardStylePhone';
 import TitleList from '@/components/Title';
 import { useQuery } from 'react-query';
-import {getTasks } from '@/services/handler/task_handler';
+import { getTasks } from '@/services/handler/task_handler';
 import Createlist from '../components/CreateList';
+import CardAllAdd from '@/components/CardAll';
 // import { useSelector, useDispatch } from "react-redux";
 
 export default function Home() {
   const { data, status } = useQuery("tasks", getTasks);
+  function teste() {
+    return <CardAllAdd />
 
-
+  }
   return (
     <>
       <Head>
@@ -20,17 +23,10 @@ export default function Home() {
       </Head>
       <main className="w-screen h-screen flex   flex-col justify-center items-center">
         <div className='flex flex-row w-11/12 h-full bg-violet-200 items-center justify-around'>
-          <Createlist/>
-          {/* <CardStylePhone content={
-            <div className='flex flex-col justify-between items-center'>
-              <TitleList titleList="All Lists" />
-              {list.map((li) => <div className='w-11/12 p-2 m-1 bg-white flex flex-col'>
-                <button className='w-full p-2 hover:bg-violet-400' >
-                  <h1>{li['name']}</h1>
-                </button>
-
-              </div>)}</div>} /> */}
-          <CardStylePhone styleCss="bg-violet-500 w-full h-full rounded-2xl" contentButton1={<TitleList titleList="ListAll"/>} contentButton2={<TitleList titleList="Create List"/>}  content={
+          <CardStylePhone tipoVoid={teste} contentButton1={<TitleList titleList='Create List'/>} contentButton2={<TitleList titleList='ListAll'/>} styleCss="bg-violet-500 w-full h-full rounded-2xl" content={
+            <div></div>
+          } />
+          <CardStylePhone tipoVoid={teste} contentButton1={<TitleList titleList='Create List'/>} contentButton2={<TitleList titleList='ListAll'/>} styleCss="bg-violet-500 w-full h-full rounded-2xl" content={
             <div className='flex flex-col justify-around items-center'>
               <TitleList titleList='AllTasks' />
               {/* {

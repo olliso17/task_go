@@ -1,12 +1,16 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, MouseEventHandler } from "react";
+import ListAll from "../ListAll";
 
 type Props = {
     content:JSX.Element
     styleCss: string
+    tipoVoid: () => JSX.Element
+    
 }
 
-const ButtonCard = ({content, styleCss}:Props)=>(
-    <button className={styleCss}>{content}</button >
+
+const ButtonCard = ({tipoVoid, content, styleCss}:Props)=>(
+    <button onClick={()=>tipoVoid} className={styleCss}>{content}</button >
 )
 
 export default ButtonCard;
