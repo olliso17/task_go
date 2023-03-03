@@ -46,13 +46,20 @@ func (l *ListUsecase) FindAll() ([]dto.ListAllOutputDTO, error) {
 		return []dto.ListAllOutputDTO{}, err
 	}
 	var listAll []dto.ListAllOutputDTO
-	var tasksList []dto.TaskOutputDTO
-	for positionList, valueList := range lists {
+	var tasksList dto.TaskOutputDTO
+
+	for _, valueList := range lists {
+		listAll = append(listAll, dto.ListAllOutputDTO{
+			ID:   valueList.ID,
+			Name: valueList.Name,
+		})
+
+	}
+	for positionList, _ := range listAll {
 
 		for positionTask, valueTask := range tasks {
-			if lists[positionList].ID == tasks[positionTask].ListID && tasks[positionTask].IsDeleted != true {
-				lists[positionList].Tasks = append(lists[positionList].Tasks, valueTask)
-				tasksList = append(tasksList, dto.TaskOutputDTO{
+			if listAll[positionList].ID == tasks[positionTask].ListID && tasks[positionTask].IsDeleted != true {
+				tasksList = dto.TaskOutputDTO{
 					Title:       valueTask.Title,
 					Description: valueTask.Description,
 					Status:      valueTask.Status,
@@ -60,20 +67,13 @@ func (l *ListUsecase) FindAll() ([]dto.ListAllOutputDTO, error) {
 					ListID:      valueTask.ListID,
 					TimeSelect:  valueTask.TimeSelect,
 					IsDeleted:   valueTask.IsDeleted,
-				})
+				}
+				listAll[positionList].Tasks = append(listAll[positionList].Tasks, tasksList)
+
 			}
 
 		}
-
-		list := dto.ListAllOutputDTO{
-			ID:    valueList.ID,
-			Name:  valueList.Name,
-			Tasks: tasksList,
-		}
-		listAll = append(listAll, list)
-
 	}
-
 	return listAll, nil
 }
 
@@ -86,7 +86,7 @@ func (l *ListUsecase) FindByID(id string) (dto.ListAllOutputDTO, error) {
 	listID := dto.ListAllOutputDTO{}
 	tasksDto := dto.TaskOutputDTO{}
 	for positionTask, valueTask := range tasks {
-		if tasks[positionTask].ListID == list.ID && tasks[positionTask].IsDeleted != true {
+		if valueTask.ListID == list.ID && tasks[positionTask].IsDeleted != true {
 
 			tasksDto.ID = valueTask.ID
 			tasksDto.Title = valueTask.Title

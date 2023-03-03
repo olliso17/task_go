@@ -1,17 +1,20 @@
 import Head from 'next/head'
 import CardStylePhone from '@/components/CardStylePhone';
 import TitleList from '@/components/Title';
-import { useQuery } from 'react-query';
-import { getTasks } from '@/services/handler/task_handler';
 import CardAllAdd from '@/components/CardAll';
 import ButtonCard from '@/components/ButtonCard/ButtonCard';
 import { useState } from 'react';
+import Task from '@/components/Task';
+import { OutputTaskDto } from '@/services/dto/task_dto';
+import { getListAll } from '@/services/handler/list_handler';
 import ListAll from '@/components/ListAll';
 // import { useSelector, useDispatch } from "react-redux";
 
 export default function Home() {
-  const { data, status } = useQuery("tasks", getTasks);
-  const [contentView, setContetView] = useState(<></>);
+  const [contentView1, setContetView1] = useState(<CardAllAdd />);
+  const [contentView2, setContetView2] = useState(<></>);
+  const [colorBackground, setColorBackground] = useState("bg-violet-300 w-full h-full rounded-2xl");
+  const [colorBackground2, setColorBackground2] = useState("bg-violet-300 w-full h-full rounded-2xl");
 
   return (
     <>
@@ -23,27 +26,45 @@ export default function Home() {
       </Head>
       <main className="w-screen h-screen flex   flex-col justify-center items-center">
         <div className='flex flex-row w-11/12 h-full bg-violet-200 items-center justify-around'>
-          <CardStylePhone styleCss="bg-violet-500 w-full h-full rounded-2xl" content={
+          <CardStylePhone styleCss={colorBackground} content={
             <>
               <div className="flex">
-                <ButtonCard tipoButton={()=>setContetView(<CardAllAdd/>)} styleCss="w-48 h-20 bg-violet-300 hover:bg-violet-400 border-violet-400 border-solid border-l-0 border-b-0 border-r border-t-0 rounded-t-lg" content={<TitleList titleList='Create List' />} />
-                <ButtonCard tipoButton={()=>setContetView(<ListAll/>)} styleCss="w-48 h-20 bg-violet-500 hover:bg-violet-400 border-violet-400 border-solid border-l-0 border-b-0 border-r border-t-0 rounded-t-lg" content={<TitleList titleList='ListAll' />} />
+                <ButtonCard tipoButton={() =>
+                (
+                  setColorBackground("bg-violet-300 w-full h-full rounded-2xl"),
+                  setContetView1(<CardAllAdd />)
+                )
+                }
+                  styleCss="w-48 h-20 bg-violet-300 hover:bg-violet-400 border-violet-400 border-solid border-l-0 border-b-0 border-r border-t-0 rounded-t-lg" content={<TitleList titleList='Create List' />} />
+                <ButtonCard tipoButton={() => (
+                  setColorBackground("bg-violet-500 w-full h-full rounded-2xl"),
+                  setContetView1(<ListAll />)
+                )
+                }
+                  styleCss="w-48 h-20 bg-violet-500 hover:bg-violet-400 border-violet-400 border-solid border-l-0 border-b-0 border-r border-t-0 rounded-t-lg" content={<TitleList titleList='All Lists' />} />
 
               </div>
-              {contentView}
+              {contentView1}
 
             </>
           } />
-          <CardStylePhone styleCss="bg-violet-500 w-full h-full rounded-2xl" content={
-            <div className='flex flex-col justify-around items-center'>
-              <TitleList titleList='AllTasks' />
-              {/* {
-                data?.map((task: OutputTaskDto) => (
-                  <Task task={task} index={task.id} />))
-              } */}
+          <CardStylePhone styleCss={colorBackground2} content={
+            <>
+              <div className="flex">
+                <ButtonCard tipoButton={() => setContetView2(<div>List</div>)} styleCss="w-48 h-20 bg-violet-300 hover:bg-violet-400 border-violet-400 border-solid border-l-0 border-b-0 border-r border-t-0 rounded-t-lg" content={<TitleList titleList='List ID' />} />
+                <ButtonCard tipoButton={() => (
+                  setColorBackground2("bg-violet-500 w-full h-full rounded-2xl"),
+                  setContetView2(<Task />)
+                )
+                }
+                  styleCss="w-48 h-20 bg-violet-500 hover:bg-violet-400 border-violet-400 border-solid border-l-0 border-b-0 border-r border-t-0 rounded-t-lg" content={<TitleList titleList='All Tasks' />} />
 
-            </div>
+              </div>
+              {contentView2}
+
+            </>
           } />
+
         </div>
 
       </main>
