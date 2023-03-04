@@ -48,7 +48,11 @@ export default function Home() {
           <CardStylePhone styleCss={colorBackground2} content={
             <>
               <div className="flex">
-                <ButtonCardHome tipoButton={() => setContetView2(<div>List</div>)} styleCss="w-48 h-20 bg-violet-300 hover:bg-violet-400 border-violet-400 border-solid border-l-0 border-b-0 border-r border-t-0 rounded-t-lg" content={<TitleList titleList='List ID' />} />
+                <ButtonCardHome tipoButton={() => (
+                  setColorBackground2("bg-violet-300 w-full h-full rounded-2xl"),
+                  setContetView2(<div>List</div>)
+                )
+                } styleCss="w-48 h-20 bg-violet-300 hover:bg-violet-400 border-violet-400 border-solid border-l-0 border-b-0 border-r border-t-0 rounded-t-lg" content={<TitleList titleList='List ID' />} />
                 <ButtonCardHome tipoButton={() => (
                   setColorBackground2("bg-violet-500 w-full h-full rounded-2xl"),
                   setContetView2(<Task />)
