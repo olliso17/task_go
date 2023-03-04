@@ -2,7 +2,7 @@ import { postList } from "@/services/handler/list_handler"
 import { useState } from "react"
 import { useMutation } from "react-query"
 import Inputs from "../Input"
-import TooltipTask from "../Tooltip"
+
 
 const CardAllAddList = () => {
     const [name, setName] = useState('');
