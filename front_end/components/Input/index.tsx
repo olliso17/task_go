@@ -15,7 +15,7 @@ export default function Inputs({style, nameList, htmlFor, id, defaultValue, type
             <label className="text-sm font-bold" htmlFor={htmlFor}>
                 {nameList}
             </label>
-            <input className="h-9 p-2 text-sm text-violet-400 focus:bg-violet-50 shadow-md rounded-md" type={type} id={id} defaultValue={defaultValue} />
+            <input className="h-9 p-2 text-sm text-violet-400 border-2 border-opacity hover:border-violet-800 shadow-md rounded-md" type={type} id={id} defaultValue={defaultValue} />
         </div>
 
     )
