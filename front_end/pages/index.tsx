@@ -1,17 +1,14 @@
 import Head from 'next/head'
 import CardStylePhone from '@/components/CardStylePhone';
 import TitleList from '@/components/Title';
-import CardAllAdd from '@/components/CardAll';
-import ButtonCard from '@/components/ButtonCard/ButtonCard';
+import CardAllAddList from '@/components/CardAllAddList';
 import { useState } from 'react';
 import Task from '@/components/Task';
-import { OutputTaskDto } from '@/services/dto/task_dto';
-import { getListAll } from '@/services/handler/list_handler';
 import ListAll from '@/components/ListAll';
-// import { useSelector, useDispatch } from "react-redux";
+import ButtonCardHome from '@/components/ButtonCardHome';
 
 export default function Home() {
-  const [contentView1, setContetView1] = useState(<CardAllAdd />);
+  const [contentView1, setContetView1] = useState(<CardAllAddList />);
   const [contentView2, setContetView2] = useState(<></>);
   const [colorBackground, setColorBackground] = useState("bg-violet-300 w-full h-full rounded-2xl");
   const [colorBackground2, setColorBackground2] = useState("bg-violet-300 w-full h-full rounded-2xl");
@@ -29,14 +26,14 @@ export default function Home() {
           <CardStylePhone styleCss={colorBackground} content={
             <>
               <div className="flex">
-                <ButtonCard tipoButton={() =>
+                <ButtonCardHome tipoButton={() =>
                 (
                   setColorBackground("bg-violet-300 w-full h-full rounded-2xl"),
-                  setContetView1(<CardAllAdd />)
+                  setContetView1(<CardAllAddList />)
                 )
                 }
                   styleCss="w-48 h-20 bg-violet-300 hover:bg-violet-400 border-violet-400 border-solid border-l-0 border-b-0 border-r border-t-0 rounded-t-lg" content={<TitleList titleList='Create List' />} />
-                <ButtonCard tipoButton={() => (
+                <ButtonCardHome tipoButton={() => (
                   setColorBackground("bg-violet-500 w-full h-full rounded-2xl"),
                   setContetView1(<ListAll />)
                 )
@@ -51,8 +48,8 @@ export default function Home() {
           <CardStylePhone styleCss={colorBackground2} content={
             <>
               <div className="flex">
-                <ButtonCard tipoButton={() => setContetView2(<div>List</div>)} styleCss="w-48 h-20 bg-violet-300 hover:bg-violet-400 border-violet-400 border-solid border-l-0 border-b-0 border-r border-t-0 rounded-t-lg" content={<TitleList titleList='List ID' />} />
-                <ButtonCard tipoButton={() => (
+                <ButtonCardHome tipoButton={() => setContetView2(<div>List</div>)} styleCss="w-48 h-20 bg-violet-300 hover:bg-violet-400 border-violet-400 border-solid border-l-0 border-b-0 border-r border-t-0 rounded-t-lg" content={<TitleList titleList='List ID' />} />
+                <ButtonCardHome tipoButton={() => (
                   setColorBackground2("bg-violet-500 w-full h-full rounded-2xl"),
                   setContetView2(<Task />)
                 )

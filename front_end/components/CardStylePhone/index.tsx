@@ -1,4 +1,4 @@
-import ButtonCard from "../ButtonCard/ButtonCard"
+import ButtonCardHome from "../ButtonCardHomeHome/ButtonCardHome"
 import ListAll from "../ListAll"
 
 interface Props {

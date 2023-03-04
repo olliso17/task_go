@@ -1,5 +1,4 @@
-import { HTMLAttributes, MouseEventHandler } from "react";
-import ListAll from "../ListAll";
+import { MouseEventHandler } from "react"
 
 type Props = {
     content:JSX.Element
@@ -9,8 +8,8 @@ type Props = {
 }
 
 
-const ButtonCard = ({tipoButton, content, styleCss}:Props)=>(
+const ButtonCardHome = ({tipoButton, content, styleCss}:Props)=>(
     <button onClick={tipoButton} className={styleCss}>{content}</button >
 )
 
-export default ButtonCard;
+export default ButtonCardHome;
