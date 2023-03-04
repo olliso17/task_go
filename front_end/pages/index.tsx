@@ -39,7 +39,7 @@ export default function Home() {
                   setColorBackground("bg-violet-500 w-full h-full rounded-2xl"),
                   setContetView1(
                     <div className='flex flex-col justify-center items-center'>
-                      <form className='overflow-y-auto bg-violet-400 w-11/12 h-[65vh] flex flex-col justify-center items-center '>
+                      <form className='overflow-y-auto pt-[100px] bg-violet-400 w-11/12 h-[65vh] flex flex-col justify-center items-center '>
                         <ListAll />
                       </form>
                     </div>
