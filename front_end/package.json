@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.5.1",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@next/font": "13.1.6",
     "@radix-ui/react-dialog": "^1.0.2",
     "@radix-ui/react-icons": "^1.1.1",
@@ -22,10 +25,12 @@
     "cors": "^2.8.5",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
+    "framer-motion": "^10.1.0",
     "next": "13.1.6",
     "nodemon": "^2.0.20",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.8.0",
     "react-query": "^3.39.3",
     "react-redux": "^8.0.5",
     "redux": "^4.2.1",

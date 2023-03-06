@@ -5,16 +5,12 @@ import CardAllAddList from '@/components/CardAllAddList';
 import { useState } from 'react';
 import Task from '@/components/Task';
 import ListAll from '@/components/ListAll';
-import ButtonCardHome from '@/components/ButtonCardHome';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
 import Link from 'next/link';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 
 
 export default function Home() {
-  const [contentView1, setContetView1] = useState(<CardAllAddList />);
-  const [contentView2, setContetView2] = useState(<></>);
-  const [colorBackground, setColorBackground] = useState("bg-violet-300 w-full h-full rounded-2xl");
-  const [colorBackground2, setColorBackground2] = useState("bg-violet-300 w-full h-full rounded-2xl");
 
   return (
     <>
@@ -26,7 +22,7 @@ export default function Home() {
       </Head>
       <main className="w-screen h-screen flex   flex-col justify-center items-center">
         <div className='flex flex-row w-11/12 h-full bg-violet-200 items-center justify-around'>
-          <CardStylePhone styleCss={colorBackground} content={
+          {/* <CardStylePhone styleCss={colorBackground} content={
             <>
               <div className="flex">
                 <ButtonCardHome tipoButton={() =>
@@ -71,8 +67,8 @@ export default function Home() {
               {contentView2}
 
             </>
-          } />
-
+          } /> */}
+          <CardStylePhone styleCss={"bg-violet-300 w-full h-full rounded-2xl"} contentCreateList={<CardAllAddList/>} contentListAll={<ListAll/>}/>
         </div>
 
       </main>
