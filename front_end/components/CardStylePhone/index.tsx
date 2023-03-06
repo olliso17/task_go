@@ -16,7 +16,6 @@ const CardStylePhone = ({ styleCss, contentCreateList,contentListAll }: Props) =
                     <Tab>List</Tab>
                     <Tab>ListAll</Tab>
                     <Tab>Task</Tab>
-                    <Tab>ListId</Tab>
                     <Tab>TaskAll</Tab>
 
                 </TabList>
