@@ -1,4 +1,5 @@
 import { postList } from "@/services/handler/list_handler"
+import { useToast } from "@chakra-ui/react"
 import { useState } from "react"
 import { useMutation } from "react-query"
 import Inputs from "../Input"
@@ -6,8 +7,15 @@ import Inputs from "../Input"
 
 const CardAllAddList = () => {
     const [name, setName] = useState('');
+    const toast = useToast()
     const mutation = useMutation({mutationFn:postList, onSuccess:() =>{
-        alert('create list successfully added')
+        toast({
+            title: 'Liste create.',
+            description: `"List ${name} successfully created."`,
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          })
     }})
     const onCreateList = (e) => {
         e.preventDefault()
