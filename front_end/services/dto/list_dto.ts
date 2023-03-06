@@ -14,3 +14,10 @@ export interface OutputListDto {
     tasks: OutputTaskDto[]
  
 }
+export interface DeleteListInputDto {
+    id: string
+}
+export interface OutputDeleteListDto {
+    mensage: string
+ 
+}

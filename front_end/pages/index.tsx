@@ -7,6 +7,7 @@ import Task from '@/components/Task';
 import ListAll from '@/components/ListAll';
 import ButtonCardHome from '@/components/ButtonCardHome';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
+import Link from 'next/link';
 
 
 export default function Home() {
@@ -41,8 +42,6 @@ export default function Home() {
                     <div className='overflow-auto  pt-[60px] h-[680px] flex flex-col justify-center items-center'>
                         <ListAll />
                     </div>
-
-
                   )
                 )
                 }

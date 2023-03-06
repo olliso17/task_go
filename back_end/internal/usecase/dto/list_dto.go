@@ -34,9 +34,10 @@ type EditListEntityOutputDto struct {
 	UpdatedAt string        `json:"updated_at"`
 }
 type ListAllOutputDTO struct {
-	ID    string          `json:"id"`
-	Name  string          `json:"name"`
-	Tasks []TaskOutputDTO `json:"tasks"`
+	ID        string          `json:"id"`
+	Name      string          `json:"name"`
+	Tasks     []TaskOutputDTO `json:"tasks"`
+	IsDeleted bool            `json:"is_deleted"`
 }
 
 type ListEntityAllOutputDto struct {

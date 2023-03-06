@@ -1,5 +1,5 @@
 import api from "../backend";
-import { CreateListInputDto, ListIdInputDto, OutputListDto } from "../dto/list_dto";
+import { CreateListInputDto, DeleteListInputDto, ListIdInputDto, OutputDeleteListDto, OutputListDto } from "../dto/list_dto";
 
 
 const getListAll = async () => {
@@ -32,5 +32,11 @@ const postList = async (input: CreateListInputDto): Promise<OutputListDto> => {
 
     return res.data
 }
+const deleteList = async (input: DeleteListInputDto): Promise<OutputDeleteListDto> => {
+    const url = `list/delete`
 
-export {getListId, postList, getListAll};
+    const res = await api.delete(url, input);
+
+    return res.data
+}
+export {getListId, postList, getListAll, deleteList};
