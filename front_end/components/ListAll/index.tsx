@@ -13,8 +13,7 @@ const ListAll = () => {
         data?.map((lists: OutputListDto) => (
             <button className='flex flex-col w-full mt-3 justify-center items-center hover:bg-violet-600'>
                 <div key={lists.id.toString()} className='flex flex-col rounded-2xl w-11/12 p-1 m-1 bg-white justify-around items-center'>
-                    <p>{lists.id}</p>
-                    <p>{lists.name}</p>
+                    <h1>{lists.name}</h1>
                     <p>{lists.tasks != null ? lists.tasks.map((task) => <p>{task.title}</p>) : []}</p>
                 </div>
             </button>
