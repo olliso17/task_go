@@ -1,5 +1,6 @@
 import { OutputTaskDto } from "@/services/dto/task_dto";
-import { AccordionPanel, Badge, Box, Card, Checkbox, Progress, Text } from "@chakra-ui/react";
+import { AccordionPanel, Badge, Box, Card, Checkbox, IconButton, Progress, Text } from "@chakra-ui/react";
+import { AiFillDelete } from "react-icons/ai";
 
 
 interface Props {
@@ -22,6 +23,13 @@ const AccordionTasks = ({ task }: Props) => {
                 </Box>
                 <Checkbox isInvalid={task.status==true?true:false}>Checkbox</Checkbox>
             </Card>
+            <IconButton
+                className="w-3/12 m-2"
+                variant='outline'
+                colorScheme='purple'
+                aria-label='Send email'
+                icon={<AiFillDelete />}
+            />
         </AccordionPanel>
     )
 }
