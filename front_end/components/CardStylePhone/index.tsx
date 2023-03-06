@@ -13,10 +13,8 @@ const CardStylePhone = ({ styleCss, contentCreateList,contentListAll }: Props) =
         <div className={styleCss}>
             <Tabs variant='enclosed'>
                 <TabList>
-                    <Tab>List</Tab>
-                    <Tab>ListAll</Tab>
-                    <Tab>Task</Tab>
-                    <Tab>TaskAll</Tab>
+                    <Tab textColor="purple.700">List</Tab>
+                    <Tab textColor="purple.700">ListAll</Tab>
 
                 </TabList>
                 <TabPanels>

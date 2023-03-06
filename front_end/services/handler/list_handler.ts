@@ -32,11 +32,11 @@ const postList = async (input: CreateListInputDto): Promise<OutputListDto> => {
 
     return res.data
 }
-const deleteList = async (input: DeleteListInputDto): Promise<OutputDeleteListDto> => {
-    const url = `list/delete`
+// const deleteList = async (input: DeleteListInputDto): Promise<OutputDeleteListDto> => {
+//     const url = `list/delete`
 
-    const res = await api.delete(url, input);
+//     const res = await api.delete(url, input);
 
-    return res.data
-}
-export {getListId, postList, getListAll, deleteList};
+//     return res.data
+// }
+export {getListId, postList, getListAll};
