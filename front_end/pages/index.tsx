@@ -7,7 +7,7 @@ import Task from '@/components/Task';
 import ListAll from '@/components/ListAll';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
 import Link from 'next/link';
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Badge, Box, Card, Checkbox, Progress, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react';
 
 
 export default function Home() {
@@ -22,6 +22,8 @@ export default function Home() {
       </Head>
       <main className="w-screen h-screen flex   flex-col justify-center items-center">
         <div className='flex flex-row w-11/12 h-full bg-violet-200 items-center justify-around'>
+        
+
           {/* <CardStylePhone styleCss={colorBackground} content={
             <>
               <div className="flex">
@@ -68,7 +70,7 @@ export default function Home() {
 
             </>
           } /> */}
-          <CardStylePhone styleCss={"bg-violet-300 w-full h-full rounded-2xl"} contentCreateList={<CardAllAddList/>} contentListAll={<ListAll/>}/>
+          <CardStylePhone styleCss={"bg-violet-300 w-full h-full rounded-2xl"} contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />
         </div>
 
       </main>
