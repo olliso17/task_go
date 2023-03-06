@@ -13,7 +13,7 @@ const ListAll = () => {
 
         <Flex className="flex-col overflow-auto w-full h-[680px]">
             {data?.map((lists: OutputListDto) => (
-                <AcordionListTasks key={lists.id} nameList={lists.name} tasks={lists.tasks}/>))}
+                <AcordionListTasks listId={lists.id} key={lists.id} nameList={lists.name} tasks={lists.tasks}/>))}
         </Flex>
 
 

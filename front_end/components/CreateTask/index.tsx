@@ -17,15 +17,6 @@ const CreateTask = ({ list_id }: Props) => {
     const [time_select, setTimeSelect] = useState('');
     const toast = useToast()
     const mutation = useMutation({ mutationFn: postTask })
-
-    // const onCreateTask = (e) => {
-    //     e.preventDefault()
-    //     mutation.mutate({title, description, status, priority, list_id, time_select})
-    //     setDescription('')
-    //     setTitle('')
-    // }
-
-
     return (
         <Formik
             initialValues={{ title: 'create task', description: 'create', priority: false, time_select: '' }}

@@ -6,11 +6,12 @@ import CreateTask from "../CreateTask";
 
 interface Props {
     nameList: string;
+    listId:string;
     // contentTasks: JSX.Element;
     tasks: OutputTaskDto[]
 }
 
-const AcordionListTasks = ({ nameList, tasks }: Props) => {
+const AcordionListTasks = ({listId, nameList, tasks }: Props) => {
     return (
         <Flex className="bg-white rounded-2xl p-2 flex-col items-end m-1">
             <Accordion className="bg-violet-500 text-violet-100 rounded-2xl container" defaultIndex={[0]} allowMultiple>
@@ -36,7 +37,7 @@ const AcordionListTasks = ({ nameList, tasks }: Props) => {
                             </AccordionItem>
                         </TabPanel>
                         <TabPanel>
-                            <CreateTask/>
+                            <CreateTask list_id={listId}/>
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
