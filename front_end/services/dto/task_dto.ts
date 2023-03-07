@@ -1,7 +1,6 @@
 export interface InputCreateTaskDto {
     title: string;
     description: string;
-    status: boolean;
     priority: boolean;
     list_id: string;
     time_select: string;

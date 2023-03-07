@@ -22,13 +22,13 @@ type Task struct {
 	TimeSelect  string
 }
 
-func NewTask(title string, description string, status bool, priority bool, listId string, timeSelect string) (*Task, error) {
+func NewTask(title string, description string, priority bool, listId string, timeSelect string) (*Task, error) {
 	timeNow := time.Now()
 	task := &Task{
 		ID:          uuid.New().String(),
 		Title:       title,
 		Description: description,
-		Status:      status,
+		Status:      false,
 		Priority:    priority,
 		ListID:      listId,
 		CreatedAt:   timeNow.Local().String(),
