@@ -1,6 +1,8 @@
-import { Box, Center, Flex, Heading, Text } from "@chakra-ui/react"
+import { Box, Button, Center, Flex, Heading, Image, Text, useColorMode, useColorModeValue } from "@chakra-ui/react"
 import { ChangeEventHandler } from "react"
 import { FormEventHandler } from "react"
+import Lottie from "lottie-react";
+import * as taskAnimation from "public/list.json";
 
 interface Props {
     nameList: string
@@ -15,11 +17,17 @@ interface Props {
 }
 
 export default function Inputs({ onChange, onSubmit, value, style, nameList, htmlFor, id, defaultValue, type }: Props) {
+    const { colorMode, toggleColorMode } = useColorMode()
+    
     return (
         <Flex justifyContent="space-between" alignItems="center" className="m-2 h-80 flex-col ">
-            <Box>
+            <Button onClick={toggleColorMode}>
+                Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
+            </Button>
+            <Box className="mt-7">
                 <Heading size='3xl'>Hello!,</Heading>
                 <Text fontSize='3xl'>Add your to-do list</Text>
+                <Lottie animationData={taskAnimation} />
             </Box>
 
             <form onSubmit={onSubmit} className="flex flex-col w-80 ">

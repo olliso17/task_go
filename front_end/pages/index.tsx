@@ -3,11 +3,11 @@ import CardStylePhone from '@/components/CardStylePhone';
 import TitleList from '@/components/Title';
 import CardAllAddList from '@/components/CardAllAddList';
 import ListAll from '@/components/ListAll';
-import { Heading } from '@chakra-ui/react';
+import { Box, Flex, Heading, useColorModeValue } from '@chakra-ui/react';
 
 
 export default function Home() {
-
+  const bg = useColorModeValue('purple.200', 'purple.900')
   return (
     <>
       <Head>
@@ -17,10 +17,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="w-screen h-screen flex   flex-col justify-center items-center">
-        <div className='flex flex-row w-11/12 h-full bg-violet-200 items-center justify-around'>
-   
+        <Flex backgroundColor={bg} height="95vh" width="95vw" justifyContent="space-around" alignItems="center">
           <CardStylePhone styleCss={"bg-violet-300 w-full h-full rounded-2xl"} contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />
-        </div>
+        </Flex>
 
       </main>
     </>
