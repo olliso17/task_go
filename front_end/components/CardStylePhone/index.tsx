@@ -1,5 +1,4 @@
 import { Box, Center, Heading, Stack, Tab, TabList, TabPanel, TabPanels, Tabs, useColorModeValue } from "@chakra-ui/react"
-import ListAll from "../ListAll"
 
 interface Props {
     contentCreateList: JSX.Element

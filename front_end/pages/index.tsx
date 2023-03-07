@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import CardStylePhone from '@/components/CardStylePhone';
-import TitleList from '@/components/Title';
 import CardAllAddList from '@/components/CardAllAddList';
 import ListAll from '@/components/ListAll';
 import { Box, Flex, Heading, useColorModeValue } from '@chakra-ui/react';

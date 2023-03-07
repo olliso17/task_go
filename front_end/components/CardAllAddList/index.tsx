@@ -12,14 +12,15 @@ import { Form, Formik } from "formik";
 const CardAllAddList = () => {
     const [name, setName] = useState('');
     const toast = useToast()
-    const textColor = useColorModeValue('gray.800','white')
-    const bgGradientColor = useColorModeValue('linear(to-l, purple.900, purple.500)','linear(to-l, purple.500, purple.200)')
+    const textColor = useColorModeValue('gray.800', 'white')
+    const bgButtonColor = useColorModeValue('purple.200', 'purple.900')
+    const bgGradientColor = useColorModeValue('linear(to-l, purple.900, purple.500)', 'linear(to-l, purple.500, purple.200)')
 
     const mutation = useMutation({
         mutationFn: postList, onSuccess: () => {
             toast({
                 title: 'Liste create.',
-                description: `"List ${name} successfully created."`,
+                description: `"List "${name}" successfully created."`,
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
@@ -34,9 +35,9 @@ const CardAllAddList = () => {
     const style = { whidth: 40, height: 40, };
     return (
 
-        <Flex height="60vh" justifyContent="space-between" alignItems="center" className="m-2 h-80 flex-col ">
-            <Flex width={300} justifyContent="end">
-                <Button backgroundColor="purple.400" rounded="50%" onClick={toggleColorMode}>
+        <Flex height="60vh" flexDirection="column" justifyContent="space-between" margin="8px" alignItems="center">
+            <Flex width="19vw" justifyContent="end">
+                <Button colorScheme={bgButtonColor} backgroundColor={bgButtonColor} rounded="full" onClick={toggleColorMode}>
                     <Lottie style={style} animationData={colorMode == "light" ? lightOff : lightOn} />
                 </Button>
             </Flex>
@@ -70,7 +71,6 @@ const CardAllAddList = () => {
                                 backgroundColor="purple.800"
                                 colorScheme='purple'
                                 textColor="white"
-                                isLoading={props.isSubmitting}
                                 type='submit'
                             >
                                 Save
