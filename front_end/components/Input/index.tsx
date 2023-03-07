@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Heading, Image, Text, useColorMode, useColorModeValue } from "@chakra-ui/react"
+import { Box, Button,Flex, Heading, Text, useColorMode} from "@chakra-ui/react"
 import { ChangeEventHandler } from "react"
 import { FormEventHandler } from "react"
 import Lottie from "lottie-react";
@@ -18,7 +18,7 @@ interface Props {
 
 export default function Inputs({ onChange, onSubmit, value, style, nameList, htmlFor, id, defaultValue, type }: Props) {
     const { colorMode, toggleColorMode } = useColorMode()
-    
+
     return (
         <Flex justifyContent="space-between" alignItems="center" className="m-2 h-80 flex-col ">
             <Button onClick={toggleColorMode}>
