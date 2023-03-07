@@ -1,4 +1,4 @@
-import { Heading, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react"
+import { Box, Center, Heading, Stack, Tab, TabList, TabPanel, TabPanels, Tabs, useColorModeValue } from "@chakra-ui/react"
 import ListAll from "../ListAll"
 
 interface Props {
@@ -8,28 +8,32 @@ interface Props {
 
 }
 
-const CardStylePhone = ({ styleCss, contentCreateList, contentListAll }: Props) => (
-    <div className="bg-black w-96 h-4/5 p-2 rounded-2xl shadow-[0_10px_6px_4px_rgba(0,0,0,0.3)]">
-        <div className={styleCss}>
-            <Tabs variant='enclosed'>
-                <TabList>
-                    <Tab textColor="purple.700">List</Tab>
-                    <Tab textColor="purple.700">ListAll</Tab>
+const CardStylePhone = ({ styleCss, contentCreateList, contentListAll }: Props) => {
+    const bg = useColorModeValue('purple.300', 'purple.900')
+    const textColor = useColorModeValue('gray.700','white')
+    const colorSatack = useColorModeValue('gray.700','gray.900')
+    return (
+        <Center backgroundColor={colorSatack} width="20vw" height="76vh" padding="8px" className="rounded-2xl shadow-[0_10px_6px_4px_rgba(0,0,0,0.3)]">
+            <Box backgroundColor={bg} width="19vw" borderRadius="16px" height="74vh">
+                <Tabs variant='enclosed'>
+                    <TabList>
+                        <Tab textColor={textColor}>List</Tab>
+                        <Tab textColor={textColor}>ListAll</Tab>
 
-                </TabList>
-                <TabPanels>
-                    <TabPanel>
-                        {contentCreateList}
-                    </TabPanel>
-                    <TabPanel>
-                        {contentListAll}
-                    </TabPanel>
-                </TabPanels>
-            </Tabs>
-        </div>
+                    </TabList>
+                    <TabPanels>
+                        <TabPanel>
+                            {contentCreateList}
+                        </TabPanel>
+                        <TabPanel>
+                            {contentListAll}
+                        </TabPanel>
+                    </TabPanels>
+                </Tabs>
+            </Box>
 
-    </div>
-)
-
+        </Center>
+    )
+}
 
 export default CardStylePhone

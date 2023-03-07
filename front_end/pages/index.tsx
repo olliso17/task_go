@@ -7,7 +7,7 @@ import { Box, Flex, Heading, useColorModeValue } from '@chakra-ui/react';
 
 
 export default function Home() {
-  const bg = useColorModeValue('purple.200', 'purple.900')
+  const bg = useColorModeValue('purple.200', 'purple.700')
   return (
     <>
       <Head>
