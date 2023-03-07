@@ -10,6 +10,7 @@ import AccordionTasks from "../AcordionTasks";
 const ListAll = () => {
     const { data } = useQuery("lists", getListAll);
     const bgAccordion = useColorModeValue('purple.300', 'purple.800')
+    const bgAccordionButton = useColorModeValue('purple.400', 'purple.900')
     const bgGradientColor = useColorModeValue('linear(to-l, purple.900, purple.700)', 'linear(to-l, purple.500, purple.200)')
 
     return (
@@ -18,7 +19,7 @@ const ListAll = () => {
             <Flex rounded="2xl" flexDirection="column" margin="4px">
                 <Accordion rounded="2xl" backgroundColor={bgAccordion} defaultIndex={[0]} allowMultiple>
                     <Tabs variant='enclosed'>
-                        <TabList>
+                        <TabList borderColor="purple.500">
                             <Tab roundedTop="2xl" textColor="white">
                                 <Text
                                     marginLeft="16px"
@@ -44,7 +45,7 @@ const ListAll = () => {
                             <TabPanel>
                                 <AccordionItem>
                                     <h2>
-                                        <AccordionButton backgroundColor={bgAccordion}>
+                                        <AccordionButton rounded="2xl" backgroundColor={bgAccordionButton}>
                                             <Box as="span" flex='1' textAlign='left'>
                                                 <Text
                                                     marginLeft="16px"
