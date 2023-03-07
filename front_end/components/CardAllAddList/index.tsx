@@ -1,11 +1,12 @@
 import { postList } from "@/services/handler/list_handler"
-import { Box, Button, Flex, Heading, Text, useColorMode, useToast } from "@chakra-ui/react"
+import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Text, useColorMode, useToast } from "@chakra-ui/react"
 import Lottie from "lottie-react";
 import { useState } from "react"
 import { useMutation } from "react-query"
 import * as listAnimation from "public/list.json";
 import * as lightOff from "public/light_off.json";
 import * as lightOn from "public/light_on.json";
+import { Form, Formik } from "formik";
 
 
 const CardAllAddList = () => {
@@ -30,26 +31,52 @@ const CardAllAddList = () => {
     const style = { whidth: 40, height: 40, };
     return (
 
-        <Flex justifyContent="space-between" alignItems="center" className="m-2 h-80 flex-col ">
-            <Button backgroundColor="purple.400" rounded="50%" onClick={toggleColorMode}>
-                <Lottie style={style} animationData={colorMode == "light" ? lightOff : lightOn} />
-            </Button>
+        <Flex height="60vh" justifyContent="space-between" alignItems="center" className="m-2 h-80 flex-col ">
+            <Flex width={300} justifyContent="end">
+                <Button backgroundColor="purple.400" rounded="50%" onClick={toggleColorMode}>
+                    <Lottie style={style} animationData={colorMode == "light" ? lightOff : lightOn} />
+                </Button>
+            </Flex>
+
             <Box className="mt-7">
-                <Heading size='3xl'>Hello!,</Heading>
-                <Text fontSize='3xl'>Add your to-do list</Text>
+                <Heading textColor="purple.900" size='3xl'>Hello!,</Heading>
+                <Text
+                    bgGradient='linear(to-l, purple.900, purple.500)'
+                    bgClip='text'
+                    fontSize='2xl'
+                    fontWeight='extrabold'
+                >Add your to-do list</Text>
                 <Lottie animationData={listAnimation} />
             </Box>
 
-            <form onSubmit={onCreateList} className="flex flex-col w-80 ">
-                <label className="text-sm font-bold" htmlFor="nameList">
-                    <p>Name List</p>
-                </label>
-                <input onChange={(e) => setName(e.target.value)} className="h-9 p-2 text-sm text-violet-400 border-2 border-opacity hover:border-violet-800 shadow-md rounded-md" type="text" id="nameList" value={name}
-                />
-                <div className="flex w-11/12 items-end justify-end">
-                    <button type="submit" className="bg-violet-900 mt-4 w-1/3 p-1 rounded-xl hover:bg-violet-700 t text-white">Save</button>
-                </div>
-            </form>
+            <Formik
+                initialValues={{ name: '', }}
+                onSubmit={onCreateList}
+
+            >
+                {(props) => (
+
+                    <Form>
+                        <FormControl >
+                            <FormLabel fontWeight="bold">Name List</FormLabel>
+                            <Input backgroundColor="white" focusBorderColor="purple.900" borderColor="purple.400" borderWidth="2px" width="16vw" onChange={(e) => setName(e.target.value)} placeholder='create name list' />
+                        </FormControl>
+                        <Flex justifyContent="end">
+                            <Button
+                                mt={4}
+                                backgroundColor="purple.800"
+                                colorScheme='purple'
+                                textColor="white"
+                                isLoading={props.isSubmitting}
+                                type='submit'
+                            >
+                                Save
+                            </Button>
+                        </Flex>
+
+                    </Form>
+                )}
+            </Formik>
 
         </Flex>
 
