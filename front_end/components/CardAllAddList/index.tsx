@@ -17,8 +17,7 @@ const CardAllAddList = () => {
             isClosable: true,
           })
     }})
-    const onCreateList = (e) => {
-        e.preventDefault()
+    const onCreateList = () => {
         mutation.mutate({ name })
         setName('')
     }

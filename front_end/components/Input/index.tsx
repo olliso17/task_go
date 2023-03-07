@@ -1,3 +1,4 @@
+import { Box, Center, Flex, Heading, Text } from "@chakra-ui/react"
 import { ChangeEventHandler } from "react"
 import { FormEventHandler } from "react"
 
@@ -15,7 +16,12 @@ interface Props {
 
 export default function Inputs({ onChange, onSubmit, value, style, nameList, htmlFor, id, defaultValue, type }: Props) {
     return (
-        <div className="flex flex-col m-2 justify-between h-auto items-center">
+        <Flex justifyContent="space-between" alignItems="center" className="m-2 h-80 flex-col ">
+            <Box>
+                <Heading size='3xl'>Hello!,</Heading>
+                <Text fontSize='3xl'>Add your to-do list</Text>
+            </Box>
+
             <form onSubmit={onSubmit} className="flex flex-col w-80 ">
                 <label className="text-sm font-bold" htmlFor={htmlFor}>
                     {nameList}
@@ -27,7 +33,7 @@ export default function Inputs({ onChange, onSubmit, value, style, nameList, htm
                 </div>
             </form>
 
-        </div>
+        </Flex>
 
 
     )

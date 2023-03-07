@@ -1,4 +1,4 @@
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react"
+import { Heading, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react"
 import ListAll from "../ListAll"
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 
 }
 
-const CardStylePhone = ({ styleCss, contentCreateList,contentListAll }: Props) => (
+const CardStylePhone = ({ styleCss, contentCreateList, contentListAll }: Props) => (
     <div className="bg-black w-96 h-4/5 p-2 rounded-2xl shadow-[0_10px_6px_4px_rgba(0,0,0,0.3)]">
         <div className={styleCss}>
             <Tabs variant='enclosed'>
@@ -22,7 +22,7 @@ const CardStylePhone = ({ styleCss, contentCreateList,contentListAll }: Props) =
                         {contentCreateList}
                     </TabPanel>
                     <TabPanel>
-                       {contentListAll}
+                        {contentListAll}
                     </TabPanel>
                 </TabPanels>
             </Tabs>
