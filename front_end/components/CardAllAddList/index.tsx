@@ -15,6 +15,8 @@ const CardAllAddList = () => {
     const textColor = useColorModeValue('gray.800', 'white')
     const bgButtonColor = useColorModeValue('purple.200', 'purple.900')
     const bgGradientColor = useColorModeValue('linear(to-l, purple.900, purple.500)', 'linear(to-l, purple.500, purple.200)')
+    const bgHeadingGradientColor = useColorModeValue('linear(to-l, purple.500, purple.900)', 'linear(to-l, purple.600, purple.200)')
+
 
     const mutation = useMutation({
         mutationFn: postList, onSuccess: () => {
@@ -43,7 +45,13 @@ const CardAllAddList = () => {
             </Flex>
 
             <Box className="mt-7">
-                <Heading textColor={textColor} size='3xl'>Hello!,</Heading>
+                <Heading size='3xl'> 
+                <Text
+                    bgGradient={bgHeadingGradientColor}
+                    bgClip='text'
+                    fontWeight='extrabold'
+                >Hello,</Text>
+                </Heading>
                 <Text
                     bgGradient={bgGradientColor}
                     bgClip='text'
@@ -62,8 +70,15 @@ const CardAllAddList = () => {
 
                     <Form>
                         <FormControl >
-                            <FormLabel fontWeight="bold">Name List</FormLabel>
-                            <Input backgroundColor="white" focusBorderColor="purple.900" borderColor="purple.400" borderWidth="2px" width="16vw" onChange={(e) => setName(e.target.value)} placeholder='create name list' />
+                            <FormLabel fontWeight="bold">
+                                <Text
+                                    bgGradient={bgGradientColor}
+                                    bgClip='text'
+                                    fontSize='sm'
+                                    fontWeight='extrabold'
+                                >Name List</Text>
+                            </FormLabel>
+                            <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" onChange={(e) => setName(e.target.value)} placeholder='create name list' />
                         </FormControl>
                         <Flex justifyContent="end">
                             <Button
