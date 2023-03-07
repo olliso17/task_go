@@ -12,7 +12,6 @@ import { Form, Formik } from "formik";
 const CardAllAddList = () => {
     const [name, setName] = useState('');
     const toast = useToast()
-    const textColor = useColorModeValue('gray.800', 'white')
     const bgButtonColor = useColorModeValue('purple.200', 'purple.900')
     const bgGradientColor = useColorModeValue('linear(to-l, purple.900, purple.500)', 'linear(to-l, purple.500, purple.200)')
     const bgHeadingGradientColor = useColorModeValue('linear(to-l, purple.500, purple.900)', 'linear(to-l, purple.600, purple.200)')
@@ -43,24 +42,25 @@ const CardAllAddList = () => {
                     <Lottie style={style} animationData={colorMode == "light" ? lightOff : lightOn} />
                 </Button>
             </Flex>
-
-            <Box className="mt-7">
-                <Heading size='3xl'> 
-                <Text
-                    bgGradient={bgHeadingGradientColor}
-                    bgClip='text'
-                    fontWeight='extrabold'
-                >Hello,</Text>
+            <Box marginTop="8px">
+                <Heading marginLeft="16px" size='3xl'>
+                    <Text
+                        bgGradient={bgHeadingGradientColor}
+                        bgClip='text'
+                        fontWeight='extrabold'
+                    >Hello,</Text>
                 </Heading>
                 <Text
+                    marginLeft="16px"
                     bgGradient={bgGradientColor}
                     bgClip='text'
                     fontSize='2xl'
                     fontWeight='extrabold'
                 >Add your to-do list</Text>
-                <Lottie animationData={listAnimation} />
+                <Box marginTop="20px">
+                    <Lottie animationData={listAnimation} />
+                </Box>
             </Box>
-
             <Formik
                 initialValues={{ name: '', }}
                 onSubmit={onCreateList}
