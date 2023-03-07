@@ -15,10 +15,17 @@ const CreateTask = ({ list_id }: Props) => {
     const [priority, setPriority] = useState(false);
     const [time_select, setTimeSelect] = useState('');
     const toast = useToast()
-    const mutation = useMutation({ mutationFn: postTask })
+    const mutation = useMutation({ mutationFn: postTask, onSuccess:() =>{
+        toast({
+            title: 'Task created successfully.',
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          })
+    }})
     return (
         <Formik
-            initialValues={{ title: 'create task', description: 'create', priority: false, time_select: '' }}
+            initialValues={{ title: '', description: '', priority: false, list_id:list_id, time_select: '' }}
             onSubmit={() => mutation.mutate({ title, description, priority, list_id, time_select })}
 
         >
@@ -39,10 +46,10 @@ const CreateTask = ({ list_id }: Props) => {
                     <Button
                         mt={4}
                         colorScheme='teal'
-                        // isLoading={props.isSubmitting}
+                        isLoading={props.isSubmitting}
                         type='submit'
                     >
-                        Submit
+                        Save
                     </Button>
                 </Form>
             )}
