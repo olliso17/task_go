@@ -13,7 +13,7 @@ const CardStylePhone = ({ styleCss, contentCreateList, contentListAll }: Props) 
     const textColor = useColorModeValue('gray.700','white')
     const colorSatack = useColorModeValue('gray.700','gray.900')
     return (
-        <Center backgroundColor={colorSatack} width="20vw" height="76vh" padding="8px" className="rounded-2xl shadow-[0_10px_6px_4px_rgba(0,0,0,0.3)]">
+        <Center backgroundColor={colorSatack} width="20vw" p='6' height="76vh" padding="8px" boxShadow='dark-lg' rounded="2xl">
             <Box backgroundColor={bg} width="19vw" borderRadius="16px" height="74vh">
                 <Tabs variant='enclosed'>
                     <TabList>
