@@ -1,5 +1,5 @@
 import { postList } from "@/services/handler/list_handler"
-import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Text, useColorMode, useToast } from "@chakra-ui/react"
+import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Text, useColorMode, useColorModeValue, useToast } from "@chakra-ui/react"
 import Lottie from "lottie-react";
 import { useState } from "react"
 import { useMutation } from "react-query"
@@ -12,6 +12,9 @@ import { Form, Formik } from "formik";
 const CardAllAddList = () => {
     const [name, setName] = useState('');
     const toast = useToast()
+    const textColor = useColorModeValue('gray.800','white')
+    const bgGradientColor = useColorModeValue('linear(to-l, purple.900, purple.500)','linear(to-l, purple.500, purple.200)')
+
     const mutation = useMutation({
         mutationFn: postList, onSuccess: () => {
             toast({
@@ -39,9 +42,9 @@ const CardAllAddList = () => {
             </Flex>
 
             <Box className="mt-7">
-                <Heading textColor="purple.900" size='3xl'>Hello!,</Heading>
+                <Heading textColor={textColor} size='3xl'>Hello!,</Heading>
                 <Text
-                    bgGradient='linear(to-l, purple.900, purple.500)'
+                    bgGradient={bgGradientColor}
                     bgClip='text'
                     fontSize='2xl'
                     fontWeight='extrabold'
