@@ -26,7 +26,7 @@ const AccordionTasks = ({ task }: Props) => {
                 </Flex>
                 <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
                     <Switch id='status' isChecked={status} onChange={(e) => { setStatus(e.target.checked) }}></Switch>
-                    <IconButton backgroundColor="white"
+                    <IconButton marginLeft="8px" backgroundColor="white"
                         className="w-6"
                         variant='outline'
                         colorScheme='red'
