@@ -5,35 +5,34 @@ import { OutputListDto } from "@/services/dto/list_dto";
 import CreateTask from "../CreateTask";
 import { AiFillDelete } from "react-icons/ai";
 import AccordionTasks from "../AcordionTasks";
+import { useColors} from "@/styles/colors";
 
 
 const ListAll = () => {
     const { data } = useQuery("lists", getListAll);
-    const bgAccordion = useColorModeValue('purple.300', 'purple.800')
-    const bgAccordionButton = useColorModeValue('purple.400', 'purple.900')
-    const bgGradientColor = useColorModeValue('linear(to-l, purple.900, purple.700)', 'linear(to-l, purple.500, purple.200)')
-
+    const allColors = useColors()
+    const listTest:OutputListDto = {id:'1', name:"list1", tasks:[{id:'1', title:"task1", description:"radad"},{id:'2', title:"task2", description:"asdasd"}]}
     return (
 
-        data?.map((list: OutputListDto) => (
+        /*data?.map((list: OutputListDto) => (*/
             <Flex rounded="2xl" flexDirection="column" margin="4px">
-                <Accordion rounded="2xl" backgroundColor={bgAccordion} defaultIndex={[0]} allowMultiple>
+                <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple>
                     <Tabs variant='enclosed'>
                         <TabList borderColor="purple.500">
                             <Tab roundedTop="2xl" textColor="white">
                                 <Text
                                     marginLeft="16px"
-                                    bgGradient={bgGradientColor}
+                                    bgGradient={allColors.bgGradientColor}
                                     bgClip='text'
                                     fontSize='md'
                                     fontWeight='extrabold'
-                                >{list.name}
+                                >{/*list.name*/}
                                 </Text>
                             </Tab>
                             <Tab roundedTop="2xl" textColor="white">
                                 <Text
                                     marginLeft="16px"
-                                    bgGradient={bgGradientColor}
+                                    bgGradient={allColors.bgGradientColor}
                                     bgClip='text'
                                     fontSize='md'
                                     fontWeight='extrabold'
@@ -45,11 +44,11 @@ const ListAll = () => {
                             <TabPanel>
                                 <AccordionItem>
                                     <h2>
-                                        <AccordionButton rounded="2xl" backgroundColor={bgAccordionButton}>
+                                        <AccordionButton rounded="2xl" backgroundColor={allColors.bgAccordionButton}>
                                             <Box as="span" flex='1' textAlign='left'>
                                                 <Text
                                                     marginLeft="16px"
-                                                    bgGradient={bgGradientColor}
+                                                    bgGradient={allColors.bgGradientColor}
                                                     bgClip='text'
                                                     fontSize='md'
                                                     fontWeight='extrabold'
@@ -59,13 +58,14 @@ const ListAll = () => {
                                             <AccordionIcon />
                                         </AccordionButton>
                                     </h2>
-                                    {list.tasks?.map((task) => (
+                                    {/*list.tasks?.map((task) => (*/
+                                    listTest.tasks.map((task) => 
                                         <AccordionTasks key={task.id.toString()} task={task} />
-                                    ))}
+                                    )}
                                 </AccordionItem>
                             </TabPanel>
                             <TabPanel>
-                                <CreateTask list_id={list.id} />
+                                <CreateTask list_id={/*list.id*/ listTest.id} />
                             </TabPanel>
                         </TabPanels>
                     </Tabs>
@@ -83,7 +83,8 @@ const ListAll = () => {
                 </Accordion>
 
 
-            </Flex>))
+            </Flex>
+            /*))*/
 
 
     )

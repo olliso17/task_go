@@ -20,10 +20,10 @@ export interface OutputTaskDto {
     id: string;
     title: string;
     description: string;
-    status: boolean;
-    priority: boolean;
-    list_id: string;
-    time_select: string;
-    is_deleted: boolean;
+    // status: boolean;
+    // priority: boolean;
+    // list_id: string;
+    // time_select: string;
+    // is_deleted: boolean;
 }
 
