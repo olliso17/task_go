@@ -32,7 +32,7 @@ services:
       dockerfile: DockerFile
     command: node_modules/.bin/nodemon --exec npm start
     ports:
-      - "3000:3000"
+      - "3000:3001"
     volumes:
       - /front_end
     depends_on:

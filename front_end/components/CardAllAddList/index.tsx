@@ -1,4 +1,4 @@
-import { useHandlerList } from "@/services/handler/list_handler"
+import { postList } from "@/services/handler/list_handler"
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Text, useColorMode, useColorModeValue, useToast } from "@chakra-ui/react"
 import Lottie from "lottie-react";
 import { useState } from "react"
@@ -7,6 +7,7 @@ import * as lightOff from "public/light_off.json";
 import * as lightOn from "public/light_on.json";
 import { Form, Formik } from "formik";
 import { useColors } from "@/hooksPerson/colors";
+import { useMutation } from "react-query";
 
 
 
@@ -14,17 +15,21 @@ const CardAllAddList = () => {
     const [name, setName] = useState('');
     const toast = useToast()
     const allColors = useColors()
-    const mutation = useHandlerList()
+    const mutation = useMutation({
+        mutationFn: postList, onSuccess: (() => {
+            toast({
+                title: 'Liste create.',
+                description: `"List "${name}" successfully created."`,
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+
+        })
+    })
 
     const onCreateList = () => {
-        mutation.postList.mutate({ name })
-        toast({
-            title: 'Liste create.',
-            description: `"List "${name}" successfully created."`,
-            status: 'success',
-            duration: 9000,
-            isClosable: true,
-        })
+        mutation.mutate({ name })
         setName('')
     }
     const { colorMode, toggleColorMode } = useColorMode()
@@ -59,7 +64,7 @@ const CardAllAddList = () => {
             <Formik
                 initialValues={{ name: '', }}
                 onSubmit={onCreateList}
-                
+
             >
                 {(props) => (
 

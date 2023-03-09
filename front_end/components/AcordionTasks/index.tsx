@@ -12,8 +12,7 @@ interface Props {
 const AccordionTasks = ({ task }: Props) => {
     const [status, setStatus] = useState(false);
     const mutation = useMutation({ mutationFn: patchTaskEdit })
-    const onChangeStatus = (e) => {
-        setStatus(e.target.checked)
+    const onChangeStatus = () => {
         mutation.mutate({ status })
         console.log(status)
     }
@@ -23,15 +22,12 @@ const AccordionTasks = ({ task }: Props) => {
                 <Flex flexDirection="column" justifyContent="space-between" flex='1'>
                     <Text fontWeight='bold'>
                         {task.title}
-                        <Badge ml='1' colorScheme='green' >
-                            {task.priority == true ? 'Priority' : ''}
-                        </Badge>
                     </Text>
                     <Text fontSize='sm'>{task.description}</Text>
                 </Flex>
                 <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
 
-                    <Checkbox borderWidth="0.2vw" borderColor="purple.900" isDisabled={task.status} isChecked={status} onChange={onChangeStatus}>
+                    <Checkbox borderWidth="0.2vw" borderColor="purple.900" isDisabled={task.status} isChecked={status} onChange={ (e)=>setStatus(e.target.checked)}>
                     </Checkbox>
 
                 </Flex>

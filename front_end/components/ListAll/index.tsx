@@ -1,20 +1,21 @@
-import { useHandlerList } from "@/services/handler/list_handler";
+import { getListAll} from "@/services/handler/list_handler";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, Box, Flex, IconButton, Progress, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { OutputListDto } from "@/services/dto/list_dto";
 import CreateTask from "../CreateTask";
 import { AiFillDelete } from "react-icons/ai";
 import AccordionTasks from "../AcordionTasks";
 import { useColors } from "@/hooksPerson/colors";
+import { useQuery } from "react-query";
 
 
 const ListAll = () => {
-    const useQueryListAll = useHandlerList();
+    const data = useQuery("lists", getListAll);
     const allColors = useColors()
-    // const listTest:OutputListDto = {id:'1', name:"list1", tasks:[{id:'1', title:"task1", description:"radad"},{id:'2', title:"task2", description:"asdasd"}]}
+
     return (
 
-        useQueryListAll.getListAll.map((list: OutputListDto) => (
-            <Flex rounded="2xl" flexDirection="column" margin="4px">
+        data.data.map((list: OutputListDto) => (
+            <Flex key={list.id} rounded="2xl" flexDirection="column" margin="4px">
                 <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple>
                     <Tabs variant='enclosed'>
                         <TabList borderColor="purple.500">
@@ -58,13 +59,12 @@ const ListAll = () => {
                                         </AccordionButton>
                                     </h2>
                                     {list.tasks?.map((task) => (
-                                    listTest.tasks.map((task) => 
                                         <AccordionTasks key={task.id.toString()} task={task} />
-                                    )}
+                                    ))}
                                 </AccordionItem>
                             </TabPanel>
                             <TabPanel>
-                                <CreateTask list_id={/*list.id*/ listTest.id} />
+                                <CreateTask list_id={list.id} />
                             </TabPanel>
                         </TabPanels>
                     </Tabs>

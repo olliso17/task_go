@@ -60,4 +60,4 @@ const useHandlerList=()=>{
 
     return handler_list
 }
-export {useHandlerList}
+export {postList, getListAll}
