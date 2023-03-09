@@ -1,20 +1,20 @@
-import { getListAll } from "@/services/handler/list_handler";
+import { useHandlerList } from "@/services/handler/list_handler";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, Box, Flex, IconButton, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useColorModeValue } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { OutputListDto } from "@/services/dto/list_dto";
 import CreateTask from "../CreateTask";
 import { AiFillDelete } from "react-icons/ai";
 import AccordionTasks from "../AcordionTasks";
-import { useColors} from "@/styles/colors";
+import { useColors } from "@/hooksPerson/colors";
 
 
 const ListAll = () => {
-    const { data } = useQuery("lists", getListAll);
+    const useQueryListAll = useHandlerList();
     const allColors = useColors()
     const listTest:OutputListDto = {id:'1', name:"list1", tasks:[{id:'1', title:"task1", description:"radad"},{id:'2', title:"task2", description:"asdasd"}]}
     return (
 
-        /*data?.map((list: OutputListDto) => (*/
+        /*useQueryListAll.getListAll?.map((list: OutputListDto) => (*/
             <Flex rounded="2xl" flexDirection="column" margin="4px">
                 <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple>
                     <Tabs variant='enclosed'>

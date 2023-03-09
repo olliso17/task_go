@@ -1,5 +1,5 @@
 
-import { useColors } from "@/styles/colors"
+import { useColors } from "@/hooksPerson/colors"
 import { Box, Center, Flex, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useColorModeValue} from "@chakra-ui/react"
 import TabNameAdd from "./TabNameAdd"
 

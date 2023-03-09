@@ -1,6 +1,6 @@
 
-import { useColors } from "@/styles/colors"
-import { Tab, Text, useColorModeValue } from "@chakra-ui/react"
+import { useColors } from "@/hooksPerson/colors"
+import { Tab, Text} from "@chakra-ui/react"
 
 interface Props{
     nameTab:string
