@@ -14,6 +14,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-chi/cors v1.2.1 // indirect
 	github.com/jessevdk/go-flags v1.5.0 // indirect
+	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rs/cors v1.8.3 // indirect
 	github.com/sbinet/go-eval v0.0.0-20160521182218-34e015998e32 // indirect
