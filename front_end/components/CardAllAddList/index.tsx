@@ -1,35 +1,30 @@
-import { postList } from "@/services/handler/list_handler"
+import { useHandlerList } from "@/services/handler/list_handler"
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Text, useColorMode, useColorModeValue, useToast } from "@chakra-ui/react"
 import Lottie from "lottie-react";
 import { useState } from "react"
-import { useMutation } from "react-query"
 import * as listAnimation from "public/list.json";
 import * as lightOff from "public/light_off.json";
 import * as lightOn from "public/light_on.json";
 import { Form, Formik } from "formik";
+import { useColors } from "@/hooksPerson/colors";
+
 
 
 const CardAllAddList = () => {
     const [name, setName] = useState('');
     const toast = useToast()
-    const bgButtonColor = useColorModeValue('purple.200', 'purple.900')
-    const bgGradientColor = useColorModeValue('linear(to-l, purple.900, purple.500)', 'linear(to-l, purple.500, purple.200)')
-    const bgHeadingGradientColor = useColorModeValue('linear(to-l, purple.500, purple.900)', 'linear(to-l, purple.600, purple.200)')
+    const allColors = useColors()
+    const mutation = useHandlerList()
 
-
-    const mutation = useMutation({
-        mutationFn: postList, onSuccess: () => {
-            toast({
-                title: 'Liste create.',
-                description: `"List "${name}" successfully created."`,
-                status: 'success',
-                duration: 9000,
-                isClosable: true,
-            })
-        }
-    })
     const onCreateList = () => {
-        mutation.mutate({ name })
+        mutation.postList.mutate({ name })
+        toast({
+            title: 'Liste create.',
+            description: `"List "${name}" successfully created."`,
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+        })
         setName('')
     }
     const { colorMode, toggleColorMode } = useColorMode()
@@ -38,21 +33,21 @@ const CardAllAddList = () => {
 
         <Flex height="60vh" flexDirection="column" justifyContent="space-between" margin="8px" alignItems="center">
             <Flex width="19vw" justifyContent="end">
-                <Button colorScheme={bgButtonColor} backgroundColor={bgButtonColor} rounded="full" onClick={toggleColorMode}>
+                <Button colorScheme={allColors.bgAccordionButton} backgroundColor={allColors.bgAccordionButton} rounded="full" onClick={toggleColorMode}>
                     <Lottie style={style} animationData={colorMode == "light" ? lightOff : lightOn} />
                 </Button>
             </Flex>
             <Box marginTop="8px">
                 <Heading marginLeft="16px" size='3xl'>
                     <Text
-                        bgGradient={bgHeadingGradientColor}
+                        bgGradient={allColors.bgHeadingGradientColor}
                         bgClip='text'
                         fontWeight='extrabold'
                     >Hello,</Text>
                 </Heading>
                 <Text
                     marginLeft="16px"
-                    bgGradient={bgGradientColor}
+                    bgGradient={allColors.bgGradientColor}
                     bgClip='text'
                     fontSize='2xl'
                     fontWeight='extrabold'
@@ -64,7 +59,7 @@ const CardAllAddList = () => {
             <Formik
                 initialValues={{ name: '', }}
                 onSubmit={onCreateList}
-
+                
             >
                 {(props) => (
 
@@ -72,7 +67,7 @@ const CardAllAddList = () => {
                         <FormControl >
                             <FormLabel fontWeight="bold">
                                 <Text
-                                    bgGradient={bgGradientColor}
+                                    bgGradient={allColors.bgGradientColor}
                                     bgClip='text'
                                     fontSize='sm'
                                     fontWeight='extrabold'

@@ -1,5 +1,7 @@
+import { useRouter } from "next/router";
+import { useMutation, useQuery } from "react-query";
 import api from "../backend";
-import { CreateListInputDto, DeleteListInputDto, ListIdInputDto, OutputDeleteListDto, OutputListDto } from "../dto/list_dto";
+import { CreateListInputDto, ListIdInputDto, OutputListDto } from "../dto/list_dto";
 
 
 const getListAll = async () => {
@@ -39,4 +41,23 @@ const postList = async (input: CreateListInputDto): Promise<OutputListDto> => {
 
 //     return res.data
 // }
-export {getListId, postList, getListAll};
+
+
+const useMutationPostList = ()=> useMutation({
+    mutationFn: postList
+    
+})
+
+
+const useQueryListAll = ()=> useQuery("lists", getListAll)
+
+const useHandlerList=()=>{
+    const postList = useMutationPostList()
+    const getListAll = useQueryListAll()
+    const handler_list = {
+        postList, getListAll
+    }
+
+    return handler_list
+}
+export {useHandlerList}

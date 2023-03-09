@@ -2,11 +2,12 @@ import Head from 'next/head'
 import CardStylePhone from '@/components/CardStylePhone';
 import CardAllAddList from '@/components/CardAllAddList';
 import ListAll from '@/components/ListAll';
-import { Box, Flex, Heading, Stack, useColorModeValue } from '@chakra-ui/react';
+import {Flex} from '@chakra-ui/react';
+import { useColors } from '@/hooksPerson/colors';
 
 
 export default function Home() {
-  const bg = useColorModeValue('white', 'purple.700')
+  const allColors= useColors()
   return (
     <>
       <Head>
@@ -15,7 +16,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Flex backgroundColor={bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
+      <Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
         <CardStylePhone contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />
       </Flex>
     </>

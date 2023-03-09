@@ -1,16 +1,16 @@
 
-import { Tab, Text, useColorModeValue } from "@chakra-ui/react"
+import { useColors } from "@/hooksPerson/colors"
+import { Tab, Text} from "@chakra-ui/react"
 
 interface Props{
     nameTab:string
 }
 const TabNameAdd = ({nameTab}:Props) => {
-    const textColor = useColorModeValue('gray.700', 'white')
-    const bgGradientColor = useColorModeValue('linear(to-l, purple.900, purple.600)', 'linear(to-l, purple.500, purple.200)')
+    const allColors = useColors()
     return (
-        <Tab roundedTop="2xl" textColor={textColor}>
+        <Tab roundedTop="2xl" textColor={allColors.textColor}>
             <Text
-                bgGradient={bgGradientColor}
+                bgGradient={allColors.bgGradientColor}
                 bgClip='text'
                 fontSize='1xl'
                 fontWeight='extrabold'
