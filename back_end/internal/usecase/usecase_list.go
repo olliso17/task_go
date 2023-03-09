@@ -55,7 +55,7 @@ func (l *ListUsecase) FindAll() ([]dto.ListAllOutputDTO, error) {
 		})
 
 	}
-	for positionList, _ := range listAll {
+	for positionList := range listAll {
 
 		for positionTask, valueTask := range tasks {
 			if listAll[positionList].ID == tasks[positionTask].ListID && tasks[positionTask].IsDeleted != true {
