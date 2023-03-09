@@ -2,7 +2,6 @@ import { useHandlerList } from "@/services/handler/list_handler"
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Text, useColorMode, useColorModeValue, useToast } from "@chakra-ui/react"
 import Lottie from "lottie-react";
 import { useState } from "react"
-import { useMutation } from "react-query"
 import * as listAnimation from "public/list.json";
 import * as lightOff from "public/light_off.json";
 import * as lightOn from "public/light_on.json";

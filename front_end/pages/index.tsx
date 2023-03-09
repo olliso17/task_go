@@ -3,7 +3,7 @@ import CardStylePhone from '@/components/CardStylePhone';
 import CardAllAddList from '@/components/CardAllAddList';
 import ListAll from '@/components/ListAll';
 import {Flex} from '@chakra-ui/react';
-import { useColors } from '@/styles/colors';
+import { useColors } from '@/hooksPerson/colors';
 
 
 export default function Home() {

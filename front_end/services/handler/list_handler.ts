@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useMutation, useQuery } from "react-query";
 import api from "../backend";
 import { CreateListInputDto, ListIdInputDto, OutputListDto } from "../dto/list_dto";
@@ -46,6 +47,7 @@ const useMutationPostList = ()=> useMutation({
     mutationFn: postList
     
 })
+
 
 const useQueryListAll = ()=> useQuery("lists", getListAll)
 
