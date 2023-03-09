@@ -1,8 +1,9 @@
 import { OutputTaskDto } from "@/services/dto/task_dto";
-import { AccordionPanel, Badge, Box, Card, Center, Checkbox, Flex, IconButton, Progress, Switch, Text } from "@chakra-ui/react";
+import { patchTaskEdit } from "@/services/handler/task_handler";
+import { AccordionPanel, Badge, Checkbox, Flex, FormControl, IconButton, Progress, Radio, Switch, Text, Toast } from "@chakra-ui/react";
 import { useState } from "react";
-import { AiFillDelete } from "react-icons/ai";
-
+import { useMutation } from "react-query";
+import { Form, Formik } from "formik";
 
 interface Props {
     task: OutputTaskDto
@@ -10,10 +11,15 @@ interface Props {
 
 const AccordionTasks = ({ task }: Props) => {
     const [status, setStatus] = useState(false);
-
+    const mutation = useMutation({ mutationFn: patchTaskEdit })
+    const onChangeStatus = (e) => {
+        setStatus(e.target.checked)
+        mutation.mutate({ status })
+        console.log(status)
+    }
     return (
-        <AccordionPanel key={task.id.toString()} height="14vh">
-            <Flex padding="8px" height="12vh" width="15vw" backgroundColor={task.status == true ? "gray" : "white"}>
+        <AccordionPanel key={task.id} height="10vh">
+            <Flex rounded="md" justifyContent="space-between" alignItems="center" padding="8px" width="15vw" backgroundColor={task.status == true ? "purple.400" : "white"}>
                 <Flex flexDirection="column" justifyContent="space-between" flex='1'>
                     <Text fontWeight='bold'>
                         {task.title}
@@ -22,19 +28,13 @@ const AccordionTasks = ({ task }: Props) => {
                         </Badge>
                     </Text>
                     <Text fontSize='sm'>{task.description}</Text>
-                    <Progress colorScheme="purple" hasStripe value={64} />
                 </Flex>
                 <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
-                    <Switch id='status' isChecked={status} onChange={(e) => { setStatus(e.target.checked) }}></Switch>
-                    <IconButton marginLeft="8px" backgroundColor="white"
-                        className="w-6"
-                        variant='outline'
-                        colorScheme='red'
-                        aria-label='delete task'
-                        icon={<AiFillDelete />}
-                    />
-                </Flex>
 
+                    <Checkbox borderWidth="0.2vw" borderColor="purple.900" isDisabled={task.status} isChecked={status} onChange={onChangeStatus}>
+                    </Checkbox>
+
+                </Flex>
             </Flex>
         </AccordionPanel>
     )

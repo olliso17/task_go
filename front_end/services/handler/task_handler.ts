@@ -1,5 +1,5 @@
 import api from "../backend";
-import { InputCreateTaskDto, OutputTaskDto, TaskCompletedInputDto, TaskIdInputDto, TaskTitleInputDto } from "../dto/task_dto";
+import { InputCreateTaskDto, OutputTaskDto, TaskCompletedInputDto, TaskIdInputDto, TaskStatusInputDto, TaskTitleInputDto } from "../dto/task_dto";
 
 const postTask = async (
     input: InputCreateTaskDto
@@ -26,14 +26,15 @@ const getTaskTitle = async (input: TaskTitleInputDto): Promise<OutputTaskDto> =>
     return res.data;
 };
 
-//criar um update finalizando a task
-// const getTaskCompleted = async (input: TaskCompletedInputDto): Promise<OutputTaskDto> => {
-//     const url = `/task/completed/${input}`;
+const patchTaskEdit = async (input: TaskStatusInputDto):Promise<OutputTaskDto>  => {
+    const url = "list/edit";
 
-//     const res = await api.get(url);
+    const res = await api.patch(url, input);
 
-//     return res.data;
-// }
+    const data = res.data;
+
+    return data;
+}
 
 const getTasks = async () => {
     const url = 'tasks';
@@ -45,4 +46,4 @@ const getTasks = async () => {
     return data;
 };
 
-export { postTask, getTaskId, getTaskTitle, getTasks};
+export { postTask, getTaskId, getTaskTitle, getTasks, patchTaskEdit};

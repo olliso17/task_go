@@ -3,7 +3,7 @@ import { CreateListInputDto, DeleteListInputDto, ListIdInputDto, OutputDeleteLis
 
 
 const getListAll = async () => {
-    const url = `lists`
+    const url = "lists"
 
     const res = await api.get(url);
 

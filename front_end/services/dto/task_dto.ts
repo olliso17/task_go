@@ -11,6 +11,9 @@ export interface TaskIdInputDto {
 export interface TaskTitleInputDto {
     title: string;
 }
+export interface TaskStatusInputDto {
+    status: boolean;
+}
 export interface TaskCompletedInputDto {
     id: string;
     status: boolean;
