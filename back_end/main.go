@@ -18,7 +18,8 @@ func main() {
 	// creatreTaskUseCase := NewCreateTaskUseCase(db)
 	newWebTaskHandlerPostgres := NewWebTaskHandlerGen(db_postgres)
 	newWebListHandlerPostgres := NewWebListHandlerGen(db_postgres)
+	newWebUserHandlerPostgres := NewWebUserHandlerGen(db_postgres)
 
-	routes.RoutesAll(":8080", newWebTaskHandlerPostgres, newWebListHandlerPostgres)
+	routes.RoutesAll(":8080", newWebTaskHandlerPostgres, newWebListHandlerPostgres, newWebUserHandlerPostgres)
 
 }

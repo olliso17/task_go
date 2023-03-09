@@ -18,6 +18,10 @@ var SetListRepositoryDependency = wire.NewSet(
 	database.NewListRepository,
 	wire.Bind(new(*interfaces.ListRepositoryInterface), new(*database.ListRepository)),
 )
+var SetUserRepositoryDependency = wire.NewSet(
+	database.NewUserRepository,
+	wire.Bind(new(*interfaces.UserRepositoryInterface), new(*database.UserRepository)),
+)
 
 // func NewCreateTaskUseCase(db *sql.DB) *usecase.TaskUseCase {
 // 	wire.Build(
@@ -38,4 +42,10 @@ func NewWebListHandler(db *sql.DB) *web.WebListHandler {
 		SetListRepositoryDependency,
 	)
 	return &web.WebListHandler{}
+}
+func NewWebUserHandler(db *sql.DB) *web.WebUserHandler {
+	wire.Build(
+		SetUserRepositoryDependency,
+	)
+	return &web.WebUserHandler{}
 }

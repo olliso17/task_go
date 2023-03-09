@@ -5,7 +5,7 @@ import (
 	"back_end/internal/infra/web/webserver"
 )
 
-func RoutesAll(serverPort string, newWebTaskHandler *web.WebTaskHandler, newWebListHandler *web.WebListHandler) {
+func RoutesAll(serverPort string, newWebTaskHandler *web.WebTaskHandler, newWebListHandler *web.WebListHandler, newWebUserHandler *web.WebUserHandler) {
 	webserver := webserver.NewWebServer(serverPort)
 
 	webserver.AddHandler("/task/create", newWebTaskHandler.Create)
@@ -22,5 +22,7 @@ func RoutesAll(serverPort string, newWebTaskHandler *web.WebTaskHandler, newWebL
 	webserver.AddHandler("/list/edit", newWebListHandler.EditList)
 	webserver.AddHandler("/list/delete", newWebListHandler.SoftDelete)
 
+	webserver.AddHandler("/user/create", newWebUserHandler.Create)
+	webserver.AddHandler("/user/login", newWebUserHandler.CheckPassword)
 	webserver.Start()
 }
