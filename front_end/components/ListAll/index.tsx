@@ -9,12 +9,12 @@ import { useQuery } from "react-query";
 
 
 const ListAll = () => {
-    const data = useQuery("lists", getListAll);
+    const {data} = useQuery("lists", getListAll);
     const allColors = useColors()
 
     return (
 
-        data.data.map((list: OutputListDto) => (
+        data?.map((list: OutputListDto) => (
             <Flex key={list.id} rounded="2xl" flexDirection="column" margin="4px">
                 <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple>
                     <Tabs variant='enclosed'>
