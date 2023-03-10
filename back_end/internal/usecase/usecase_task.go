@@ -9,17 +9,17 @@ import (
 	"time"
 )
 
-type TaskUseCase struct {
+type TaskRepository struct {
 	TaskRepository interfaces.TaskRepositoryInterface
 }
 
-func NewTaskUseCase(taskRepository interfaces.TaskRepositoryInterface) *TaskUseCase {
-	return &TaskUseCase{
+func NewTaskRepository(taskRepository interfaces.TaskRepositoryInterface) *TaskRepository {
+	return &TaskRepository{
 		TaskRepository: taskRepository,
 	}
 }
 
-func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error) {
+func (c *TaskRepository) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error) {
 	taskAll, err := c.TaskRepository.FindAll()
 
 	task, _ := entity.NewTask(input.Title, input.Description, input.Priority, input.ListID, input.TimeSelect)
@@ -49,7 +49,7 @@ func (c *TaskUseCase) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error)
 	return dto, nil
 }
 
-func (c *TaskUseCase) FindExceptDeleted() ([]dto.TaskOutputDTO, error) {
+func (c *TaskRepository) FindExceptDeleted() ([]dto.TaskOutputDTO, error) {
 	tasks, err := c.TaskRepository.FindAll()
 	if err != nil {
 		return []dto.TaskOutputDTO{}, err
@@ -75,7 +75,7 @@ func (c *TaskUseCase) FindExceptDeleted() ([]dto.TaskOutputDTO, error) {
 	return listTaskAll, nil
 }
 
-func (c *TaskUseCase) FindAll() ([]entity.Task, error) {
+func (c *TaskRepository) FindAll() ([]entity.Task, error) {
 	tasks, err := c.TaskRepository.FindAll()
 	if err != nil {
 		return []entity.Task{}, err
@@ -84,7 +84,7 @@ func (c *TaskUseCase) FindAll() ([]entity.Task, error) {
 	return tasks, nil
 }
 
-func (c *TaskUseCase) FindTitle(title string) ([]entity.Task, error) {
+func (c *TaskRepository) FindTitle(title string) ([]entity.Task, error) {
 	taskAll, err := c.TaskRepository.FindExceptDeleted()
 
 	if err != nil {
@@ -104,7 +104,7 @@ func (c *TaskUseCase) FindTitle(title string) ([]entity.Task, error) {
 
 }
 
-func (c *TaskUseCase) FindByID(id string) (entity.Task, error) {
+func (c *TaskRepository) FindByID(id string) (entity.Task, error) {
 	taskAll, err := c.TaskRepository.FindExceptDeleted()
 	if err != nil {
 		return entity.Task{}, err
@@ -119,7 +119,7 @@ func (c *TaskUseCase) FindByID(id string) (entity.Task, error) {
 	return entity.Task{}, err
 
 }
-func (c *TaskUseCase) EditTask(task dto.TaskEditInputDTO) (dto.TaskEditOutputDTO, error) {
+func (c *TaskRepository) EditTask(task dto.TaskEditInputDTO) (dto.TaskEditOutputDTO, error) {
 	taskAll, err := c.TaskRepository.FindAll()
 
 	if err != nil {
@@ -158,7 +158,7 @@ func (c *TaskUseCase) EditTask(task dto.TaskEditInputDTO) (dto.TaskEditOutputDTO
 	return dto, err
 }
 
-func (c *TaskUseCase) TaskCompleted(input dto.TaskInputCompletedDTO) (dto.TaskOutputMessageDTO, error) {
+func (c *TaskRepository) TaskCompleted(input dto.TaskInputCompletedDTO) (dto.TaskOutputMessageDTO, error) {
 	task, err := c.TaskRepository.FindByID(input.ID)
 	timestamp := time.Now()
 	if err != nil {
@@ -172,7 +172,7 @@ func (c *TaskUseCase) TaskCompleted(input dto.TaskInputCompletedDTO) (dto.TaskOu
 
 }
 
-func (c *TaskUseCase) SoftDelete(input dto.TaskInputSoftDeleteDTO) (dto.TaskOutputMessageDTO, error) {
+func (c *TaskRepository) SoftDelete(input dto.TaskInputSoftDeleteDTO) (dto.TaskOutputMessageDTO, error) {
 	task, err := c.TaskRepository.FindByID(input.ID)
 	timestamp := time.Now()
 	if err != nil {

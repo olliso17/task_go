@@ -2,7 +2,7 @@ package interfaces
 
 import "back_end/internal/entity"
 
-type TokenRepository interface {
+type TokenRepositoryInterface interface {
 	CreateAccessToken(user *entity.User, secret string, expiry int) (accessToken string, err error)
 	CreateRefreshToken(user *entity.User, secret string, expiry int) (refreshToken string, err error)
 	IsAuthorized(requestToken string, secret string) (bool, error)

@@ -7,17 +7,17 @@ import (
 	"os"
 )
 
-type UserUsecase struct {
+type UserRepository struct {
 	UserRepository interfaces.UserRepositoryInterface
 }
 
-func NewUserUsecase(userRepository interfaces.UserRepositoryInterface) *UserUsecase {
-	return &UserUsecase{
+func NewUserRepository(userRepository interfaces.UserRepositoryInterface) *UserRepository {
+	return &UserRepository{
 		UserRepository: userRepository,
 	}
 }
 
-func (userRepository *UserUsecase) Create(input dto.UserInputDTO) (dto.UserOutputDTO, error) {
+func (userRepository *UserRepository) Create(input dto.UserInputDTO) (dto.UserOutputDTO, error) {
 	user, _ := entity.NewUser(input.Email, input.Name, input.Password)
 
 	if err := userRepository.UserRepository.Create(user); err != nil {
@@ -29,7 +29,7 @@ func (userRepository *UserUsecase) Create(input dto.UserInputDTO) (dto.UserOutpu
 	return dto, nil
 }
 
-func (userRepository *UserUsecase) CheckPassword(input dto.CheckPasswordInputDTO) (dto.UserOutputDTO, error) {
+func (userRepository *UserRepository) CheckPassword(input dto.CheckPasswordInputDTO) (dto.UserOutputDTO, error) {
 	password := entity.Hash(input.Email, os.Getenv("CRYPTO_PASSWORD"), input.Password)
 	email := entity.Hash(input.Password, os.Getenv("CRYPTO_EMAIL"), input.Email)
 	user, err := userRepository.UserRepository.CheckPassword(email, password)

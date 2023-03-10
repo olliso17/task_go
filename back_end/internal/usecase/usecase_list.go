@@ -7,19 +7,19 @@ import (
 	"time"
 )
 
-type ListUsecase struct {
+type ListRepository struct {
 	ListRepository interfaces.ListRepositoryInterface
 	TaskRepository interfaces.TaskRepositoryInterface
 }
 
-func NewListUsecase(listRepository interfaces.ListRepositoryInterface, taskRepository interfaces.TaskRepositoryInterface) *ListUsecase {
-	return &ListUsecase{
+func NewListRepository(listRepository interfaces.ListRepositoryInterface, taskRepository interfaces.TaskRepositoryInterface) *ListRepository {
+	return &ListRepository{
 		ListRepository: listRepository,
 		TaskRepository: taskRepository,
 	}
 }
 
-func (l *ListUsecase) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error) {
+func (l *ListRepository) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error) {
 
 	list, err := entity.NewListEntity(input.Name)
 
@@ -37,7 +37,7 @@ func (l *ListUsecase) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error
 	return dto, nil
 }
 
-func (l *ListUsecase) FindAll() ([]dto.ListAllOutputDTO, error) {
+func (l *ListRepository) FindAll() ([]dto.ListAllOutputDTO, error) {
 	lists, err := l.ListRepository.FindAll()
 
 	tasks, err := l.TaskRepository.FindAll()
@@ -77,7 +77,7 @@ func (l *ListUsecase) FindAll() ([]dto.ListAllOutputDTO, error) {
 	return listAll, nil
 }
 
-func (l *ListUsecase) FindByID(id string) (dto.ListAllOutputDTO, error) {
+func (l *ListRepository) FindByID(id string) (dto.ListAllOutputDTO, error) {
 	list, err := l.ListRepository.FindByID(id)
 	tasks, err := l.TaskRepository.FindAll()
 	if err != nil {
@@ -107,7 +107,7 @@ func (l *ListUsecase) FindByID(id string) (dto.ListAllOutputDTO, error) {
 
 }
 
-func (l *ListUsecase) EditList(list dto.EditListEntityInputDto) (dto.EditListEntityOutputDto, error) {
+func (l *ListRepository) EditList(list dto.EditListEntityInputDto) (dto.EditListEntityOutputDto, error) {
 	timesTamp := time.Now().Local().String()
 	listEntity, err := l.ListRepository.FindByID(list.ID)
 	tasks, err := l.TaskRepository.FindAll()
@@ -127,7 +127,7 @@ func (l *ListUsecase) EditList(list dto.EditListEntityInputDto) (dto.EditListEnt
 	return dto, err
 }
 
-func (l *ListUsecase) SoftDelete(input dto.ListInputSoftDeleteDTO) (dto.ListOutputMessageDTO, error) {
+func (l *ListRepository) SoftDelete(input dto.ListInputSoftDeleteDTO) (dto.ListOutputMessageDTO, error) {
 	timestamp := time.Now().Local().String()
 	list, err := l.ListRepository.FindByID(input.ID)
 	tasks, err := l.TaskRepository.FindAll()
