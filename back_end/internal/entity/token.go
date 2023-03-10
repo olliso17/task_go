@@ -11,19 +11,19 @@ import (
 var jwtKey = []byte(os.Getenv("CRYPTO_EMAIL"))
 
 type JWTClaim struct {
-	UserID string
-	Name   string
-	Email  string
+	User  User
+	Name  string
+	Email string
 	jwt.StandardClaims
 }
 
 func GenerateJWT(email string, userName string) (tokenString string, err error) {
-	expirationTime := time.Now().Add(1 * time.Hour)
+	expire := time.Now().Add(1 * time.Hour)
 
 	auth := &JWTClaim{
 		Email:          email,
 		Name:           userName,
-		StandardClaims: jwt.StandardClaims{ExpiresAt: expirationTime.Unix()},
+		StandardClaims: jwt.StandardClaims{ExpiresAt: expire.Unix()},
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, auth)

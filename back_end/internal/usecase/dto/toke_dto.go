@@ -6,9 +6,10 @@ import (
 )
 
 type InputTokenDTO struct {
-	User  entity.User `json:"user"`
-	Name  string      `json:"name"`
-	Email string      `json:"email"`
+	User   entity.User `json:"user"`
+	Name   string      `json:"name"`
+	Email  string      `json:"email"`
+	Expiry int64       `json:"expiry"`
 }
 
 type OutputCreateTokenDTO struct {
