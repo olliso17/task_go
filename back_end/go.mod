@@ -12,6 +12,7 @@ require (
 require (
 	github.com/avito-tech/go-mutesting v0.0.0-20230213082317-d1faf20aea4f // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/go-chi/cors v1.2.1 // indirect
 	github.com/jessevdk/go-flags v1.5.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
