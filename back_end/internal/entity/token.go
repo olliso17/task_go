@@ -11,8 +11,9 @@ import (
 var jwtKey = []byte(os.Getenv("CRYPTO_EMAIL"))
 
 type JWTClaim struct {
-	Name  string
-	Email string
+	UserID string
+	Name   string
+	Email  string
 	jwt.StandardClaims
 }
 
