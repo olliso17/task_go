@@ -32,7 +32,7 @@ func (h *WebListHandler) Create(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
+	createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
 	output, err := createList.Execute(dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -51,7 +51,7 @@ func (h *WebListHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
+	createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
 	output, err := createList.FindAll()
 
 	err = json.NewEncoder(w).Encode(output)
@@ -71,7 +71,7 @@ func (h *WebListHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 
 	params := r.URL.Query().Get("id")
 
-	createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
+	createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
 	output, err := createList.FindByID(params)
 
 	err = json.NewEncoder(w).Encode(output)
@@ -93,7 +93,7 @@ func (h *WebListHandler) EditList(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
+	createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
 	output, err := createList.EditList(input)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -117,7 +117,7 @@ func (h *WebListHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	createList := *usecase.NewListUsecase(h.ListRepository, h.TaskRepository)
+	createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
 
 	ListDelete, err := createList.SoftDelete(input)
 	if err != nil {

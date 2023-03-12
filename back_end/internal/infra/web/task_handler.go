@@ -31,7 +31,7 @@ func (h *WebTaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+	createTask := *usecase.NewTaskRepository(h.TaskRepository)
 	output, err := createTask.Execute(dto)
 
 	if err != nil {
@@ -52,7 +52,7 @@ func (h *WebTaskHandler) FindExceptDeleted(w http.ResponseWriter, r *http.Reques
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+	createTask := *usecase.NewTaskRepository(h.TaskRepository)
 	output, err := createTask.FindExceptDeleted()
 
 	err = json.NewEncoder(w).Encode(output)
@@ -69,7 +69,7 @@ func (h *WebTaskHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+	createTask := *usecase.NewTaskRepository(h.TaskRepository)
 	output, err := createTask.FindAll()
 
 	err = json.NewEncoder(w).Encode(output)
@@ -88,7 +88,7 @@ func (h *WebTaskHandler) FindTitle(w http.ResponseWriter, r *http.Request) {
 
 	params := r.URL.Query().Get("title")
 
-	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+	createTask := *usecase.NewTaskRepository(h.TaskRepository)
 	output, err := createTask.FindTitle(params)
 
 	err = json.NewEncoder(w).Encode(output)
@@ -106,7 +106,7 @@ func (h *WebTaskHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 	}
 	params := r.URL.Query().Get("id")
 
-	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+	createTask := *usecase.NewTaskRepository(h.TaskRepository)
 	output, err := createTask.FindByID(params)
 
 	err = json.NewEncoder(w).Encode(output)
@@ -128,7 +128,7 @@ func (h *WebTaskHandler) EditTask(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+	createTask := *usecase.NewTaskRepository(h.TaskRepository)
 	output, err := createTask.EditTask(input)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -151,7 +151,7 @@ func (h *WebTaskHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 	input := dto.TaskInputSoftDeleteDTO{
 		ID: id,
 	}
-	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+	createTask := *usecase.NewTaskRepository(h.TaskRepository)
 
 	taskDelete, err := createTask.SoftDelete(input)
 	if err != nil {
@@ -178,7 +178,7 @@ func (h *WebTaskHandler) TaskCompleted(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	createTask := *usecase.NewTaskUseCase(h.TaskRepository)
+	createTask := *usecase.NewTaskRepository(h.TaskRepository)
 
 	taskDelete, err := createTask.TaskCompleted(input)
 	if err != nil {

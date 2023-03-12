@@ -9,12 +9,14 @@ import (
 )
 
 type WebUserHandler struct {
-	UserRepository interfaces.UserRepositoryInterface
+	UserRepository  interfaces.UserRepositoryInterface
+	TokenRepository interfaces.TokenRepositoryInterface
 }
 
-func NewUserHandler(userRepository interfaces.UserRepositoryInterface) *WebUserHandler {
+func NewUserHandler(userRepository interfaces.UserRepositoryInterface, tokenRepository interfaces.TokenRepositoryInterface) *WebUserHandler {
 	return &WebUserHandler{
-		UserRepository: userRepository,
+		UserRepository:  userRepository,
+		TokenRepository: tokenRepository,
 	}
 }
 
@@ -31,7 +33,7 @@ func (userHandler *WebUserHandler) Create(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	createUser := *usecase.NewUserUsecase(userHandler.UserRepository)
+	createUser := *usecase.NewUserRepository(userHandler.UserRepository, userHandler.TokenRepository)
 	output, err := createUser.Create(dto)
 
 	if err != nil {
@@ -59,7 +61,7 @@ func (userHandler *WebUserHandler) CheckPassword(w http.ResponseWriter, r *http.
 		return
 	}
 
-	createUser := *usecase.NewUserUsecase(userHandler.UserRepository)
+	createUser := *usecase.NewUserRepository(userHandler.UserRepository, userHandler.TokenRepository)
 	output, err := createUser.CheckPassword(dto)
 
 	if err != nil {
