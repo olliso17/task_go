@@ -45,30 +45,3 @@ func (userHandler *WebUserHandler) Create(w http.ResponseWriter, r *http.Request
 	}
 
 }
-
-func (userHandler *WebUserHandler) CheckPassword(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
-	var dto dto.CheckPasswordInputDTO
-	err := json.NewDecoder(r.Body).Decode(&dto)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	createUser := *usecase.NewUserRepository(userHandler.UserRepository)
-	output, err := createUser.CheckPassword(dto)
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	err = json.NewEncoder(w).Encode(output)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-}

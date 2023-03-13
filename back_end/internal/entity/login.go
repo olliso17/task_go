@@ -8,12 +8,11 @@ import (
 
 type Login struct {
 	ID          string
-	AccessToken string
 	UserID      string
+	AccessToken string
 	CreatedAt   time.Time
 	ExpiredAt   time.Time
 	IsExpired   bool
-	IsSuccess   bool
 }
 
 func NewLogin(userId string, accessToken string) (*Login, error) {
@@ -23,8 +22,8 @@ func NewLogin(userId string, accessToken string) (*Login, error) {
 		UserID:      userId,
 		AccessToken: accessToken,
 		CreatedAt:   time.Now(),
+		ExpiredAt:   time.Now().Add(1 * time.Hour),
 		IsExpired:   false,
-		IsSuccess:   false,
 	}
 
 	return login, nil

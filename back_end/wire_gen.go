@@ -40,7 +40,13 @@ func NewWebUserHandlerGen(db *sql.DB) *web.WebUserHandler{
 	webUserHandler := web.NewUserHandler(userRepository)
 	return webUserHandler
 }
-
+func NewWebLoginHandlerGen(db *sql.DB) *web.WebLoginHandler{
+	loginNewRepository := database.NewLoginRepository(db)
+	userRepository := database.NewUserRepository(db)
+	webLoginHandler := web.NewLoginHandler(loginNewRepository, userRepository)
+	return webLoginHandler
+}
 var setTaskRepositoryDependency = wire.NewSet(database.NewTaskRepository, wire.Bind(new(interfaces.TaskRepositoryInterface), new(*database.TaskRepository)))
+var setLoginRepositoryDependency = wire.NewSet(database.NewLoginRepository, wire.Bind(new(interfaces.LoginRepositoryInterface), new(*database.LoginRepository)))
 var setListRepositoryDependency = wire.NewSet(database.NewListRepository, wire.Bind(new(interfaces.ListRepositoryInterface), new(*database.ListRepository)))
 var setUserRepositoryDependency = wire.NewSet(database.NewUserRepository, wire.Bind(new(interfaces.UserRepositoryInterface), new(*database.UserRepository)))

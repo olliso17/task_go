@@ -22,6 +22,10 @@ var SetUserRepositoryDependency = wire.NewSet(
 	database.NewUserRepository,
 	wire.Bind(new(*interfaces.UserRepositoryInterface), new(*database.UserRepository)),
 )
+var SetLoginRepositoryDependency = wire.NewSet(
+	database.NewUserRepository,
+	wire.Bind(new(*interfaces.ListRepositoryInterface), new(*database.LoginRepository)),
+)
 
 // func NewCreateTaskUseCase(db *sql.DB) *usecase.TaskUseCase {
 // 	wire.Build(
@@ -48,4 +52,11 @@ func NewWebUserHandler(db *sql.DB) *web.WebUserHandler {
 		SetUserRepositoryDependency,
 	)
 	return &web.WebUserHandler{}
+}
+
+func NewWebLoginHandler(db *sql.DB) *web.WebLoginHandler {
+	wire.Build(
+		SetLoginRepositoryDependency,
+	)
+	return &web.WebLoginHandler{}
 }

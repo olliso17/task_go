@@ -59,10 +59,16 @@ ALTER TABLE IF EXISTS public.users
 
 CREATE TABLE IF NOT EXISTS public.logins
 (
-    id text COLLATE pg_catalog."default",
+    id text COLLATE pg_catalog."default" NOT NULL,
     user_id text COLLATE pg_catalog."default",
-    acess_token text COLLATE pg_catalog."default",
-    created_at text COLLATE pg_catalog."default",
-    expired_at text COLLATE pg_catalog."default",
-    is_expired boolean
+    access_token text COLLATE pg_catalog."default",
+    created_at date,
+    expired_at date,
+    is_expired boolean,
+    CONSTRAINT logins_pkey PRIMARY KEY (id)
 )
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.logins
+    OWNER to root;

@@ -19,7 +19,8 @@ func main() {
 	newWebTaskHandlerPostgres := NewWebTaskHandlerGen(db_postgres)
 	newWebListHandlerPostgres := NewWebListHandlerGen(db_postgres)
 	newWebUserHandlerPostgres := NewWebUserHandlerGen(db_postgres)
+	newWebLoginHandlerPostgres := NewWebLoginHandlerGen(db_postgres)
 
-	routes.RoutesAll(":8080", newWebTaskHandlerPostgres, newWebListHandlerPostgres, newWebUserHandlerPostgres)
+	routes.RoutesAll(":8080", newWebTaskHandlerPostgres, newWebListHandlerPostgres, newWebUserHandlerPostgres, newWebLoginHandlerPostgres)
 
 }
