@@ -5,7 +5,6 @@ import (
 	"back_end/internal/entity/interfaces"
 	"back_end/internal/usecase/dto"
 	"os"
-	"time"
 )
 
 type LoginRepository struct {
@@ -39,9 +38,7 @@ func (loginRepository *LoginRepository) Execute(input dto.InputLoginDto) (dto.Ou
 		}
 
 		dto := dto.OutPutLoginDto{
-			AccessToken: login.AccessToken,
-			Expired:     time.Now().Add(1 * time.Hour),
-			Mensage:     "Login successfully",
+			Mensage: "Login successfully",
 		}
 
 		return dto, err
@@ -52,13 +49,13 @@ func (loginRepository *LoginRepository) Execute(input dto.InputLoginDto) (dto.Ou
 	loginFindUserId.IsExpired = login.IsExpired
 
 	if err := loginRepository.LoginRepository.EditLogin(&loginFindUserId); err != nil {
-		return dto.OutPutLoginDto{}, err
+		return dto.OutPutLoginDto{
+			Mensage: "Unable to login please review your credentials",
+		}, err
 	}
 
 	dto := dto.OutPutLoginDto{
-		AccessToken: login.AccessToken,
-		Expired:     time.Now().Add(1 * time.Hour),
-		Mensage:     "Login successfully",
+		Mensage: "Login successfully",
 	}
 
 	return dto, err
