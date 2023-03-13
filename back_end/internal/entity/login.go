@@ -3,22 +3,18 @@ package entity
 import "time"
 
 type Login struct {
-	Email       string
-	UserID      string
-	Password    string
 	AccessToken string
-	CreatedAt   string
+	UserID      string
+	CreatedAt   time.Time
+	ExpiredAt   time.Time
 }
 
-func NewLogin(email string, password string, userId string, accessToken string) (*Login, error) {
-	timsesTemp := time.Now().Local().String()
+func NewLogin(userId string, accessToken string) (*Login, error) {
 
 	login := &Login{
-		Email:       email,
-		Password:    password,
 		UserID:      userId,
 		AccessToken: accessToken,
-		CreatedAt:   timsesTemp,
+		CreatedAt:   time.Now(),
 	}
 
 	return login, nil

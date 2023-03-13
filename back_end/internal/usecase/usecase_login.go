@@ -27,9 +27,9 @@ func (loginRepository *LoginRepository) Execute(input dto.InputLoginDto) (dto.Ou
 	}
 	token, _ := entity.GenerateJWT(user.Email, user.Password)
 	tokenCreate, _ := loginRepository.TokenRepository.CreateAccessToken(&user, token, 3)
-
+	login, _ := entity.NewLogin(user.ID, tokenCreate)
 	dto := dto.OutPutLoginDto{
-		AccessToken: tokenCreate,
+		AccessToken: login.AccessToken,
 		Mensage:     "Login successfully",
 	}
 
