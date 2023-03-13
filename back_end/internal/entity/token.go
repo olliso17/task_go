@@ -11,18 +11,18 @@ import (
 var jwtKey = []byte(os.Getenv("CRYPTO_EMAIL"))
 
 type JWTClaim struct {
-	User  User
-	Name  string
-	Email string
+	User     User
+	Password string
+	Email    string
 	jwt.StandardClaims
 }
 
-func GenerateJWT(email string, userName string) (tokenString string, err error) {
+func GenerateJWT(email string, password string) (tokenString string, err error) {
 	expire := time.Now().Add(1 * time.Hour)
 
 	auth := &JWTClaim{
 		Email:          email,
-		Name:           userName,
+		Password:       password,
 		StandardClaims: jwt.StandardClaims{ExpiresAt: expire.Unix()},
 	}
 

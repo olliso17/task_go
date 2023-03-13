@@ -28,7 +28,10 @@ func (tokenRepository *TokenRepository) CreateAccessToken(input dto.InputTokenDT
 	if _, err := tokenRepository.TokenRepository.CreateAccessToken(&input.User, token, expiry); err != nil {
 		return dto.OutputCreateTokenDTO{AccessToken: "Unable to create token"}, err
 	}
-	dto := dto.OutputCreateTokenDTO{AccessToken: token}
+	dto := dto.OutputCreateTokenDTO{
+		AccessToken: token,
+		Expired:     expiry,
+	}
 
 	return dto, nil
 }

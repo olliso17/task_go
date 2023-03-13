@@ -14,6 +14,7 @@ type InputTokenDTO struct {
 
 type OutputCreateTokenDTO struct {
 	AccessToken string `json:"access_token"`
+	Expired     int64  `json:"expired"`
 }
 
 type OutputTokenDTO struct {

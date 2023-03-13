@@ -7,12 +7,15 @@ type UserInputDTO struct {
 }
 
 type UserOutputDTO struct {
-	Mensage     string `json:"mensage"`
-	AccessToken string `json:"access_token"`
+	Mensage string `json:"mensage"`
 }
 
 type CheckPasswordInputDTO struct {
 	Email    string `json:"email"`
-	Name     string `json:"name"`
+	Password string `json:"password"`
+}
+
+type CheckPasswordOutputDTO struct {
+	Email    string `json:"email"`
 	Password string `json:"password"`
 }

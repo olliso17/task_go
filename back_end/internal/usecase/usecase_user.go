@@ -32,16 +32,21 @@ func (userRepository *UserRepository) Create(input dto.UserInputDTO) (dto.UserOu
 	return dto, nil
 }
 
-func (userRepository *UserRepository) CheckPassword(input dto.CheckPasswordInputDTO) (dto.UserOutputDTO, error) {
+func (userRepository *UserRepository) CheckPassword(input dto.CheckPasswordInputDTO) (dto.CheckPasswordOutputDTO, error) {
 	password := entity.Hash(input.Email, os.Getenv("CRYPTO_PASSWORD"), input.Password)
-	email := entity.Hash(input.Name, os.Getenv("CRYPTO_EMAIL"), input.Email)
+	email := entity.Hash(input.Password, os.Getenv("CRYPTO_EMAIL"), input.Email)
 	user, err := userRepository.UserRepository.CheckPassword(email, password)
 
 	if err != nil || user.Email == "" && user.Password == "" {
-		return dto.UserOutputDTO{Mensage: "incorrect credentials"}, err
+		return dto.CheckPasswordOutputDTO{}, err
 	}
-	dto := dto.UserOutputDTO{
-		Mensage: "Successfully logged in",
+	if err != nil || user.Email != email || user.Password != password {
+		return dto.CheckPasswordOutputDTO{}, err
+	}
+
+	dto := dto.CheckPasswordOutputDTO{
+		Email:    user.Email,
+		Password: user.Password,
 	}
 	return dto, nil
 }

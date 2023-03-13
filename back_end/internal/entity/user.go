@@ -29,7 +29,7 @@ func NewUser(email string, name string, password string) (*User, error) {
 	user := &User{
 		ID:        uuid.New().String(),
 		Name:      name,
-		Email:     Hash(name, os.Getenv("CRYPTO_EMAIL"), email),
+		Email:     Hash(password, os.Getenv("CRYPTO_EMAIL"), email),
 		Password:  Hash(email, os.Getenv("CRYPTO_PASSWORD"), password),
 		IsAdmin:   false,
 		CreatedAt: timsesTemp,
