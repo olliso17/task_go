@@ -8,28 +8,26 @@ import (
 )
 
 type UserRepository struct {
-	UserRepository  interfaces.UserRepositoryInterface
-	TokenRepository interfaces.TokenRepositoryInterface
+	UserRepository interfaces.UserRepositoryInterface
 }
 
-func NewUserRepository(userRepository interfaces.UserRepositoryInterface, tokenRepository interfaces.TokenRepositoryInterface) *UserRepository {
+func NewUserRepository(userRepository interfaces.UserRepositoryInterface) *UserRepository {
 	return &UserRepository{
-		UserRepository:  userRepository,
-		TokenRepository: tokenRepository,
+		UserRepository: userRepository,
 	}
 }
 
 func (userRepository *UserRepository) Create(input dto.UserInputDTO) (dto.UserOutputDTO, error) {
-	user, _ := entity.NewUser(input.Email, input.Name, input.Password)
-	token, _ := entity.GenerateJWT(user.Email, user.Name)
-	tokenCreate, _ := userRepository.TokenRepository.CreateAccessToken(user, token, 2)
+	user, err := entity.NewUser(input.Email, input.Name, input.Password)
 
-	if err := userRepository.UserRepository.Create(user); err != nil {
-		return dto.UserOutputDTO{Mensage: "Unable to create user", AccessToken: tokenCreate}, err
+	if user.Name != "" && user.Email != "" && user.Password != "" {
+		dto := dto.UserOutputDTO{
+			Mensage: "User not created",
+		}
+		return dto, err
 	}
 	dto := dto.UserOutputDTO{
-		Mensage:     "User created successfully",
-		AccessToken: tokenCreate,
+		Mensage: "User created successfully",
 	}
 	return dto, nil
 }
