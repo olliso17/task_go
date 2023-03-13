@@ -57,11 +57,12 @@ ALTER TABLE IF EXISTS public.users
     OWNER to root;
 
 
-CREATE TABLE IF NOT EXISTS public.tokens
+CREATE TABLE IF NOT EXISTS public.logins
 (
+    id text COLLATE pg_catalog."default",
     user_id text COLLATE pg_catalog."default",
     acess_token text COLLATE pg_catalog."default",
     created_at text COLLATE pg_catalog."default",
-    deleted_at text COLLATE pg_catalog."default",
-    is_deleted boolean
+    expired_at text COLLATE pg_catalog."default",
+    is_expired boolean
 )

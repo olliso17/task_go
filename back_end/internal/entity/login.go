@@ -13,6 +13,7 @@ type Login struct {
 	CreatedAt   time.Time
 	ExpiredAt   time.Time
 	IsExpired   bool
+	IsSuccess   bool
 }
 
 func NewLogin(userId string, accessToken string) (*Login, error) {
@@ -23,6 +24,7 @@ func NewLogin(userId string, accessToken string) (*Login, error) {
 		AccessToken: accessToken,
 		CreatedAt:   time.Now(),
 		IsExpired:   false,
+		IsSuccess:   false,
 	}
 
 	return login, nil

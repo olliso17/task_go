@@ -17,12 +17,12 @@ func NewLoginRepository(db *sql.DB) *LoginRepository {
 }
 
 func (r *LoginRepository) Execute(login *entity.Login) error {
-	stmt, err := r.Db.Prepare("INSERT INTO logins (id, access_token, user_id, created_at, expired_at, is_expired) VALUES ($1, $2, $3, $4, $5, $6)")
+	stmt, err := r.Db.Prepare("INSERT INTO logins (id, access_token, user_id, created_at, expired_at, is_expired, is_success) VALUES ($1, $2, $3, $4, $5, $6, $7)")
 	if err != nil {
 		fmt.Print("o erro:", err)
 		return err
 	}
-	_, err = stmt.Exec(login.ID, login.AccessToken, login.UserID, login.CreatedAt, login.ExpiredAt, login.IsExpired)
+	_, err = stmt.Exec(login.ID, login.AccessToken, login.UserID, login.CreatedAt, login.ExpiredAt, login.IsExpired, login.IsSuccess)
 	if err != nil {
 		return err
 	}
