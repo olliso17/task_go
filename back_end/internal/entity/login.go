@@ -22,7 +22,7 @@ func NewLogin(userId string, accessToken string) (*Login, error) {
 		UserID:      userId,
 		AccessToken: accessToken,
 		CreatedAt:   time.Now(),
-		ExpiredAt:   time.Now().Add(1 * time.Hour),
+		ExpiredAt:   time.Now().Add(24 * time.Hour),
 		IsExpired:   false,
 	}
 
