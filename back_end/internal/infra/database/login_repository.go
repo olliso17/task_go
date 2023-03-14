@@ -16,7 +16,7 @@ func NewLoginRepository(db *sql.DB) *LoginRepository {
 	}
 }
 
-func (r *LoginRepository) Execute(login *entity.Login) error {
+func (r *LoginRepository) Create(login *entity.Login) error {
 	stmt, err := r.Db.Prepare("INSERT INTO logins (id, user_id, access_token,  created_at, expired_at, is_expired) VALUES ($1, $2, $3, $4, $5, $6)")
 	if err != nil {
 		fmt.Print("o erro:", err)

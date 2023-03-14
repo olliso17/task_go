@@ -19,7 +19,7 @@ func NewLoginRepository(loginRepository interfaces.LoginRepositoryInterface, use
 	}
 }
 
-func (loginRepository *LoginRepository) Execute(input dto.InputLoginDto) (dto.OutPutLoginDto, error) {
+func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.OutPutLoginDto, error) {
 	password := entity.Hash(input.Email, os.Getenv("CRYPTO_PASSWORD"), input.Password)
 	email := entity.Hash(input.Password, os.Getenv("CRYPTO_EMAIL"), input.Email)
 	user, err := loginRepository.UserRepository.CheckPassword(email, password)
@@ -33,12 +33,13 @@ func (loginRepository *LoginRepository) Execute(input dto.InputLoginDto) (dto.Ou
 	login, _ := entity.NewLogin(user.ID, token)
 	if loginFindUserId.UserID != login.UserID {
 
-		if err := loginRepository.LoginRepository.Execute(login); err != nil {
+		if err := loginRepository.LoginRepository.Create(login); err != nil {
 			return dto.OutPutLoginDto{}, err
 		}
 
 		dto := dto.OutPutLoginDto{
-			Mensage: "Login successfully",
+			AccessToken: login.AccessToken,
+			Mensage:     "Login successfully",
 		}
 
 		return dto, err
@@ -50,12 +51,14 @@ func (loginRepository *LoginRepository) Execute(input dto.InputLoginDto) (dto.Ou
 
 	if err := loginRepository.LoginRepository.EditLogin(&loginFindUserId); err != nil {
 		return dto.OutPutLoginDto{
-			Mensage: "Unable to login please review your credentials",
+			AccessToken: " ",
+			Mensage:     "Unable to login please review your credentials",
 		}, err
 	}
 
 	dto := dto.OutPutLoginDto{
-		Mensage: "Login successfully",
+		AccessToken: login.AccessToken,
+		Mensage:     "Login successfully",
 	}
 
 	return dto, err

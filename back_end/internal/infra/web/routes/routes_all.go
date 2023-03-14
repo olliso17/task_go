@@ -24,7 +24,7 @@ func RoutesAll(serverPort string, newWebTaskHandler *web.WebTaskHandler, newWebL
 
 	webserver.AddHandler("/user/create", newWebUserHandler.Create)
 
-	webserver.AddHandler("/login", newWebLoginHandler.Execute)
+	webserver.AddHandler("/login", newWebLoginHandler.Create /*|| newWebLoginHandler.Execute*/)
 	// webserver.AddHandler("/logins", newWebLoginHandler.FindAll)
 
 	webserver.Start()

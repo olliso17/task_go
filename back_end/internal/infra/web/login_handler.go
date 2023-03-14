@@ -21,7 +21,7 @@ func NewLoginHandler(loginRepository interfaces.LoginRepositoryInterface, userRe
 	}
 }
 
-func (h *WebLoginHandler) Execute(w http.ResponseWriter, r *http.Request) {
+func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -35,7 +35,7 @@ func (h *WebLoginHandler) Execute(w http.ResponseWriter, r *http.Request) {
 	}
 
 	login := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
-	output, err := login.Execute(dto)
+	output, err := login.Create(dto)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
