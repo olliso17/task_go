@@ -1,7 +1,6 @@
 package entity
 
 import (
-	"fmt"
 	"sync"
 )
 
@@ -12,15 +11,11 @@ type Manager struct {
 	Maxlifetime int64
 }
 
-func NewManager(provideName, cookieName string, maxlifetime int64) (*Manager, error) {
-	var provides = make(map[string]Provider)
-	provider, ok := provides[provideName]
-	if !ok {
-		return nil, fmt.Errorf("session: unknown provide %q (forgotten import?)", provideName)
-	}
-	return &Manager{
-		Provider:    provider,
-		CookieName:  cookieName,
-		Maxlifetime: maxlifetime,
-	}, nil
-}
+// func NewManager(cookieName string, maxlifetime int64) (*Manager, error) {
+
+// 	return &Manager{
+// 		Provider:    provide,
+// 		CookieName:  cookieName,
+// 		Maxlifetime: maxlifetime,
+// 	}, nil
+// }

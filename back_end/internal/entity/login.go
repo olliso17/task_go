@@ -7,23 +7,21 @@ import (
 )
 
 type Login struct {
-	ID          string
-	UserID      string
-	AccessToken string
-	CreatedAt   time.Time
-	ExpiredAt   time.Time
-	IsExpired   bool
+	ID        string
+	UserID    string
+	Cookie    Cookie
+	CreatedAt time.Time
+	IsExpired bool
 }
 
-func NewLogin(userId string, accessToken string) (*Login, error) {
+func NewLogin(userId string, cookie Cookie) (*Login, error) {
 
 	login := &Login{
-		ID:          uuid.New().String(),
-		UserID:      userId,
-		AccessToken: accessToken,
-		CreatedAt:   time.Now(),
-		ExpiredAt:   time.Now().Add(24 * time.Hour),
-		IsExpired:   false,
+		ID:        uuid.New().String(),
+		UserID:    userId,
+		Cookie:    cookie,
+		CreatedAt: time.Now().Local(),
+		IsExpired: false,
 	}
 
 	return login, nil

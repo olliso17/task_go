@@ -29,8 +29,8 @@ func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.Out
 		return dto.OutPutLoginDto{}, err
 	}
 	token, _ := entity.GenerateJWT(user.Email, user.Password)
-
-	login, _ := entity.NewLogin(user.ID, token)
+	cookie := entity.NewCookie("access_token", token, "/", "/login")
+	login, _ := entity.NewLogin(user.ID, *cookie)
 	if loginFindUserId.UserID != login.UserID {
 
 		if err := loginRepository.LoginRepository.Create(login); err != nil {
@@ -38,27 +38,23 @@ func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.Out
 		}
 
 		dto := dto.OutPutLoginDto{
-			AccessToken: login.AccessToken,
-			Mensage:     "Login successfully",
+			Mensage: "Login successfully",
 		}
 
 		return dto, err
 	}
-	loginFindUserId.AccessToken = login.AccessToken
+	loginFindUserId.Cookie = login.Cookie
 	loginFindUserId.CreatedAt = login.CreatedAt
-	loginFindUserId.ExpiredAt = login.ExpiredAt
 	loginFindUserId.IsExpired = login.IsExpired
 
 	if err := loginRepository.LoginRepository.EditLogin(&loginFindUserId); err != nil {
 		return dto.OutPutLoginDto{
-			AccessToken: " ",
-			Mensage:     "Unable to login please review your credentials",
+			Mensage: "Unable to login please review your credentials",
 		}, err
 	}
 
 	dto := dto.OutPutLoginDto{
-		AccessToken: login.AccessToken,
-		Mensage:     "Login successfully",
+		Mensage: "Login successfully",
 	}
 
 	return dto, err
@@ -74,12 +70,11 @@ func (loginRepository *LoginRepository) EditLogin(login entity.Login) (entity.Lo
 
 	loginRepository.LoginRepository.EditLogin(&loginUserId)
 	dto := entity.Login{
-		ID:          login.ID,
-		UserID:      login.UserID,
-		AccessToken: login.AccessToken,
-		CreatedAt:   login.CreatedAt,
-		ExpiredAt:   login.ExpiredAt,
-		IsExpired:   login.IsExpired,
+		ID:        login.ID,
+		UserID:    login.UserID,
+		Cookie:    login.Cookie,
+		CreatedAt: login.CreatedAt,
+		IsExpired: login.IsExpired,
 	}
 
 	return dto, err

@@ -3,19 +3,18 @@ package main
 import (
 	// _ "github.com/go-sql-driver/mysql"
 
-	"back_end/internal/entity"
 	db "back_end/internal/infra/database/db"
 	"back_end/internal/infra/web/routes"
 
 	_ "github.com/lib/pq"
 )
 
-var globalSessions *entity.Manager
+// var globalSessions *entity.Manager
 
-func init() {
-	globalSessions, _ = entity.NewManager("memory", "gosessionid", 3600)
+// func init() {
+// 	globalSessions, _ = entity.NewManager("memory", "gosessionid", 3600)
 
-}
+// }
 
 func main() {
 

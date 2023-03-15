@@ -6,9 +6,7 @@ import (
 	usecase "back_end/internal/usecase"
 	"back_end/internal/usecase/dto"
 	"encoding/json"
-	"fmt"
 	"net/http"
-	"time"
 )
 
 type WebLoginHandler struct {
@@ -38,22 +36,22 @@ func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 
 	login := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
 	output, err := login.Create(dto)
-	rtCookie := http.Cookie{
-		Name:     "refresh_token",
-		Path:     "/",
-		Value:    output.AccessToken,
-		Expires:  time.Now().Add(24 * time.Hour),
-		HttpOnly: true,
-	}
-	cookie := http.Cookie{
-		Name:     "access_token",
-		Value:    output.AccessToken,
-		Expires:  time.Now().Add(24 * time.Hour),
-		HttpOnly: true,
-	}
-	http.SetCookie(w, &cookie)
-	http.SetCookie(w, &rtCookie)
-	fmt.Fprint(w, cookie)
+	// rtCookie := http.Cookie{
+	// 	Name:     "refresh_token",
+	// 	Path:     "/",
+	// 	Value:    output.AccessToken,
+	// 	Expires:  time.Now().Add(24 * time.Hour),
+	// 	HttpOnly: true,
+	// }
+	// cookie := http.Cookie{
+	// 	Name:     "access_token",
+	// 	Value:    output.AccessToken,
+	// 	Expires:  time.Now().Add(24 * time.Hour),
+	// 	HttpOnly: true,
+	// }
+	http.SetCookie(w, &output.Cookie)
+	// http.SetCookie(w, &rtCookie)
+	// fmt.Fprint(w, cookie)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

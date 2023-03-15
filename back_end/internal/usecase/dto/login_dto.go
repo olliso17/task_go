@@ -6,6 +6,5 @@ type InputLoginDto struct {
 }
 
 type OutPutLoginDto struct {
-	AccessToken string `json:"access_token"`
-	Mensage     string `json:"mensage"`
+	Mensage string `json:"mensage"`
 }

@@ -6,7 +6,15 @@ import (
 )
 
 type Provider struct {
-	lock     sync.Mutex               // lock
-	sessions map[string]*list.Element // save in memory
-	list     *list.List               // gc
+	Lock     sync.Mutex               // lock
+	Sessions map[string]*list.Element // save in memory
+	List     *list.List               // gc
+}
+
+func NewProvider(lock sync.Mutex, sessions map[string]*list.Element, list *list.List) *Provider {
+	return &Provider{
+		Lock:     lock,
+		Sessions: sessions,
+		List:     list,
+	}
 }
