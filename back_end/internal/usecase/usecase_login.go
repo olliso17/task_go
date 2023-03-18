@@ -38,6 +38,7 @@ func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.Out
 		}
 
 		dto := dto.OutPutLoginDto{
+			Cookie:  entity.Cookie{},
 			Mensage: "Login successfully",
 		}
 
@@ -49,11 +50,13 @@ func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.Out
 
 	if err := loginRepository.LoginRepository.EditLogin(&loginFindUserId); err != nil {
 		return dto.OutPutLoginDto{
+			Cookie:  entity.Cookie{},
 			Mensage: "Unable to login please review your credentials",
 		}, err
 	}
 
 	dto := dto.OutPutLoginDto{
+		Cookie:  *cookie,
 		Mensage: "Login successfully",
 	}
 

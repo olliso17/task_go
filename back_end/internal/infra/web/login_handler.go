@@ -43,13 +43,14 @@ func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 	// 	Expires:  time.Now().Add(24 * time.Hour),
 	// 	HttpOnly: true,
 	// }
-	// cookie := http.Cookie{
-	// 	Name:     "access_token",
-	// 	Value:    output.AccessToken,
-	// 	Expires:  time.Now().Add(24 * time.Hour),
-	// 	HttpOnly: true,
-	// }
-	http.SetCookie(w, &output.Cookie)
+	cookie := http.Cookie{
+		Name:     output.Cookie.Name,
+		Value:    output.Cookie.Value,
+		Expires:  output.Cookie.Expires,
+		HttpOnly: output.Cookie.HttpOnly,
+	}
+
+	http.SetCookie(w, &cookie)
 	// http.SetCookie(w, &rtCookie)
 	// fmt.Fprint(w, cookie)
 	if err != nil {
