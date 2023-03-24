@@ -8,6 +8,6 @@ type InputLoginDto struct {
 }
 
 type OutPutLoginDto struct {
-	Cookie  entity.Cookie `json:cookie`
-	Mensage string        `json:"mensage"`
+	CookieDTO entity.Cookie `json:cookie`
+	Mensage   string        `json:"mensage"`
 }

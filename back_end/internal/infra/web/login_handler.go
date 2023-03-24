@@ -44,10 +44,10 @@ func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 	// 	HttpOnly: true,
 	// }
 	cookie := http.Cookie{
-		Name:     output.Cookie.Name,
-		Value:    output.Cookie.Value,
-		Expires:  output.Cookie.Expires,
-		HttpOnly: output.Cookie.HttpOnly,
+		Name:     output.CookieDTO.Name,
+		Value:    output.CookieDTO.Value,
+		Expires:  output.CookieDTO.Expires,
+		HttpOnly: output.CookieDTO.HttpOnly,
 	}
 
 	http.SetCookie(w, &cookie)

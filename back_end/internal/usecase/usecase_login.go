@@ -38,26 +38,27 @@ func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.Out
 		}
 
 		dto := dto.OutPutLoginDto{
-			Cookie:  entity.Cookie{},
-			Mensage: "Login successfully",
+			CookieDTO: *cookie,
+			Mensage:   "Login successfully",
 		}
 
 		return dto, err
 	}
-	loginFindUserId.Cookie = login.Cookie
+	loginFindUserId.AccessToken = cookie.Value
 	loginFindUserId.CreatedAt = login.CreatedAt
+	loginFindUserId.ExpiredAt = cookie.Expires
 	loginFindUserId.IsExpired = login.IsExpired
 
 	if err := loginRepository.LoginRepository.EditLogin(&loginFindUserId); err != nil {
 		return dto.OutPutLoginDto{
-			Cookie:  entity.Cookie{},
-			Mensage: "Unable to login please review your credentials",
+			CookieDTO: entity.Cookie{},
+			Mensage:   "Unable to login please review your credentials",
 		}, err
 	}
 
 	dto := dto.OutPutLoginDto{
-		Cookie:  *cookie,
-		Mensage: "Login successfully",
+		CookieDTO: *cookie,
+		Mensage:   "Login successfully",
 	}
 
 	return dto, err
@@ -73,11 +74,11 @@ func (loginRepository *LoginRepository) EditLogin(login entity.Login) (entity.Lo
 
 	loginRepository.LoginRepository.EditLogin(&loginUserId)
 	dto := entity.Login{
-		ID:        login.ID,
-		UserID:    login.UserID,
-		Cookie:    login.Cookie,
-		CreatedAt: login.CreatedAt,
-		IsExpired: login.IsExpired,
+		ID:          login.ID,
+		UserID:      login.UserID,
+		AccessToken: login.AccessToken,
+		CreatedAt:   login.CreatedAt,
+		IsExpired:   login.IsExpired,
 	}
 
 	return dto, err
