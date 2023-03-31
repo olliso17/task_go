@@ -4,6 +4,7 @@ import CardAllAddList from '@/components/CardAllAddList';
 import ListAll from '@/components/ListAll';
 import {Flex} from '@chakra-ui/react';
 import { useColors } from '@/hooksPerson/colors';
+import LoginAcess from '@/components/Login';
 
 
 export default function Home() {
@@ -17,7 +18,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
-        <CardStylePhone contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />
+        <CardStylePhone contentCreateList={<CardAllAddList />} contentListAll={<ListAll />}  contentLogin={<LoginAcess/>}/>
       </Flex>
     </>
   )

@@ -1,15 +1,16 @@
 
 import { useColors } from "@/hooksPerson/colors"
-import { Box, Center, Flex, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useColorModeValue} from "@chakra-ui/react"
+import { Box, Center, Flex, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useColorModeValue } from "@chakra-ui/react"
 import TabNameAdd from "./TabNameAdd"
 
 interface Props {
     contentCreateList: JSX.Element
     contentListAll: JSX.Element
+    contentLogin: JSX.Element
 
 }
 
-const CardStylePhone = ({ contentCreateList, contentListAll }: Props) => {
+const CardStylePhone = ({ contentCreateList, contentListAll, contentLogin }: Props) => {
     const allColors = useColors()
 
     return (
@@ -18,16 +19,21 @@ const CardStylePhone = ({ contentCreateList, contentListAll }: Props) => {
                 <Box backgroundColor={allColors.bgCenter} width="19vw" borderRadius="16px" rounded="2xl" height="74vh">
                     <Tabs rounded="2xl" isFitted variant='enclosed'>
                         <TabList borderColor="purple.400" mb="lem">
-                            <TabNameAdd nameTab="Create List"/>
-                            <TabNameAdd nameTab="ListAll"/>
+                            <TabNameAdd nameTab="Login" />
+                            <TabNameAdd nameTab="Create List" />
+                            <TabNameAdd nameTab="ListAll" />
                         </TabList>
                         <TabPanels>
+                            <TabPanel height="68vh" backgroundColor={allColors.bgCenter} width="19vw" overflow="auto" padding="0">
+                                {contentLogin}
+                            </TabPanel>
                             <TabPanel height="68vh" backgroundColor={allColors.bgCenter} width="19vw" padding="0">
                                 {contentCreateList}
                             </TabPanel>
                             <TabPanel height="68vh" backgroundColor={allColors.bgCenter} width="19vw" overflow="auto" padding="0">
                                 {contentListAll}
                             </TabPanel>
+
                         </TabPanels>
                     </Tabs>
                 </Box>
