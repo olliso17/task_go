@@ -36,13 +36,7 @@ func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 
 	login := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
 	output, err := login.Create(dto)
-	// rtCookie := http.Cookie{
-	// 	Name:     "refresh_token",
-	// 	Path:     "/",
-	// 	Value:    output.AccessToken,
-	// 	Expires:  time.Now().Add(24 * time.Hour),
-	// 	HttpOnly: true,
-	// }
+
 	cookie := http.Cookie{
 		Name:     output.CookieDTO.Name,
 		Value:    output.CookieDTO.Value,

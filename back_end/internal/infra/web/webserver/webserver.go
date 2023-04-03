@@ -15,7 +15,7 @@ type WebServer struct {
 	// MeuMiddleware MeuMiddleware
 }
 
-func NewWebServer(serverPort string, cookies string) *WebServer {
+func NewWebServer(serverPort string) *WebServer {
 	return &WebServer{
 		Router:        chi.NewRouter(),
 		Handlers:      make(map[string]http.HandlerFunc),

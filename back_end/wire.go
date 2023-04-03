@@ -23,8 +23,8 @@ var SetUserRepositoryDependency = wire.NewSet(
 	wire.Bind(new(*interfaces.UserRepositoryInterface), new(*database.UserRepository)),
 )
 var SetLoginRepositoryDependency = wire.NewSet(
-	database.NewUserRepository,
-	wire.Bind(new(*interfaces.ListRepositoryInterface), new(*database.LoginRepository)),
+	database.NewLoginRepository,
+	wire.Bind(new(*interfaces.LoginRepositoryInterface), new(*database.LoginRepository)),
 )
 
 // func NewCreateTaskUseCase(db *sql.DB) *usecase.TaskUseCase {

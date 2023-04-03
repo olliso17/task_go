@@ -9,12 +9,14 @@ import (
 )
 
 type WebUserHandler struct {
-	UserRepository interfaces.UserRepositoryInterface
+	UserRepository  interfaces.UserRepositoryInterface
+	LoginRepository interfaces.LoginRepositoryInterface
 }
 
-func NewUserHandler(userRepository interfaces.UserRepositoryInterface) *WebUserHandler {
+func NewUserHandler(userRepository interfaces.UserRepositoryInterface, loginRepository interfaces.LoginRepositoryInterface) *WebUserHandler {
 	return &WebUserHandler{
-		UserRepository: userRepository,
+		UserRepository:  userRepository,
+		LoginRepository: loginRepository,
 	}
 }
 
@@ -31,9 +33,16 @@ func (userHandler *WebUserHandler) Create(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	createUser := *usecase.NewUserRepository(userHandler.UserRepository)
+	createUser := *usecase.NewUserRepository(userHandler.UserRepository, userHandler.LoginRepository)
 	output, err := createUser.Create(dto)
+	cookie := http.Cookie{
+		Name:     output.CookieDTO.Name,
+		Value:    output.CookieDTO.Value,
+		Expires:  output.CookieDTO.Expires,
+		HttpOnly: output.CookieDTO.HttpOnly,
+	}
 
+	http.SetCookie(w, &cookie)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

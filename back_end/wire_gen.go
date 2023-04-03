@@ -37,7 +37,8 @@ func NewWebListHandlerGen(db *sql.DB) *web.WebListHandler{
 }
 func NewWebUserHandlerGen(db *sql.DB) *web.WebUserHandler{
 	userRepository := database.NewUserRepository(db)
-	webUserHandler := web.NewUserHandler(userRepository)
+	loginRepository:= database.NewLoginRepository(db)
+	webUserHandler := web.NewUserHandler(userRepository, loginRepository)
 	return webUserHandler
 }
 func NewWebLoginHandlerGen(db *sql.DB) *web.WebLoginHandler{

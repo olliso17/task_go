@@ -7,33 +7,35 @@ import (
 )
 
 type UserRepository struct {
-	UserRepository interfaces.UserRepositoryInterface
+	UserRepository  interfaces.UserRepositoryInterface
+	LoginRepository interfaces.LoginRepositoryInterface
 }
 
-func NewUserRepository(userRepository interfaces.UserRepositoryInterface) *UserRepository {
+func NewUserRepository(userRepository interfaces.UserRepositoryInterface, loginRepository interfaces.LoginRepositoryInterface) *UserRepository {
 	return &UserRepository{
-		UserRepository: userRepository,
+		UserRepository:  userRepository,
+		LoginRepository: loginRepository,
 	}
 }
 
-func (userRepository *UserRepository) Create(input dto.UserInputDTO) (dto.UserOutputDTO, error) {
+func (userRepository *UserRepository) Create(input dto.UserInputDTO) (dto.OutPutLoginDto, error) {
 	user, err := entity.NewUser(input.Email, input.Name, input.Password)
 
 	if user.Name == "" && user.Email == "" && user.Password == "" {
-		dto := dto.UserOutputDTO{
-			Mensage: "User not created",
-		}
+		dto := dto.OutPutLoginDto{CookieDTO: entity.Cookie{}, Mensage: "Unable to create user please review your credentials"}
 		return dto, err
 	}
 
 	if err := userRepository.UserRepository.Create(user); err != nil {
-		return dto.UserOutputDTO{
-			Mensage: "User not created",
-		}, err
+		return dto.OutPutLoginDto{CookieDTO: entity.Cookie{}, Mensage: "Unable to create user please review your credentials"}, err
 	}
-	dto := dto.UserOutputDTO{
-		Mensage: "User created successfully",
+	token, _ := entity.GenerateJWT(user.Email, user.Password)
+	cookie := entity.NewCookie("access_token", token, "/", "/login")
+	login, _ := entity.NewLogin(user.ID, *cookie)
+	if err := userRepository.LoginRepository.Create(login); err != nil {
+		return dto.OutPutLoginDto{CookieDTO: *cookie, Mensage: "User created successfully"}, err
 	}
+	dto := dto.OutPutLoginDto{CookieDTO: *cookie, Mensage: "User created successfully"}
 
 	return dto, nil
 }
