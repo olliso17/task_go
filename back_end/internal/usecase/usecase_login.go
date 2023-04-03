@@ -26,7 +26,8 @@ func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.Out
 	loginFindUserId, err := loginRepository.LoginRepository.FindByUserID(user.ID)
 
 	if err != nil || user.Email == "" && user.Password == "" {
-		return dto.OutPutLoginDto{}, err
+		return dto.OutPutLoginDto{CookieDTO: entity.Cookie{},
+			Mensage: "Unable to login please review your credentials"}, err
 	}
 	token, _ := entity.GenerateJWT(user.Email, user.Password)
 	cookie := entity.NewCookie("access_token", token, "/", "/login")
@@ -92,7 +93,21 @@ func (loginRepository *LoginRepository) FindAll() ([]entity.Login, error) {
 
 	return loginAll, nil
 }
+func (loginRepository *LoginRepository) FindCookie(id string) (string, error) {
+	loginAll, err := loginRepository.LoginRepository.FindAll()
+	if err != nil {
+		return "", err
+	}
+	for _, v := range loginAll {
+		if id == v.ID {
 
+			return v.AccessToken, nil
+
+		}
+	}
+	return " ", err
+
+}
 func (loginRepository *LoginRepository) FindByID(id string) (entity.Login, error) {
 	loginAll, err := loginRepository.LoginRepository.FindAll()
 	if err != nil {

@@ -12,9 +12,10 @@ type WebServer struct {
 	Router        chi.Router
 	Handlers      map[string]http.HandlerFunc
 	WebServerPort string
+	// MeuMiddleware MeuMiddleware
 }
 
-func NewWebServer(serverPort string) *WebServer {
+func NewWebServer(serverPort string, cookies string) *WebServer {
 	return &WebServer{
 		Router:        chi.NewRouter(),
 		Handlers:      make(map[string]http.HandlerFunc),
@@ -32,6 +33,14 @@ func (s *WebServer) AddHandler(path string, handler http.HandlerFunc) {
 // start the server
 func (s *WebServer) Start() {
 	s.Router.Use(middleware.Logger)
+	// s.Router.Use(s.MeuMiddleware)
+	//criar uma struct com middleware
+	// func MeuMiddleware(next http.Handler) http.Handler {
+	// 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	// 		ctx := context.WithValue(r.Context(), "user", "123")
+	// 		next.ServeHTTP(w, r.WithContext(ctx))
+	// 	})
+	// }
 	s.Router.Use(cors.Handler(cors.Options{
 		// AllowedOrigins:   []string{"https://foo.com"}, // Use this to allow specific origin hosts
 		AllowedOrigins: []string{"https://*", "http://*"},
