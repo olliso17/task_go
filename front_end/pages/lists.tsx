@@ -6,7 +6,6 @@ import {Flex} from '@chakra-ui/react';
 import { useColors } from '@/hooksPerson/colors';
 import TabsLoginOk from '@/components/TabsLoginOk';
 import LoginAcess from '@/components/LoginAcess';
-import CreateUser from '@/components/CreateUser';
 
 
 export default function Home() {
@@ -20,7 +19,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
-        <CardStylePhone content={<CreateUser/>}/>
+        <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList/>} contentListAll={<ListAll/>}/>}/>
       </Flex>
     </>
   )
