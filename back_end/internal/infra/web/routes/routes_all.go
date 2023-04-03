@@ -23,6 +23,7 @@ func RoutesAll(serverPort string, newWebTaskHandler *web.WebTaskHandler, newWebL
 	webserver.AddHandler("/list/delete", newWebListHandler.SoftDelete)
 
 	webserver.AddHandler("/user/create", newWebUserHandler.Create)
+	// webserver.AddHandler("/users", newWebUserHandler.FindAll)
 
 	webserver.AddHandler("/login", newWebLoginHandler.Create)
 

@@ -4,6 +4,7 @@ import (
 	"back_end/internal/entity"
 	"back_end/internal/entity/interfaces"
 	"back_end/internal/usecase/dto"
+	"fmt"
 )
 
 type UserRepository struct {
@@ -19,7 +20,22 @@ func NewUserRepository(userRepository interfaces.UserRepositoryInterface, loginR
 }
 
 func (userRepository *UserRepository) Create(input dto.UserInputDTO) (dto.OutPutLoginDto, error) {
+	userAll, err := userRepository.FindAll()
 	user, err := entity.NewUser(input.Email, input.Name, input.Password)
+	for _, v := range userAll {
+		fmt.Print(v.Email)
+		if user.Email == v.Email || user.Name == v.Name {
+			dto := dto.OutPutLoginDto{CookieDTO: entity.Cookie{}, Mensage: "Unable to create user please review your credentials"}
+			return dto, err
+
+		}
+		if user.ID == v.ID {
+			err = fmt.Errorf("user already exist")
+			dto := dto.OutPutLoginDto{CookieDTO: entity.Cookie{}, Mensage: "Unable to create user please review your credentials"}
+			return dto, err
+
+		}
+	}
 
 	if user.Name == "" && user.Email == "" && user.Password == "" {
 		dto := dto.OutPutLoginDto{CookieDTO: entity.Cookie{}, Mensage: "Unable to create user please review your credentials"}
@@ -42,6 +58,7 @@ func (userRepository *UserRepository) Create(input dto.UserInputDTO) (dto.OutPut
 
 func (userRepository *UserRepository) FindAll() ([]entity.User, error) {
 	users, err := userRepository.UserRepository.FindAll()
+	fmt.Print(users)
 	if err != nil {
 		return []entity.User{}, err
 	}

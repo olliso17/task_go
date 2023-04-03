@@ -32,7 +32,7 @@ func (userRepository *UserRepository) Create(user *entity.User) error {
 
 func (userRepository *UserRepository) FindAll() ([]entity.User, error) {
 
-	rows, err := userRepository.Db.Query("SELECT id, email, name, password, is_admin, created_at, updated_at, deleted_at, isdeleted,  FROM users")
+	rows, err := userRepository.Db.Query("SELECT * FROM users")
 	var users []entity.User
 	for rows.Next() {
 		var user entity.User
