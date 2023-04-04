@@ -17,7 +17,7 @@ type Cookie struct {
 }
 
 func NewCookie(name string, value string, path string, domain string) *Cookie {
-	expiration := time.Now().Add(365 * 24 * time.Hour)
+	expiration := time.Now().Add(1 * 24 * time.Hour)
 
 	cookie := &Cookie{
 		Name:       name,
