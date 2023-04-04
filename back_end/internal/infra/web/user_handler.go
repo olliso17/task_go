@@ -6,6 +6,8 @@ import (
 	"back_end/internal/usecase/dto"
 	"encoding/json"
 	"net/http"
+
+	"gitea.com/go-chi/session"
 )
 
 type WebUserHandler struct {
@@ -43,6 +45,8 @@ func (userHandler *WebUserHandler) Create(w http.ResponseWriter, r *http.Request
 	}
 
 	http.SetCookie(w, &cookie)
+	session.GetCookie(r, cookie.Name)
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

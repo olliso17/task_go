@@ -7,6 +7,8 @@ import (
 	"back_end/internal/usecase/dto"
 	"encoding/json"
 	"net/http"
+
+	"gitea.com/go-chi/session"
 )
 
 type WebLoginHandler struct {
@@ -45,6 +47,8 @@ func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.SetCookie(w, &cookie)
+	session.GetCookie(r, cookie.Name)
+
 	// http.SetCookie(w, &rtCookie)
 	// fmt.Fprint(w, cookie)
 	if err != nil {
