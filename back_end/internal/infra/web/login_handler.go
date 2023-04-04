@@ -46,7 +46,7 @@ func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: output.CookieDTO.HttpOnly,
 	}
 
-	http.SetCookie(w, &cookie)
+	// http.SetCookie(w, &cookie)
 	session.GetCookie(r, cookie.Name)
 
 	// http.SetCookie(w, &rtCookie)
