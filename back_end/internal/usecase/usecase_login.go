@@ -4,6 +4,7 @@ import (
 	"back_end/internal/entity"
 	"back_end/internal/entity/interfaces"
 	"back_end/internal/usecase/dto"
+	"fmt"
 	"os"
 )
 
@@ -93,21 +94,7 @@ func (loginRepository *LoginRepository) FindAll() ([]entity.Login, error) {
 
 	return loginAll, nil
 }
-func (loginRepository *LoginRepository) FindCookie(id string) (string, error) {
-	loginAll, err := loginRepository.LoginRepository.FindAll()
-	if err != nil {
-		return "", err
-	}
-	for _, v := range loginAll {
-		if id == v.ID {
 
-			return v.AccessToken, nil
-
-		}
-	}
-	return " ", err
-
-}
 func (loginRepository *LoginRepository) FindByID(id string) (entity.Login, error) {
 	loginAll, err := loginRepository.LoginRepository.FindAll()
 	if err != nil {
@@ -122,4 +109,31 @@ func (loginRepository *LoginRepository) FindByID(id string) (entity.Login, error
 	}
 	return entity.Login{}, err
 
+}
+func (loginRepository *LoginRepository) FindByUserID(userID string) (entity.Login, error) {
+	loginAll, err := loginRepository.LoginRepository.FindAll()
+	if err != nil {
+		return entity.Login{}, err
+	}
+	for _, v := range loginAll {
+		if userID == v.UserID {
+
+			return v, nil
+
+		}
+	}
+	return entity.Login{}, err
+
+}
+func (loginRepository *LoginRepository) Logout(userID string, token string) error {
+	login, err := loginRepository.LoginRepository.FindByUserID(userID)
+	if err != nil {
+		return err
+	}
+	// Revogar o token de autenticação
+	if err := loginRepository.LoginRepository.Logout(login.UserID, login.AccessToken); err != nil {
+		return fmt.Errorf("failed to revoke token: %v", err)
+	}
+
+	return nil
 }

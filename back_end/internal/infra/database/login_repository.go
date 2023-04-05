@@ -56,10 +56,25 @@ func (r *LoginRepository) FindAll() ([]entity.Login, error) {
 
 }
 
-func (r *LoginRepository) FindByUserID(id string) (entity.Login, error) {
+func (r *LoginRepository) FindByID(id string) (entity.Login, error) {
 	var login entity.Login
 
-	rows, err := r.Db.Query("SELECT * FROM logins WHERE user_id = $1", id)
+	rows, err := r.Db.Query("SELECT * FROM logins WHERE id = $1", id)
+	for rows.Next() {
+		if err := rows.Scan(&login.ID, &login.UserID, &login.AccessToken, &login.CreatedAt, &login.ExpiredAt, &login.IsExpired); err != nil {
+			return login, err
+		}
+	}
+	if err = rows.Err(); err != nil {
+		return login, err
+	}
+	return login, nil
+}
+
+func (r *LoginRepository) FindByUserID(userID string) (entity.Login, error) {
+	var login entity.Login
+
+	rows, err := r.Db.Query("SELECT * FROM logins WHERE user_id = $1", userID)
 	for rows.Next() {
 		if err := rows.Scan(&login.ID, &login.UserID, &login.AccessToken, &login.CreatedAt, &login.ExpiredAt, &login.IsExpired); err != nil {
 			return login, err
