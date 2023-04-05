@@ -7,8 +7,6 @@ import (
 	"back_end/internal/usecase/dto"
 	"encoding/json"
 	"net/http"
-
-	"gitea.com/go-chi/session"
 )
 
 type WebLoginHandler struct {
@@ -32,29 +30,24 @@ func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var dto dto.InputLoginDto
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	login := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
 	output, err := login.Create(dto)
-
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
 	cookie := http.Cookie{
 		Name:     output.CookieDTO.Name,
 		Value:    output.CookieDTO.Value,
 		Expires:  output.CookieDTO.Expires,
 		HttpOnly: output.CookieDTO.HttpOnly,
 	}
+	http.SetCookie(w, &cookie)
 
-	// http.SetCookie(w, &cookie)
-	session.GetCookie(r, cookie.Name)
-
-	// http.SetCookie(w, &rtCookie)
-	// fmt.Fprint(w, cookie)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
 	err = json.NewEncoder(w).Encode(output)
 
 	if err != nil {
