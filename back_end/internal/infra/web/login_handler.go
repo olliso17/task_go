@@ -52,7 +52,7 @@ func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &cookie)
 
 	err = json.NewEncoder(w).Encode(output)
-
+	http.Redirect(w, r, "/lists", http.StatusSeeOther)
 	if err != nil {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
