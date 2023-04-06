@@ -30,14 +30,17 @@ func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var dto dto.InputLoginDto
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	login := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
 	output, err := login.Create(dto)
+
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusUnauthorized)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	cookie := http.Cookie{
@@ -51,6 +54,7 @@ func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 	err = json.NewEncoder(w).Encode(output)
 
 	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -97,32 +101,32 @@ func (h *WebLoginHandler) EditLogin(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *WebLoginHandler) Logout(w http.ResponseWriter, r *http.Request) {
-	// Obter o cookie de autenticação
-	cookie, err := r.Cookie("access_token")
-	if err != nil || cookie.Value == "" {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
-		return
-	}
+// func (h *WebLoginHandler) Logout(w http.ResponseWriter, r *http.Request) {
+// 	// Obter o cookie de autenticação
+// 	cookie, err := r.Cookie("access_token")
+// 	if err != nil || cookie.Value == "" {
+// 		http.Redirect(w, r, "/login", http.StatusSeeOther)
+// 		return
+// 	}
 
-	// Obter o ID do usuário a partir do token JWT
-	// claims, err := validateJWT(cookie.Value)
-	// if err != nil {
-	// 	http.Redirect(w, r, "/login", http.StatusSeeOther)
-	// 	return
-	// }
+// 	// Obter o ID do usuário a partir do token JWT
+// 	// claims, err := validateJWT(cookie.Value)
+// 	// if err != nil {
+// 	// 	http.Redirect(w, r, "/login", http.StatusSeeOther)
+// 	// 	return
+// 	// }
 
-	// Revogar o token de autenticação
-	// err = h.LoginRepository.Logout(claims.UserID, cookie.Value)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+// 	// Revogar o token de autenticação
+// 	// err = h.LoginRepository.Logout(claims.UserID, cookie.Value)
+// 	if err != nil {
+// 		http.Error(w, err.Error(), http.StatusInternalServerError)
+// 		return
+// 	}
 
-	// Remover o cookie de autenticação
-	cookie.MaxAge = -1
-	http.SetCookie(w, cookie)
+// 	// Remover o cookie de autenticação
+// 	cookie.MaxAge = -1
+// 	http.SetCookie(w, cookie)
 
-	// Redirecionar o usuário para a página de login
-	http.Redirect(w, r, "/login", http.StatusSeeOther)
-}
+// 	// Redirecionar o usuário para a página de login
+// 	http.Redirect(w, r, "/login", http.StatusSeeOther)
+// }

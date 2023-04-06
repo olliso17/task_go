@@ -4,7 +4,6 @@ import (
 	"back_end/internal/entity"
 	"back_end/internal/entity/interfaces"
 	"back_end/internal/usecase/dto"
-	"fmt"
 	"os"
 )
 
@@ -27,8 +26,7 @@ func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.Out
 	loginFindUserId, err := loginRepository.LoginRepository.FindByUserID(user.ID)
 
 	if err != nil || user.Email == "" && user.Password == "" {
-		return dto.OutPutLoginDto{CookieDTO: entity.Cookie{},
-			Mensage: "Unable to login please review your credentials"}, err
+		return dto.OutPutLoginDto{}, err
 	}
 	token, _ := entity.GenerateJWT(user.Email, user.Password)
 	cookie := entity.NewCookie("access_token", token, "/", "/login")
@@ -52,10 +50,7 @@ func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.Out
 	loginFindUserId.IsExpired = login.IsExpired
 
 	if err := loginRepository.LoginRepository.EditLogin(&loginFindUserId); err != nil {
-		return dto.OutPutLoginDto{
-			CookieDTO: entity.Cookie{},
-			Mensage:   "Unable to login please review your credentials",
-		}, err
+		return dto.OutPutLoginDto{}, err
 	}
 
 	dto := dto.OutPutLoginDto{
@@ -125,15 +120,16 @@ func (loginRepository *LoginRepository) FindByUserID(userID string) (entity.Logi
 	return entity.Login{}, err
 
 }
-func (loginRepository *LoginRepository) Logout(userID string, token string) error {
-	login, err := loginRepository.LoginRepository.FindByUserID(userID)
-	if err != nil {
-		return err
-	}
-	// Revogar o token de autenticação
-	if err := loginRepository.LoginRepository.Logout(login.UserID, login.AccessToken); err != nil {
-		return fmt.Errorf("failed to revoke token: %v", err)
-	}
 
-	return nil
-}
+// func (loginRepository *LoginRepository) Logout(userID string, token string) error {
+// 	login, err := loginRepository.LoginRepository.FindByUserID(userID)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	// Revogar o token de autenticação
+// 	if err := loginRepository.LoginRepository.Logout(login.UserID, login.AccessToken); err != nil {
+// 		return fmt.Errorf("failed to revoke token: %v", err)
+// 	}
+
+// 	return nil
+// }
