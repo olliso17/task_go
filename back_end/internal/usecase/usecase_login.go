@@ -29,7 +29,7 @@ func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.Out
 		return dto.OutPutLoginDto{}, err
 	}
 	token, _ := entity.GenerateJWT(user.Email, user.Password)
-	cookie := entity.NewCookie("access_token", token, "/", "/login")
+	cookie := entity.NewCookie("access_token", token, "/")
 	login, _ := entity.NewLogin(user.ID, *cookie)
 	if loginFindUserId.UserID != login.UserID {
 

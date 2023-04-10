@@ -36,7 +36,6 @@ func (userHandler *WebUserHandler) Create(w http.ResponseWriter, r *http.Request
 	createUser := *usecase.NewUserRepository(userHandler.UserRepository, userHandler.LoginRepository)
 	output, err := createUser.Create(dto)
 	if err != nil {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -46,12 +45,12 @@ func (userHandler *WebUserHandler) Create(w http.ResponseWriter, r *http.Request
 		Expires:  output.CookieDTO.Expires,
 		HttpOnly: output.CookieDTO.HttpOnly,
 	}
+
 	http.SetCookie(w, &cookie)
 
 	err = json.NewEncoder(w).Encode(output)
-	http.Redirect(w, r, "/lists", http.StatusSeeOther)
+
 	if err != nil {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

@@ -12,6 +12,7 @@ type WebServer struct {
 	Router        chi.Router
 	Handlers      map[string]http.HandlerFunc
 	WebServerPort string
+	Cookie        http.Cookie
 	// MeuMiddleware MeuMiddleware
 }
 
@@ -20,12 +21,12 @@ func NewWebServer(serverPort string) *WebServer {
 		Router:        chi.NewRouter(),
 		Handlers:      make(map[string]http.HandlerFunc),
 		WebServerPort: serverPort,
+		Cookie:        http.Cookie{},
 	}
 }
 
 func (s *WebServer) AddHandler(path string, handler http.HandlerFunc) {
 	s.Handlers[path] = handler
-
 }
 
 // loop through the handlers and add them to the router
@@ -33,18 +34,8 @@ func (s *WebServer) AddHandler(path string, handler http.HandlerFunc) {
 // start the server
 func (s *WebServer) Start() {
 	s.Router.Use(middleware.Logger)
-	// s.Router.Use(s.MeuMiddleware)
-	//criar uma struct com middleware
-	// func MeuMiddleware(next http.Handler) http.Handler {
-	// 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	// 		ctx := context.WithValue(r.Context(), "user", "123")
-	// 		next.ServeHTTP(w, r.WithContext(ctx))
-	// 	})
-	// }
 	s.Router.Use(cors.Handler(cors.Options{
-		// AllowedOrigins:   []string{"https://foo.com"}, // Use this to allow specific origin hosts
-		AllowedOrigins: []string{"https://*", "http://*"},
-		// AllowOriginFunc:  func(r *http.Request, origin string) bool { return true },
+		AllowedOrigins:   []string{"https://*", "http://*"},
 		AllowedMethods:   []string{"GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		ExposedHeaders:   []string{"Link", "Content-Type", "Set-Cookie", "Cookie"},

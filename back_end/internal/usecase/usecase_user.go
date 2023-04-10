@@ -23,7 +23,6 @@ func (userRepository *UserRepository) Create(input dto.UserInputDTO) (dto.OutPut
 	userAll, err := userRepository.FindAll()
 	user, err := entity.NewUser(input.Email, input.Name, input.Password)
 	for _, v := range userAll {
-		fmt.Print(v.Email)
 		if user.Email == v.Email || user.Name == v.Name {
 			dto := dto.OutPutLoginDto{CookieDTO: entity.Cookie{}, Mensage: "Unable to create user please review your credentials"}
 			return dto, err
@@ -46,7 +45,7 @@ func (userRepository *UserRepository) Create(input dto.UserInputDTO) (dto.OutPut
 		return dto.OutPutLoginDto{CookieDTO: entity.Cookie{}, Mensage: "Unable to create user please review your credentials"}, err
 	}
 	token, _ := entity.GenerateJWT(user.Email, user.Password)
-	cookie := entity.NewCookie("access_token", token, "/", "/login")
+	cookie := entity.NewCookie("token", token, "/lists")
 	login, _ := entity.NewLogin(user.ID, *cookie)
 	if err := userRepository.LoginRepository.Create(login); err != nil {
 		return dto.OutPutLoginDto{CookieDTO: *cookie, Mensage: "User created successfully"}, err
@@ -58,7 +57,6 @@ func (userRepository *UserRepository) Create(input dto.UserInputDTO) (dto.OutPut
 
 func (userRepository *UserRepository) FindAll() ([]entity.User, error) {
 	users, err := userRepository.UserRepository.FindAll()
-	fmt.Print(users)
 	if err != nil {
 		return []entity.User{}, err
 	}
