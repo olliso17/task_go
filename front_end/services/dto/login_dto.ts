@@ -1,5 +1,4 @@
 export interface CreateLoginInputDto {
-    name: string
     email: string
     password: string
 }
