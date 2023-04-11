@@ -29,7 +29,7 @@ import { CreateUserInputDto, OutputUsertDto } from "../dto/user_dto";
 
 
 const postUser = async (input: CreateUserInputDto): Promise<OutputUsertDto> => {
-    const url = `user/create`
+    const url = `/`
 
     const res = await api.post(url, input);
    

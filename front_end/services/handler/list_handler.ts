@@ -28,7 +28,7 @@ const getListId = async (input: ListIdInputDto):Promise<OutputListDto> => {
 
 
 const postList = async (input: CreateListInputDto): Promise<OutputListDto> => {
-    const url = `list/create`
+    const url = `lists`
 
     const res = await api.post(url, input);
 
@@ -49,15 +49,4 @@ const useMutationPostList = ()=> useMutation({
 })
 
 
-const useQueryListAll = ()=> useQuery("lists", getListAll)
-
-const useHandlerList=()=>{
-    const postList = useMutationPostList()
-    const getListAll = useQueryListAll()
-    const handler_list = {
-        postList, getListAll
-    }
-
-    return handler_list
-}
 export {postList, getListAll}

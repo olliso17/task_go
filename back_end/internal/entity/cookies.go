@@ -19,20 +19,20 @@ type Cookie struct {
 	Unparsed   []string // Raw text of unparsed attribute-value pairs
 }
 
-func NewCookie(name string, value string, path string) *Cookie {
+func NewCookie(name string, value string) *Cookie {
 	expiration := time.Now().Add(1 * 24 * time.Hour)
 
 	cookie := &Cookie{
 		Name:       name,
 		Value:      value,
-		Path:       path,
+		Path:       "/",
 		Expires:    expiration,
 		RawExpires: "",
 		MaxAge:     3600,
 		Secure:     true,
 		HttpOnly:   true,
 		Raw:        "",
-		SameSite:   http.SameSiteLaxMode,
+		SameSite:   http.SameSiteNoneMode,
 	}
 
 	return cookie

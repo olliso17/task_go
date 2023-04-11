@@ -34,19 +34,22 @@ func (s *WebServer) AddHandler(path string, handler http.HandlerFunc) {
 // start the server
 func (s *WebServer) Start() {
 	s.Router.Use(middleware.Logger)
+	s.Router.Use(middleware.RequestID)
+	s.Router.Use(middleware.RealIP)
+	s.Router.Use(middleware.Recoverer)
 	s.Router.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"https://*", "http://*"},
+		AllowedOrigins:   []string{"*"},
+		AllowedHeaders:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
-		ExposedHeaders:   []string{"Link", "Content-Type", "Set-Cookie", "Cookie"},
-		AllowCredentials: false,
+		ExposedHeaders:   []string{"Content-Type", "Set-Cookie", "Cookie"},
+		AllowCredentials: true,
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	}))
 	for path, handler := range s.Handlers {
 
 		s.Router.Group(func(r chi.Router) {
 			r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-				w.Write([]byte("welcome"))
+
 			})
 			s.Router.Handle(path, handler)
 		})

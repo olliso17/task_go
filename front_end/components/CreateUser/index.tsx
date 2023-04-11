@@ -42,6 +42,7 @@ const CreateUser = () => {
                     isClosable: true,
 
                 })
+              
                 router.push('/lists')
             }
 

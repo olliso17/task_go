@@ -24,33 +24,33 @@ func (userRepository *UserRepository) Create(input dto.UserInputDTO) (dto.OutPut
 	user, err := entity.NewUser(input.Email, input.Name, input.Password)
 	for _, v := range userAll {
 		if user.Email == v.Email || user.Name == v.Name {
-			dto := dto.OutPutLoginDto{CookieDTO: entity.Cookie{}, Mensage: "Unable to create user please review your credentials"}
+			dto := dto.OutPutLoginDto{Mensage: "Unable to create user please review your credentials"}
 			return dto, err
 
 		}
 		if user.ID == v.ID {
 			err = fmt.Errorf("user already exist")
-			dto := dto.OutPutLoginDto{CookieDTO: entity.Cookie{}, Mensage: "Unable to create user please review your credentials"}
+			dto := dto.OutPutLoginDto{Mensage: "Unable to create user please review your credentials"}
 			return dto, err
 
 		}
 	}
 
 	if user.Name == "" && user.Email == "" && user.Password == "" {
-		dto := dto.OutPutLoginDto{CookieDTO: entity.Cookie{}, Mensage: "Unable to create user please review your credentials"}
+		dto := dto.OutPutLoginDto{Mensage: "Unable to create user please review your credentials"}
 		return dto, err
 	}
 
 	if err := userRepository.UserRepository.Create(user); err != nil {
-		return dto.OutPutLoginDto{CookieDTO: entity.Cookie{}, Mensage: "Unable to create user please review your credentials"}, err
+		return dto.OutPutLoginDto{Mensage: "Unable to create user please review your credentials"}, err
 	}
-	token, _ := entity.GenerateJWT(user.Email, user.Password)
-	cookie := entity.NewCookie("token", token, "/lists")
-	login, _ := entity.NewLogin(user.ID, *cookie)
+	// token, _ := entity.GenerateJWT()
+
+	login, _ := entity.NewLogin(user.ID)
 	if err := userRepository.LoginRepository.Create(login); err != nil {
-		return dto.OutPutLoginDto{CookieDTO: *cookie, Mensage: "User created successfully"}, err
+		return dto.OutPutLoginDto{Mensage: "User created successfully"}, err
 	}
-	dto := dto.OutPutLoginDto{CookieDTO: *cookie, Mensage: "User created successfully"}
+	dto := dto.OutPutLoginDto{Mensage: "User created successfully"}
 
 	return dto, nil
 }

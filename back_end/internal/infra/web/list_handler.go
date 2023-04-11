@@ -5,6 +5,8 @@ import (
 	usecase "back_end/internal/usecase"
 	"back_end/internal/usecase/dto"
 	"encoding/json"
+	"fmt"
+	"io"
 	"net/http"
 )
 
@@ -21,19 +23,30 @@ func NewListHandler(listRepository interfaces.ListRepositoryInterface, taskUseca
 }
 
 func (h *WebListHandler) Create(w http.ResponseWriter, r *http.Request) {
+
 	if r.Method != http.MethodPost {
 
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
+	fmt.Print("foi", cookie)
+	io.WriteString(w, cookie.String())
+
 	var dto dto.ListInpuntDtO
-	err := json.NewDecoder(r.Body).Decode(&dto)
+	err = json.NewDecoder(r.Body).Decode(&dto)
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
 	output, err := createList.Execute(dto)
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -51,6 +64,12 @@ func (h *WebListHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
+
 	createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
 	output, err := createList.FindAll()
 
@@ -68,6 +87,11 @@ func (h *WebListHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
 
 	params := r.URL.Query().Get("id")
 
@@ -86,9 +110,14 @@ func (h *WebListHandler) EditList(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
 
 	input := dto.EditListEntityInputDto{}
-	err := json.NewDecoder(r.Body).Decode(&input)
+	err = json.NewDecoder(r.Body).Decode(&input)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -110,9 +139,14 @@ func (h *WebListHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
 
 	input := dto.ListInputSoftDeleteDTO{}
-	err := json.NewDecoder(r.Body).Decode(&input)
+	err = json.NewDecoder(r.Body).Decode(&input)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return

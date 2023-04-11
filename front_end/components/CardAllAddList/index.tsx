@@ -16,7 +16,7 @@ const CardAllAddList = () => {
     const toast = useToast()
     const allColors = useColors()
     const mutation = useMutation({
-        mutationFn: postList, onSuccess: (() => {
+        mutationFn: postList, onSuccess: ((data) => {
             toast({
                 title: 'Liste create.',
                 description: `"List "${name}" successfully created."`,
@@ -25,7 +25,16 @@ const CardAllAddList = () => {
                 isClosable: true,
             })
 
-        })
+        }), onError(error) {
+            toast({
+                title: `${error} `,
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+
+            })
+
+        },
     })
 
     const onCreateList = () => {

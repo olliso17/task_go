@@ -17,12 +17,10 @@ type JWTClaim struct {
 	jwt.StandardClaims
 }
 
-func GenerateJWT(email string, password string) (tokenString string, err error) {
+func GenerateJWT() (tokenString string, err error) {
 	expire := time.Now().Add(1 * time.Hour)
 
 	auth := &JWTClaim{
-		Email:          email,
-		Password:       password,
 		StandardClaims: jwt.StandardClaims{ExpiresAt: expire.Unix()},
 	}
 

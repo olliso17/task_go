@@ -7,6 +7,7 @@ import (
 	"back_end/internal/usecase/dto"
 	"encoding/json"
 	"net/http"
+	"time"
 )
 
 type WebLoginHandler struct {
@@ -43,13 +44,18 @@ func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	cookie := http.Cookie{
-		Name:     output.CookieDTO.Name,
-		Value:    output.CookieDTO.Value,
-		Expires:  output.CookieDTO.Expires,
-		HttpOnly: output.CookieDTO.HttpOnly,
+	token, _ := entity.GenerateJWT()
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		cookie = &http.Cookie{
+			Name:     "access_token",
+			Value:    token,
+			Path:     "/",
+			Expires:  time.Now().Add(1 * 24 * time.Hour),
+			HttpOnly: true,
+		}
+		http.SetCookie(w, cookie)
 	}
-	http.SetCookie(w, &cookie)
 
 	err = json.NewEncoder(w).Encode(output)
 	http.Redirect(w, r, "/lists", http.StatusSeeOther)

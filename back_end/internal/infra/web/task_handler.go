@@ -24,8 +24,14 @@ func (h *WebTaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
+
 	var dto dto.TaskInputDTO
-	err := json.NewDecoder(r.Body).Decode(&dto)
+	err = json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -52,6 +58,12 @@ func (h *WebTaskHandler) FindExceptDeleted(w http.ResponseWriter, r *http.Reques
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
+
 	createTask := *usecase.NewTaskRepository(h.TaskRepository)
 	output, err := createTask.FindExceptDeleted()
 
@@ -69,6 +81,12 @@ func (h *WebTaskHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
+
 	createTask := *usecase.NewTaskRepository(h.TaskRepository)
 	output, err := createTask.FindAll()
 
@@ -85,6 +103,11 @@ func (h *WebTaskHandler) FindTitle(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
 
 	params := r.URL.Query().Get("title")
 
@@ -104,6 +127,12 @@ func (h *WebTaskHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
+
 	params := r.URL.Query().Get("id")
 
 	createTask := *usecase.NewTaskRepository(h.TaskRepository)
@@ -122,8 +151,14 @@ func (h *WebTaskHandler) EditTask(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
+
 	input := dto.TaskEditInputDTO{}
-	err := json.NewDecoder(r.Body).Decode(&input)
+	err = json.NewDecoder(r.Body).Decode(&input)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -146,6 +181,12 @@ func (h *WebTaskHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
+
 	id := r.URL.Query().Get("id")
 
 	input := dto.TaskInputSoftDeleteDTO{
@@ -171,9 +212,14 @@ func (h *WebTaskHandler) TaskCompleted(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	cookie, err := r.Cookie("access_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
 
 	input := dto.TaskInputCompletedDTO{}
-	err := json.NewDecoder(r.Body).Decode(&input)
+	err = json.NewDecoder(r.Body).Decode(&input)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
