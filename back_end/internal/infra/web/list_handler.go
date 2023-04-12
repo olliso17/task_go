@@ -5,8 +5,6 @@ import (
 	usecase "back_end/internal/usecase"
 	"back_end/internal/usecase/dto"
 	"encoding/json"
-	"fmt"
-	"io"
 	"net/http"
 )
 
@@ -29,13 +27,11 @@ func (h *WebListHandler) Create(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	cookie, err := r.Cookie("access_token")
+	cookie, err := r.Cookie("session_token")
 	if err != nil {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 	}
 	http.SetCookie(w, cookie)
-	fmt.Print("foi", cookie)
-	io.WriteString(w, cookie.String())
 
 	var dto dto.ListInpuntDtO
 	err = json.NewDecoder(r.Body).Decode(&dto)
@@ -64,7 +60,7 @@ func (h *WebListHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	cookie, err := r.Cookie("access_token")
+	cookie, err := r.Cookie("session_token")
 	if err != nil {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 	}
@@ -87,7 +83,7 @@ func (h *WebListHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	cookie, err := r.Cookie("access_token")
+	cookie, err := r.Cookie("session_token")
 	if err != nil {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 	}
@@ -110,7 +106,7 @@ func (h *WebListHandler) EditList(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	cookie, err := r.Cookie("access_token")
+	cookie, err := r.Cookie("session_token")
 	if err != nil {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 	}
@@ -139,7 +135,7 @@ func (h *WebListHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	cookie, err := r.Cookie("access_token")
+	cookie, err := r.Cookie("session_token")
 	if err != nil {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 	}

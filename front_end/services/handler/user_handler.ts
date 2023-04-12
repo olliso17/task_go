@@ -28,12 +28,17 @@ import { CreateUserInputDto, OutputUsertDto } from "../dto/user_dto";
 // };
 
 
-const postUser = async (input: CreateUserInputDto): Promise<OutputUsertDto> => {
+const postUser = async (input: CreateUserInputDto) => {
     const url = `/`
 
-    const res = await api.post(url, input);
-   
-    return res.data
+    try {
+        const res = await api.post(url, input);
+
+        return res.data
+    }
+    catch (err) {
+        console.error(err);
+    }
 }
 // const deleteList = async (input: DeleteListInputDto): Promise<OutputDeleteListDto> => {
 //     const url = `list/delete`
@@ -46,7 +51,7 @@ const postUser = async (input: CreateUserInputDto): Promise<OutputUsertDto> => {
 
 // const useMutationPostUser = ()=> useMutation({
 //     mutationFn: postUser
-    
+
 // })
 
 
@@ -61,4 +66,4 @@ const postUser = async (input: CreateUserInputDto): Promise<OutputUsertDto> => {
 
 //     return handler_user
 // }
-export {postUser}
+export { postUser }

@@ -1,7 +1,9 @@
 package webserver
 
 import (
+	"back_end/internal/entity"
 	"net/http"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -49,7 +51,17 @@ func (s *WebServer) Start() {
 
 		s.Router.Group(func(r chi.Router) {
 			r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+				token, _ := entity.GenerateJWT()
 
+				http.SetCookie(w, &http.Cookie{
+					Name:     "session_token",
+					Value:    token,
+					Path:     "/",
+					Expires:  time.Now().Add(1 * 24 * time.Hour),
+					SameSite: http.SameSiteNoneMode,
+					MaxAge:   300,
+					HttpOnly: true,
+				})
 			})
 			s.Router.Handle(path, handler)
 		})
