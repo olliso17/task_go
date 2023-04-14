@@ -16,7 +16,7 @@ func RoutesAll(serverPort string, newWebTaskHandler *web.WebTaskHandler, newWebL
 	webserver.AddHandler("/task/edit", newWebTaskHandler.EditTask)
 	webserver.AddHandler("/task/completed", newWebTaskHandler.TaskCompleted)
 
-	webserver.AddHandler("/lists", newWebListHandler.Create)
+	webserver.AddHandler("/list/create", newWebListHandler.Create)
 	webserver.AddHandler("/lists", newWebListHandler.FindAll)
 	webserver.AddHandler("/list/id", newWebListHandler.FindByID)
 	webserver.AddHandler("/list/edit", newWebListHandler.EditList)

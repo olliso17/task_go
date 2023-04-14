@@ -28,7 +28,7 @@ const getListId = async (input: ListIdInputDto):Promise<OutputListDto> => {
 
 
 const postList = async (input: CreateListInputDto): Promise<OutputListDto> => {
-    const url = `lists`
+    const url = `list/create`
 
     const res = await api.post(url, input);
 
@@ -49,4 +49,4 @@ const useMutationPostList = ()=> useMutation({
 })
 
 
-export {postList, getListAll}
+export {postList, getListAll, getListId}

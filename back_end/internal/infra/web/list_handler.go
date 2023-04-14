@@ -21,17 +21,17 @@ func NewListHandler(listRepository interfaces.ListRepositoryInterface, taskUseca
 }
 
 func (h *WebListHandler) Create(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
 
 	if r.Method != http.MethodPost {
 
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	cookie, err := r.Cookie("session_token")
-	if err != nil {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
-	}
-	http.SetCookie(w, cookie)
 
 	var dto dto.ListInpuntDtO
 	err = json.NewDecoder(r.Body).Decode(&dto)
