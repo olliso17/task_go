@@ -23,6 +23,18 @@ func NewUserHandler(userRepository interfaces.UserRepositoryInterface, loginRepo
 }
 
 func (userHandler *WebUserHandler) Create(w http.ResponseWriter, r *http.Request) {
+	token, _ := entity.GenerateJWT()
+	cookie := &http.Cookie{
+		Name:     "session_token",
+		Value:    token,
+		Path:     "/",
+		Expires:  time.Now().Add(1 * 24 * time.Hour),
+		MaxAge:   3600,
+		HttpOnly: true,
+		Secure:   true,
+		SameSite: http.SameSiteLaxMode,
+	}
+	http.SetCookie(w, cookie)
 	if r.Method != http.MethodPost {
 
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -45,17 +57,6 @@ func (userHandler *WebUserHandler) Create(w http.ResponseWriter, r *http.Request
 	}
 
 	err = json.NewEncoder(w).Encode(output)
-	token, _ := entity.GenerateJWT()
-
-	http.SetCookie(w, &http.Cookie{
-		Name:     "session_token",
-		Value:    token,
-		Path:     "/",
-		Expires:  time.Now().Add(1 * 24 * time.Hour),
-		SameSite: http.SameSiteNoneMode,
-		MaxAge:   300,
-		HttpOnly: true,
-	})
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

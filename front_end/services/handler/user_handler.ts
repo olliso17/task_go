@@ -1,3 +1,4 @@
+import { getCookie } from 'cookies-next'
 import { useRouter } from "next/router";
 import { useMutation, useQuery } from "react-query";
 import api from "../backend";
@@ -33,7 +34,8 @@ const postUser = async (input: CreateUserInputDto) => {
 
     try {
         const res = await api.post(url, input);
-
+        // getCookie('session_token', res.headers)
+       
         return res.data
     }
     catch (err) {
