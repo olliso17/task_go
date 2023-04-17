@@ -43,13 +43,13 @@ const CreateUser = () => {
                     isClosable: true,
 
                 })
-              
+
                 router.push('/lists')
             }
 
-    }, onError(error) {
-        toast({
-            title: `${error} `,
+        }, onError(error) {
+            toast({
+                title: `${error} `,
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
@@ -57,6 +57,7 @@ const CreateUser = () => {
             })
             
         },
+
     })
 
     return (
@@ -101,15 +102,15 @@ const CreateUser = () => {
                                 <Flex flexDirection="column" justifyContent="center" alignItems="center">
                                     <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" type="name" onChange={(e) => {
                                         setName(e.target.value)
-                                        }} placeholder='Name' />
-                                    <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" type="email" onChange={(e) => {setEmail(e.target.value)}} placeholder='Email' />
-                                    <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" type="password" className="mt-1" onChange={(e) => {setPassword(e.target.value)}} placeholder='Password' />
+                                    }} placeholder='Name' />
+                                    <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder='Email' />
+                                    <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" type="password" className="mt-1" onChange={(e) => { setPassword(e.target.value) }} placeholder='Password' />
                                 </Flex>
 
                             </FormControl>
                             <Flex justifyContent="end">
                                 <Button
-                                   
+
                                     mt={4}
                                     backgroundColor="purple.800"
                                     colorScheme='purple'
@@ -118,7 +119,7 @@ const CreateUser = () => {
                                 >
                                     Create
                                 </Button>
-                      
+
                             </Flex>
                         </Form>
 
