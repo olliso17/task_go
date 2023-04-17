@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS public.logins
 (
     id text COLLATE pg_catalog."default" NOT NULL,
     user_id text COLLATE pg_catalog."default",
+    session_token text COLLATE pg_catalog."default",
     created_at date,
     expired_at date,
     is_expired boolean,

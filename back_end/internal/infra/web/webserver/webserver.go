@@ -1,10 +1,8 @@
 package webserver
 
 import (
-	"fmt"
 	"net/http"
 
-	"gitea.com/go-chi/session"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
@@ -35,6 +33,7 @@ func (s *WebServer) AddHandler(path string, handler http.HandlerFunc) {
 // register middeleware logger
 // start the server
 func (s *WebServer) Start() {
+
 	s.Router.Use(middleware.Logger)
 	s.Router.Use(middleware.RequestID)
 	s.Router.Use(middleware.RealIP)
@@ -47,11 +46,11 @@ func (s *WebServer) Start() {
 		AllowCredentials: true,
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	}))
+
 	for path, handler := range s.Handlers {
 
 		s.Router.Group(func(r chi.Router) {
-			r.Get("/lists", func(w http.ResponseWriter, r *http.Request) {
-				fmt.Print(session.GetSession(r))
+			r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 
 			})
 			s.Router.Handle(path, handler)

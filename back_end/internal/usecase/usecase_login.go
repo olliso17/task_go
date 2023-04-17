@@ -29,8 +29,8 @@ func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.Out
 	if err != nil || user.Email == "" && user.Password == "" {
 		return dto.OutPutLoginDto{}, err
 	}
-
-	login, _ := entity.NewLogin(user.ID)
+	token, _ := entity.GenerateJWT()
+	login, _ := entity.NewLogin(user.ID, token)
 	if loginFindUserId.UserID != login.UserID {
 
 		if err := loginRepository.LoginRepository.Create(login); err != nil {
@@ -43,8 +43,9 @@ func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.Out
 
 		return dto, err
 	}
+	loginFindUserId.SessionToken = token
 	loginFindUserId.CreatedAt = login.CreatedAt
-	loginFindUserId.ExpiredAt = time.Now().Add(1 * 24 * time.Hour)
+	loginFindUserId.ExpiredAt = time.Now().Add(3 * time.Hour)
 	loginFindUserId.IsExpired = login.IsExpired
 
 	if err := loginRepository.LoginRepository.EditLogin(&loginFindUserId); err != nil {
@@ -68,10 +69,11 @@ func (loginRepository *LoginRepository) EditLogin(login entity.Login) (entity.Lo
 
 	loginRepository.LoginRepository.EditLogin(&loginUserId)
 	dto := entity.Login{
-		ID:        login.ID,
-		UserID:    login.UserID,
-		CreatedAt: login.CreatedAt,
-		IsExpired: login.IsExpired,
+		ID:           login.ID,
+		SessionToken: login.SessionToken,
+		UserID:       login.UserID,
+		CreatedAt:    login.CreatedAt,
+		IsExpired:    login.IsExpired,
 	}
 
 	return dto, err

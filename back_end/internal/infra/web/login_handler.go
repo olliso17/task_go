@@ -45,13 +45,13 @@ func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	token, _ := entity.GenerateJWT()
-	cookie, err := r.Cookie("access_token")
+	cookie, err := r.Cookie("session_token")
 	if err != nil {
 		cookie = &http.Cookie{
-			Name:     "access_token",
+			Name:     "session_token",
 			Value:    token,
 			Path:     "/",
-			Expires:  time.Now().Add(1 * 24 * time.Hour),
+			Expires:  time.Now().Add(3 * time.Hour),
 			HttpOnly: true,
 		}
 		http.SetCookie(w, cookie)

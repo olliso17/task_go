@@ -22,6 +22,7 @@ func NewUserRepository(userRepository interfaces.UserRepositoryInterface, loginR
 func (userRepository *UserRepository) Create(input dto.UserInputDTO) (dto.OutPutLoginDto, error) {
 	userAll, err := userRepository.FindAll()
 	user, err := entity.NewUser(input.Email, input.Name, input.Password)
+
 	for _, v := range userAll {
 		if user.Email == v.Email || user.Name == v.Name {
 			dto := dto.OutPutLoginDto{Mensage: "Unable to create user please review your credentials"}
@@ -44,9 +45,9 @@ func (userRepository *UserRepository) Create(input dto.UserInputDTO) (dto.OutPut
 	if err := userRepository.UserRepository.Create(user); err != nil {
 		return dto.OutPutLoginDto{Mensage: "Unable to create user please review your credentials"}, err
 	}
-	// token, _ := entity.GenerateJWT()
+	token, _ := entity.GenerateJWT()
 
-	login, _ := entity.NewLogin(user.ID)
+	login, _ := entity.NewLogin(user.ID, token)
 	if err := userRepository.LoginRepository.Create(login); err != nil {
 		return dto.OutPutLoginDto{Mensage: "User created successfully"}, err
 	}
