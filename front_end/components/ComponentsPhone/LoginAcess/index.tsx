@@ -35,9 +35,9 @@ const LoginAccess = () => {;
                 })
 
             }
-            if (data.mensage == "User created successfully") {
+            if (data.mensage == "Login successfully") {
                 toast({
-                    title: 'User created successfully',
+                    title: 'Login successfully',
                     status: 'success',
                     duration: 9000,
                     isClosable: true,
