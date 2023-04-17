@@ -1,16 +1,18 @@
 import Head from 'next/head'
-import CardStylePhone from '@/components/CardStylePhone';
-import CardAllAddList from '@/components/CardAllAddList';
-import ListAll from '@/components/ListAll';
-import {Flex} from '@chakra-ui/react';
-import { useColors } from '@/hooksPerson/colors';
-import TabsLoginOk from '@/components/TabsLoginOk';
-import LoginAcess from '@/components/LoginAcess';
-import CreateUser from '@/components/CreateUser';
+import { Flex, Stack, Button } from '@chakra-ui/react';
+import { useColorsWeb } from '@/hooksPerson/colorsWeb';
+import CardStylePhone from '@/components/ComponentsPhone/CardStylePhone';
+import CreateUser from '@/components/ComponentsPhone/CreateUser';
+import { } from '@chakra-ui/react'
+import CardStyleWeb from '@/components/ComponentsWeb/CardStyleWeb';
+import { useState } from 'react';
 
 
 export default function Home() {
-  const allColors= useColors()
+  const allColors = useColorsWeb()
+  const [active, setActive] = useState(false);
+
+
   return (
     <>
       <Head>
@@ -20,7 +22,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
-        <CardStylePhone content={<CreateUser/>}/>
+        <Stack>
+          <Button onClick={e => {setActive(state => !state)}}>{active == false ? "Web" : "Mobile"}</Button>
+        </Stack>
+        {active == false ? <CardStylePhone content={<CreateUser />} /> : <CardStyleWeb content={<CreateUser />} />}
       </Flex>
     </>
   )

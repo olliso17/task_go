@@ -1,8 +1,10 @@
 package webserver
 
 import (
+	"fmt"
 	"net/http"
 
+	"gitea.com/go-chi/session"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
@@ -48,7 +50,8 @@ func (s *WebServer) Start() {
 	for path, handler := range s.Handlers {
 
 		s.Router.Group(func(r chi.Router) {
-			r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+			r.Get("/lists", func(w http.ResponseWriter, r *http.Request) {
+				fmt.Print(session.GetSession(r))
 
 			})
 			s.Router.Handle(path, handler)

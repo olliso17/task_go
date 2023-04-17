@@ -1,13 +1,15 @@
 import Head from 'next/head'
-import CardStylePhone from '@/components/CardStylePhone';
+
 import {Flex} from '@chakra-ui/react';
-import { useColors } from '@/hooksPerson/colors';
-import LoginAcess from '@/components/LoginAcess';
+import CardStylePhone from '@/components/ComponentsPhone/CardStylePhone';
+import LoginAccess from '@/components/ComponentsPhone/LoginAcess';
+import { useColorsPhone } from '@/hooksPerson/colorsPhone';
+
 
 
 
 export default function Home() {
-  const allColors= useColors()
+  const allColors= useColorsPhone()
   return (
     <>
       <Head>
@@ -17,7 +19,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
-        <CardStylePhone content={<LoginAcess/>}/>
+        <CardStylePhone content={<LoginAccess/>}/>
       </Flex>
     </>
   )

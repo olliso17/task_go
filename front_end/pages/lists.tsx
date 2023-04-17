@@ -1,15 +1,15 @@
 import Head from 'next/head'
-import CardStylePhone from '@/components/CardStylePhone';
-import CardAllAddList from '@/components/CardAllAddList';
-import ListAll from '@/components/ListAll';
 import {Flex} from '@chakra-ui/react';
-import { useColors } from '@/hooksPerson/colors';
-import TabsLoginOk from '@/components/TabsLoginOk';
-import LoginAcess from '@/components/LoginAcess';
+import CardStylePhone from '@/components/ComponentsPhone/CardStylePhone';
+import CardAllAddList from '@/components/ComponentsPhone/CardAllAddList';
+import ListAll from '@/components/ComponentsPhone/ListAll';
+import TabsLoginOk from '@/components/ComponentsPhone/TabsLoginOk';
+import { useColorsPhone } from '@/hooksPerson/colorsPhone';
+
 
 
 export default function Home() {
-  const allColors= useColors()
+  const allColors= useColorsPhone()
   return (
     <>
       <Head>
