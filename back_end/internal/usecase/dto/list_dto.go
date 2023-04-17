@@ -3,7 +3,9 @@ package dto
 import "back_end/internal/entity"
 
 type ListInpuntDtO struct {
-	Name string `json:"name"`
+	Name     string `json:"name"`
+	UserId   string `json:"user_id"`
+	TypeTask string `json:"type_task"`
 }
 type ListInpuntEditDtO struct {
 	ID string `json:"id"`
@@ -23,6 +25,8 @@ type ListOutputMessageDTO struct {
 type EditListEntityInputDto struct {
 	ID        string        `json:"id"`
 	Name      string        `json:"name"`
+	UserId    string        `json:"user_id"`
+	TypeTask  string        `json:"type_task"`
 	Tasks     []entity.Task `json:"tasks"`
 	UpdatedAt string        `json:"updated_at"`
 }
@@ -30,12 +34,16 @@ type EditListEntityInputDto struct {
 type EditListEntityOutputDto struct {
 	ID        string        `json:"id"`
 	Name      string        `json:"name"`
+	UserId    string        `json:"user_id"`
+	TypeTask  string        `json:"type_task"`
 	Tasks     []entity.Task `json:"tasks"`
 	UpdatedAt string        `json:"updated_at"`
 }
 type ListAllOutputDTO struct {
 	ID        string          `json:"id"`
 	Name      string          `json:"name"`
+	UserId    string          `json:"user_id"`
+	TypeTask  string          `json:"type_task"`
 	Tasks     []TaskOutputDTO `json:"tasks"`
 	IsDeleted bool            `json:"is_deleted"`
 }

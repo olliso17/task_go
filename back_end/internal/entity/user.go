@@ -65,6 +65,7 @@ func IsValidate(user *User) bool {
 		"name":     user.Name,
 		"password": user.Password,
 	})
+
 	return true
 }
 
@@ -85,6 +86,7 @@ func (t *User) IsRegex(sliceString map[string]string) {
 	}
 
 }
+
 func Hash(salt, serverSalt, password string) string {
 	buff := password + salt + serverSalt
 	h := sha256.Sum256([]byte(buff))

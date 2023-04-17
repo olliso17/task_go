@@ -21,7 +21,7 @@ func NewListRepository(listRepository interfaces.ListRepositoryInterface, taskRe
 
 func (l *ListRepository) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, error) {
 
-	list, err := entity.NewListEntity(input.Name)
+	list, err := entity.NewListEntity(input.Name, input.UserId, input.TypeTask)
 
 	if err != nil {
 		return dto.ListOutputDTO{}, err
