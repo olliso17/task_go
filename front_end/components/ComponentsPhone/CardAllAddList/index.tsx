@@ -1,4 +1,4 @@
-import { postList } from "@/services/handler/list_handler"
+import { useMutationPostList, postList } from "@/services/handler/list_handler"
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Text, useColorMode, useColorModeValue, useToast } from "@chakra-ui/react"
 import Lottie from "lottie-react";
 import { useState } from "react"
@@ -18,33 +18,13 @@ const CardAllAddList = () => {
     const [name, setName] = useState('');
     const {data} = useQuery("login", getLogin);
     const user_id =data?.user_id
-    if(user_id == undefined) {
+
+    if(typeof user_id != 'string') {
         router.push('/login')
     }
   
-    const toast = useToast()
     const allColors = useColorsPhone()
-    const mutation = useMutation({
-        mutationFn: postList, onSuccess: ((data) => {
-            toast({
-                title: 'Liste create.',
-                description: `"List "${name}" successfully created."`,
-                status: 'success',
-                duration: 9000,
-                isClosable: true,
-            })
-
-        }), onError(error) {
-            toast({
-                title: `${error} `,
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
-
-            })
-
-        },
-    })
+    const mutation = useMutationPostList()
 
     const onCreateList = () => {
         mutation.mutate({ name, user_id })

@@ -1,22 +1,24 @@
-import { getCookie, getCookies } from "cookies-next";
-import { useRouter } from "next/router";
+
+import { useToast } from "@chakra-ui/react"
 import { useMutation, useQuery } from "react-query";
 import api from "../backend";
 import { CreateListInputDto, ListIdInputDto, OutputListDto } from "../dto/list_dto";
 
 
+
+
 const getListAll = async () => {
     const url = "lists"
-    
+
     const res = await api.get(url);
-    
+
     const data = res.data;
 
     return data
 
 }
 
-const getListId = async (input: ListIdInputDto):Promise<OutputListDto> => {
+const getListId = async (input: ListIdInputDto): Promise<OutputListDto> => {
 
     const url = `list/${input}`
 
@@ -29,7 +31,7 @@ const getListId = async (input: ListIdInputDto):Promise<OutputListDto> => {
 
 
 const postList = async (input: CreateListInputDto): Promise<OutputListDto> => {
-  
+
     const url = `list/create`
 
     const res = await api.post(url, input);
@@ -44,5 +46,30 @@ const postList = async (input: CreateListInputDto): Promise<OutputListDto> => {
 //     return res.data
 // }
 
+const useMutationPostList= () => {
+    const toast = useToast()
+    const mutation = useMutation({
+        mutationFn: postList, onSuccess: ((data) => {
+            toast({
+                title: 'Liste create.',
+                description: `"List successfully created."`,
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
 
-export {postList, getListAll, getListId}
+        }), onError(error) {
+            toast({
+                title: `${error} `,
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+
+            })
+
+        },
+    })
+    return mutation
+}
+
+export { postList, getListAll, getListId, useMutationPostList }

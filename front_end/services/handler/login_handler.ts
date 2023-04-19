@@ -10,9 +10,8 @@ const postLogin = async (input: CreateLoginInputDto): Promise<OutputLogintDto> =
     const res = await api.post(url, input);
     return res.data
 }
-const getLogin = async ():Promise<OutputLogintDto> => {
-    // const token = getCookies()
-    
+const getLogin = async () => {
+
     const url = `login/token`
 
     const res = await api.get(url);
