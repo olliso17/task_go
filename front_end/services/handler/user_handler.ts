@@ -34,7 +34,6 @@ const postUser = async (input: CreateUserInputDto) => {
 
     try {
         const res = await api.post(url, input);
-        // getCookie('session_token', res.headers)
        
         return res.data
     }

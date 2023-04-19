@@ -1,5 +1,4 @@
-import { useMutationPostList, postList } from "@/services/handler/list_handler"
-import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Text, useColorMode, useColorModeValue, useToast } from "@chakra-ui/react"
+import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Text, useColorMode} from "@chakra-ui/react"
 import Lottie from "lottie-react";
 import { useState } from "react"
 import * as listAnimation from "public/list.json";
@@ -10,6 +9,7 @@ import { useMutation, useQuery } from "react-query";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
 import { getLogin } from "@/services/handler/login_handler";
 import { useRouter } from "next/router"
+import { useMutationPostList } from "@/services/handler/muation";
 
 
 
@@ -19,9 +19,7 @@ const CardAllAddList = () => {
     const {data} = useQuery("login", getLogin);
     const user_id =data?.user_id
 
-    if(typeof user_id != 'string') {
-        router.push('/login')
-    }
+   
   
     const allColors = useColorsPhone()
     const mutation = useMutationPostList()

@@ -46,30 +46,6 @@ const postList = async (input: CreateListInputDto): Promise<OutputListDto> => {
 //     return res.data
 // }
 
-const useMutationPostList= () => {
-    const toast = useToast()
-    const mutation = useMutation({
-        mutationFn: postList, onSuccess: ((data) => {
-            toast({
-                title: 'Liste create.',
-                description: `"List successfully created."`,
-                status: 'success',
-                duration: 9000,
-                isClosable: true,
-            })
 
-        }), onError(error) {
-            toast({
-                title: `${error} `,
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
 
-            })
-
-        },
-    })
-    return mutation
-}
-
-export { postList, getListAll, getListId, useMutationPostList }
+export { postList, getListAll, getListId}

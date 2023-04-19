@@ -17,12 +17,12 @@ func NewLoginRepository(db *sql.DB) *LoginRepository {
 }
 
 func (r *LoginRepository) Create(login *entity.Login) error {
-	stmt, err := r.Db.Prepare("INSERT INTO logins (id, user_id, session_token, created_at, expired_at, is_expired) VALUES ($1, $2, $3, $4, $5, $6)")
+	stmt, err := r.Db.Prepare("INSERT INTO logins (id, user_id, session_token, hostname, ip_address, created_at, expired_at, is_expired) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)")
 	if err != nil {
 		fmt.Print("o erro:", err)
 		return err
 	}
-	_, err = stmt.Exec(login.ID, login.UserID, login.SessionToken, login.CreatedAt, login.ExpiredAt, login.IsExpired)
+	_, err = stmt.Exec(login.ID, login.UserID, login.SessionToken, login.HostName, login.IPAddress, login.CreatedAt, login.ExpiredAt, login.IsExpired)
 	if err != nil {
 		return err
 	}
@@ -39,9 +39,9 @@ func (r *LoginRepository) FindAll() ([]entity.Login, error) {
 	for rows.Next() {
 
 		var login entity.Login
-		fmt.Print(rows.Scan(&login.ID, &login.UserID, &login.SessionToken, &login.CreatedAt, &login.ExpiredAt, &login.IsExpired))
+		fmt.Print(rows.Scan(&login.ID, &login.UserID, &login.SessionToken, &login.HostName, &login.IPAddress, &login.CreatedAt, &login.ExpiredAt, &login.IsExpired))
 
-		if err := rows.Scan(&login.ID, &login.UserID, &login.SessionToken, &login.CreatedAt, &login.ExpiredAt, &login.IsExpired); err != nil {
+		if err := rows.Scan(&login.ID, &login.UserID, &login.SessionToken, &login.HostName, &login.IPAddress, &login.CreatedAt, &login.ExpiredAt, &login.IsExpired); err != nil {
 			return logins, err
 		}
 
@@ -61,7 +61,7 @@ func (r *LoginRepository) FindByID(id string) (entity.Login, error) {
 
 	rows, err := r.Db.Query("SELECT * FROM logins WHERE id = $1", id)
 	for rows.Next() {
-		if err := rows.Scan(&login.ID, &login.UserID, &login.SessionToken, &login.CreatedAt, &login.ExpiredAt, &login.IsExpired); err != nil {
+		if err := rows.Scan(&login.ID, &login.UserID, &login.SessionToken, &login.HostName, &login.IPAddress, &login.CreatedAt, &login.ExpiredAt, &login.IsExpired); err != nil {
 			return login, err
 		}
 	}
@@ -76,7 +76,7 @@ func (r *LoginRepository) FindByUserID(userID string) (entity.Login, error) {
 
 	rows, err := r.Db.Query("SELECT * FROM logins WHERE user_id = $1", userID)
 	for rows.Next() {
-		if err := rows.Scan(&login.ID, &login.UserID, &login.SessionToken, &login.CreatedAt, &login.ExpiredAt, &login.IsExpired); err != nil {
+		if err := rows.Scan(&login.ID, &login.UserID, &login.SessionToken, &login.HostName, &login.IPAddress, &login.CreatedAt, &login.ExpiredAt, &login.IsExpired); err != nil {
 			return login, err
 		}
 	}
@@ -90,7 +90,7 @@ func (r *LoginRepository) FindByToken(sessionToken string) (entity.Login, error)
 
 	rows, err := r.Db.Query("SELECT * FROM logins WHERE session_token = $1", sessionToken)
 	for rows.Next() {
-		if err := rows.Scan(&login.ID, &login.UserID, &login.SessionToken, &login.CreatedAt, &login.ExpiredAt, &login.IsExpired); err != nil {
+		if err := rows.Scan(&login.ID, &login.UserID, &login.SessionToken, &login.HostName, &login.IPAddress, &login.CreatedAt, &login.ExpiredAt, &login.IsExpired); err != nil {
 			return login, err
 		}
 	}
@@ -101,13 +101,13 @@ func (r *LoginRepository) FindByToken(sessionToken string) (entity.Login, error)
 }
 func (r *LoginRepository) EditLogin(login *entity.Login) error {
 
-	stmt, err := r.Db.Prepare("UPDATE logins SET user_id= $1, session_token=$2,  created_at=$3, expired_at=$4 ,is_expired=$5 WHERE id = $6")
+	stmt, err := r.Db.Prepare("UPDATE logins SET id=$1, user_id= $2, session_token=$3, hostname=$4, ip_address=$5, created_at=$6, expired_at=$7 ,is_expired=$8 WHERE id = $1")
 
 	if err != nil {
 
 		return err
 	}
-	_, err = stmt.Exec(login.UserID, login.SessionToken, login.CreatedAt, login.ExpiredAt, login.IsExpired, login.ID)
+	_, err = stmt.Exec(login.ID, login.UserID, login.SessionToken, login.HostName, login.IPAddress, login.CreatedAt, login.ExpiredAt, login.IsExpired)
 	if err != nil {
 		return err
 	}

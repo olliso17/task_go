@@ -5,6 +5,7 @@ import (
 	"back_end/internal/entity/interfaces"
 	"back_end/internal/usecase/dto"
 	"fmt"
+	"os"
 )
 
 type UserRepository struct {
@@ -45,9 +46,12 @@ func (userRepository *UserRepository) Create(input dto.UserInputDTO) (dto.OutPut
 	if err := userRepository.UserRepository.Create(user); err != nil {
 		return dto.OutPutLoginDto{Mensage: "Unable to create user please review your credentials"}, err
 	}
+	hostname, _ := os.Hostname()
+
+	ip := os.Getpid()
 	token, _ := entity.GenerateJWT()
 
-	login, _ := entity.NewLogin(user.ID, token)
+	login, _ := entity.NewLogin(user.ID, token, string(hostname), int(ip))
 	if err := userRepository.LoginRepository.Create(login); err != nil {
 		return dto.OutPutLoginDto{Mensage: "User created successfully"}, err
 	}

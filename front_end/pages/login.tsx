@@ -1,5 +1,4 @@
 import Head from 'next/head'
-
 import {Flex} from '@chakra-ui/react';
 import CardStylePhone from '@/components/ComponentsPhone/CardStylePhone';
 import LoginAccess from '@/components/ComponentsPhone/LoginAcess';

@@ -1,63 +1,23 @@
-
-import { postUser } from "@/services/handler/user_handler"
-import { Box, Button, Flex, FormControl, Heading, Input, Text, useColorMode, useToast } from "@chakra-ui/react"
+import { Box, Button, Flex, FormControl, Heading, Input, Text, useColorMode} from "@chakra-ui/react"
 import { Form, Formik } from 'formik'
 import React, { useState } from "react"
-import { isError, useMutation } from "react-query"
 import * as lightOff from "public/light_off.json";
 import * as lightOn from "public/light_on.json";
 import * as register from "public/register.json";
 import Lottie from "lottie-react";
-import { useRouter } from "next/router"
-import { postLogin } from "@/services/handler/login_handler"
 import { useColorsPhone } from "@/hooksPerson/colorsPhone"
+import { useMutationPostLogin } from "@/services/handler/muation"
 
 const LoginAccess = () => {;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const toast = useToast()
     const allColors = useColorsPhone()
-    const router = useRouter();
     const { colorMode, toggleColorMode } = useColorMode()
     const style = { whidth: 40, height: 40, };
     const styleRegister = { whidth: 250, height: 250, };
     const initialValues = { email: '', password: '' }
-
-    const mutation = useMutation({
-        mutationFn: postLogin, onSuccess: (data) => {
-            if (data.mensage == "") {
-                toast({
-                    title: 'Unable to create user please review your credentials',
-                    status: 'warning',
-                    duration: 9000,
-                    isClosable: true,
-
-                })
-
-            }
-            if (data.mensage == "Login successfully") {
-                toast({
-                    title: 'Login successfully',
-                    status: 'success',
-                    duration: 9000,
-                    isClosable: true,
-
-                })
-              
-                router.push(`/lists`)
-            }
-
-    }, onError(error) {
-        toast({
-            title: `${error} `,
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
-
-            })
-            
-        },
-    })
+    const mutation = useMutationPostLogin()
+    
 
     return (
         <>

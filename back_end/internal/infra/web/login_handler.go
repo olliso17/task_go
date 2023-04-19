@@ -23,43 +23,42 @@ func NewLoginHandler(loginRepository interfaces.LoginRepositoryInterface, userRe
 }
 
 func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
+	token, _ := entity.GenerateJWT()
+	cookie := &http.Cookie{
+		Name:     "session_token",
+		Value:    token,
+		Path:     "/",
+		Expires:  time.Now().Add(1 * time.Hour),
+		MaxAge:   300,
+		HttpOnly: true,
+		Secure:   true,
+		SameSite: http.SameSiteLaxMode,
+	}
+	http.SetCookie(w, cookie)
 	if r.Method != http.MethodPost {
 
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+
 	var dto dto.InputLoginDto
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	createLogin := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
+	output, err := createLogin.Create(dto)
+
+	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	login := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
-	output, err := login.Create(dto)
-
-	if err != nil {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	token, _ := entity.GenerateJWT()
-	cookie, err := r.Cookie("session_token")
-	if err != nil {
-		cookie = &http.Cookie{
-			Name:     "session_token",
-			Value:    token,
-			Path:     "/",
-			Expires:  time.Now().Add(3 * time.Hour),
-			HttpOnly: true,
-		}
-		http.SetCookie(w, cookie)
-	}
 	err = json.NewEncoder(w).Encode(output)
 
 	if err != nil {
-
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -99,6 +98,17 @@ func (h *WebLoginHandler) EditLogin(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	token, _ := entity.GenerateJWT()
+
+	cookie := &http.Cookie{
+		Name:     "session_token",
+		Value:    token,
+		Path:     "/",
+		Expires:  time.Now().Add(3 * time.Hour),
+		HttpOnly: true,
+	}
+	http.SetCookie(w, cookie)
+
 	err = json.NewEncoder(w).Encode(output)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
