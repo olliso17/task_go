@@ -25,7 +25,7 @@ const LoginAccess = () => {;
 
     const mutation = useMutation({
         mutationFn: postLogin, onSuccess: (data) => {
-            if (data.mensage == "Unable to create user please review your credentials") {
+            if (data.mensage == "") {
                 toast({
                     title: 'Unable to create user please review your credentials',
                     status: 'warning',
@@ -44,7 +44,7 @@ const LoginAccess = () => {;
 
                 })
               
-                router.push('/lists')
+                router.push(`/lists`)
             }
 
     }, onError(error) {

@@ -1,3 +1,4 @@
+import { getCookie, getCookies } from "cookies-next";
 import { useRouter } from "next/router";
 import { useMutation, useQuery } from "react-query";
 import api from "../backend";
@@ -6,9 +7,9 @@ import { CreateListInputDto, ListIdInputDto, OutputListDto } from "../dto/list_d
 
 const getListAll = async () => {
     const url = "lists"
-
+    
     const res = await api.get(url);
-
+    
     const data = res.data;
 
     return data
@@ -28,6 +29,7 @@ const getListId = async (input: ListIdInputDto):Promise<OutputListDto> => {
 
 
 const postList = async (input: CreateListInputDto): Promise<OutputListDto> => {
+  
     const url = `list/create`
 
     const res = await api.post(url, input);

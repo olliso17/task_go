@@ -5,6 +5,7 @@ export interface CreateLoginInputDto {
 
 export interface OutputLogintDto {
    mensage:string
+   user_id:string
  
 }
 export interface DeleteLogintInputDto {

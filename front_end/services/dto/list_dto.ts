@@ -6,6 +6,7 @@ export interface ListIdInputDto{
 
 export interface CreateListInputDto {
     name: string
+    user_id:string
 }
 
 export interface OutputListDto {
