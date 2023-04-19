@@ -7,5 +7,8 @@ type InputLoginDto struct {
 
 type OutPutLoginDto struct {
 	Mensage string `json:"mensage"`
-	UserId  string `json:"user_id"`
+}
+
+type OutPutLoginTokenDto struct {
+	UserId string `json:"user_id"`
 }

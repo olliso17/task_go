@@ -105,6 +105,26 @@ func (h *WebLoginHandler) EditLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+func (h *WebLoginHandler) FindByToken(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	http.SetCookie(w, cookie)
+
+	createLogin := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
+	output, err := createLogin.FindByToken(cookie.Value)
+
+	err = json.NewEncoder(w).Encode(output)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
 
 // func (h *WebLoginHandler) Logout(w http.ResponseWriter, r *http.Request) {
 // 	// Obter o cookie de autenticação

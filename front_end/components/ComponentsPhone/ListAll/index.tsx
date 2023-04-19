@@ -6,15 +6,16 @@ import { AiFillDelete } from "react-icons/ai";
 import AccordionTasks from "../AcordionTasks";
 import { useQuery } from "react-query";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
+import { getLogin } from "@/services/handler/login_handler";
 
 
 const ListAll = () => {
-    const {data} = useQuery("lists", getListAll);
+    const {data:list} = useQuery("lists", getListAll);
     const allColors = useColorsPhone()
-
+ 
     return (
 
-        data?.map((list: OutputListDto) => (
+        list?.map((list: OutputListDto) => (
             <Flex key={list.id} rounded="2xl" flexDirection="column" margin="4px">
                 <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple>
                     <Tabs variant='enclosed'>

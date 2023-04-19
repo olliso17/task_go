@@ -85,7 +85,20 @@ func (r *LoginRepository) FindByUserID(userID string) (entity.Login, error) {
 	}
 	return login, nil
 }
+func (r *LoginRepository) FindByToken(sessionToken string) (entity.Login, error) {
+	var login entity.Login
 
+	rows, err := r.Db.Query("SELECT * FROM logins WHERE session_token = $1", sessionToken)
+	for rows.Next() {
+		if err := rows.Scan(&login.ID, &login.UserID, &login.SessionToken, &login.CreatedAt, &login.ExpiredAt, &login.IsExpired); err != nil {
+			return login, err
+		}
+	}
+	if err = rows.Err(); err != nil {
+		return login, err
+	}
+	return login, nil
+}
 func (r *LoginRepository) EditLogin(login *entity.Login) error {
 
 	stmt, err := r.Db.Prepare("UPDATE logins SET user_id= $1, session_token=$2,  created_at=$3, expired_at=$4 ,is_expired=$5 WHERE id = $6")

@@ -6,13 +6,22 @@ import * as listAnimation from "public/list.json";
 import * as lightOff from "public/light_off.json";
 import * as lightOn from "public/light_on.json";
 import { Form, Formik } from "formik";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
+import { getLogin } from "@/services/handler/login_handler";
+import { useRouter } from "next/router"
 
 
 
 const CardAllAddList = () => {
+    const router = useRouter();
     const [name, setName] = useState('');
+    const {data} = useQuery("login", getLogin);
+    const user_id =data?.user_id
+    if(user_id == undefined) {
+        router.push('/login')
+    }
+  
     const toast = useToast()
     const allColors = useColorsPhone()
     const mutation = useMutation({
@@ -38,7 +47,7 @@ const CardAllAddList = () => {
     })
 
     const onCreateList = () => {
-        mutation.mutate({ name })
+        mutation.mutate({ name, user_id })
         setName('')
     }
     const { colorMode, toggleColorMode } = useColorMode()
@@ -71,7 +80,7 @@ const CardAllAddList = () => {
                 </Box>
             </Box>
             <Formik
-                initialValues={{ name: '', }}
+                initialValues={{ name: '', user_id: data?.user_id}}
                 onSubmit={onCreateList}
 
             >

@@ -118,6 +118,25 @@ func (loginRepository *LoginRepository) FindByUserID(userID string) (entity.Logi
 	return entity.Login{}, err
 
 }
+func (loginRepository *LoginRepository) FindByToken(sessionToken string) (dto.OutPutLoginTokenDto, error) {
+	loginAll, err := loginRepository.LoginRepository.FindAll()
+	if err != nil {
+		return dto.OutPutLoginTokenDto{}, err
+	}
+	for _, v := range loginAll {
+		if sessionToken == v.SessionToken {
+			if v.IsExpired != true {
+				dto := dto.OutPutLoginTokenDto{
+					UserId: v.UserID,
+				}
+				return dto, nil
+			}
+
+		}
+	}
+	return dto.OutPutLoginTokenDto{}, err
+
+}
 
 // func (loginRepository *LoginRepository) Logout(userID string, token string) error {
 // 	login, err := loginRepository.LoginRepository.FindByUserID(userID)

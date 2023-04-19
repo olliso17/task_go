@@ -6,12 +6,13 @@ export interface ListIdInputDto{
 
 export interface CreateListInputDto {
     name: string
-    user_id:string
+    user_id:string|undefined;
 }
 
 export interface OutputListDto {
     id: string
     name: string
+    user_id:string
     tasks: OutputTaskDto[]
  
 }

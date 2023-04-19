@@ -45,10 +45,4 @@ const postList = async (input: CreateListInputDto): Promise<OutputListDto> => {
 // }
 
 
-const useMutationPostList = ()=> useMutation({
-    mutationFn: postList
-    
-})
-
-
 export {postList, getListAll, getListId}

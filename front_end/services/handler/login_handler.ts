@@ -11,9 +11,9 @@ const postLogin = async (input: CreateLoginInputDto): Promise<OutputLogintDto> =
     return res.data
 }
 const getLogin = async ():Promise<OutputLogintDto> => {
-    const token = getCookies()
+    // const token = getCookies()
     
-    const url = `login/${token}`
+    const url = `login/token`
 
     const res = await api.get(url);
 
@@ -21,4 +21,4 @@ const getLogin = async ():Promise<OutputLogintDto> => {
 
     return data
 };
-export { postLogin }
+export { postLogin, getLogin }
