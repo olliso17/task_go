@@ -10,5 +10,5 @@ type LoginRepositoryInterface interface {
 	FindByUserID(userID string) (entity.Login, error)
 	FindByToken(sessionToken string) (entity.Login, error)
 	EditLogin(login *entity.Login) error
-	// Logout(userID string, token string) error
+	Logout(login *entity.Login) error
 }

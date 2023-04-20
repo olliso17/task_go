@@ -14,7 +14,7 @@ type Login struct {
 	IPAddress    int
 	CreatedAt    time.Time
 	ExpiredAt    time.Time
-	IsExpired    bool
+	IsLogout     bool
 }
 
 func NewLogin(userId string, token string, hostName string, ipAddress int) (*Login, error) {
@@ -27,7 +27,7 @@ func NewLogin(userId string, token string, hostName string, ipAddress int) (*Log
 		IPAddress:    ipAddress,
 		CreatedAt:    time.Now().Local(),
 		ExpiredAt:    expiration,
-		IsExpired:    false,
+		IsLogout:     false,
 	}
 
 	return login, nil

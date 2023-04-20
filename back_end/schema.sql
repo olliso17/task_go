@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS public.logins
     ip_Address int,
     created_at date,
     expired_at date,
-    is_expired boolean,
+    is_logout boolean,
     CONSTRAINT logins_pkey PRIMARY KEY (id)
 )
 

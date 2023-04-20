@@ -4,6 +4,7 @@ import (
 	"back_end/internal/entity"
 	"back_end/internal/entity/interfaces"
 	"back_end/internal/usecase/dto"
+	"fmt"
 	"os"
 	"time"
 )
@@ -58,7 +59,7 @@ func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.Out
 	loginFindUserId.IPAddress = login.IPAddress
 	loginFindUserId.CreatedAt = login.CreatedAt
 	loginFindUserId.ExpiredAt = time.Now().Add(3 * time.Hour)
-	loginFindUserId.IsExpired = login.IsExpired
+	loginFindUserId.IsLogout = login.IsLogout
 	if err := loginRepository.LoginRepository.EditLogin(&loginFindUserId); err != nil {
 		return dto.OutPutLoginDto{
 			Mensage: "Unable to create user please review your credentials",
@@ -88,7 +89,7 @@ func (loginRepository *LoginRepository) EditLogin(login entity.Login) (entity.Lo
 		IPAddress:    login.IPAddress,
 		CreatedAt:    login.CreatedAt,
 		ExpiredAt:    login.ExpiredAt,
-		IsExpired:    login.IsExpired,
+		IsLogout:     login.IsLogout,
 	}
 
 	return dto, err
@@ -140,7 +141,7 @@ func (loginRepository *LoginRepository) FindByToken(sessionToken string) (dto.Ou
 	}
 	for _, v := range loginAll {
 		if sessionToken == v.SessionToken {
-			if v.IsExpired != true {
+			if v.IsLogout != true {
 				dto := dto.OutPutLoginTokenDto{
 					UserId: v.UserID,
 				}
@@ -153,15 +154,16 @@ func (loginRepository *LoginRepository) FindByToken(sessionToken string) (dto.Ou
 
 }
 
-// func (loginRepository *LoginRepository) Logout(userID string, token string) error {
-// 	login, err := loginRepository.LoginRepository.FindByUserID(userID)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	// Revogar o token de autenticação
-// 	if err := loginRepository.LoginRepository.Logout(login.UserID, login.AccessToken); err != nil {
-// 		return fmt.Errorf("failed to revoke token: %v", err)
-// 	}
+func (loginRepository *LoginRepository) Logout(token string) error {
+	login, err := loginRepository.LoginRepository.FindByToken(token)
+	if err != nil {
+		return err
+	}
+	// Revogar o token de autenticação
+	login.IsLogout = true
+	if err := loginRepository.LoginRepository.Logout(&login); err != nil {
+		return fmt.Errorf("failed to revoke token: %v", err)
+	}
 
-// 	return nil
-// }
+	return nil
+}
