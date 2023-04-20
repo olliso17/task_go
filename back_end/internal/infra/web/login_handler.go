@@ -144,17 +144,15 @@ func (h *WebLoginHandler) Logout(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+
 	// Obter o cookie de autenticação
-	cookie, err := r.Cookie("access_token")
+
+	cookie, _ := r.Cookie("session_token")
 	logoutLogin := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
-	output := logoutLogin.Logout(cookie.Value)
+	output, err := logoutLogin.Logout(cookie.Value)
 
-	if err != nil {
-		http.SetCookie(w, cookie)
-		return
-	}
+	err = json.NewEncoder(w).Encode(output)
 
-	// Remover o cookie de autenticação
 	cookie.Name = ""
 	cookie.Value = ""
 	cookie.Path = ""
@@ -162,7 +160,6 @@ func (h *WebLoginHandler) Logout(w http.ResponseWriter, r *http.Request) {
 
 	http.SetCookie(w, cookie)
 
-	err = json.NewEncoder(w).Encode(output)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

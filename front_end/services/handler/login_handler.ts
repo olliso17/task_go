@@ -22,4 +22,14 @@ const getLogin = async () => {
 
     return data
 };
-export { postLogin, getLogin }
+const getLogout = async () => {
+
+    const url = `logout`
+
+    const res = await api.get(url);
+
+    const data = res.data;
+
+    return data
+};
+export { postLogin, getLogin, getLogout }

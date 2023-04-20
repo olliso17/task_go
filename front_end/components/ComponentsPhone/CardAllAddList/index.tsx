@@ -1,4 +1,4 @@
-import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Text, useColorMode} from "@chakra-ui/react"
+import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Text, useColorMode } from "@chakra-ui/react"
 import Lottie from "lottie-react";
 import { useState } from "react"
 import * as listAnimation from "public/list.json";
@@ -7,7 +7,7 @@ import * as lightOn from "public/light_on.json";
 import { Form, Formik } from "formik";
 import { useMutation, useQuery } from "react-query";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
-import { getLogin } from "@/services/handler/login_handler";
+import { getLogin, getLogout } from "@/services/handler/login_handler";
 import { useRouter } from "next/router"
 import { useMutationPostList } from "@/services/handler/muation";
 
@@ -16,11 +16,13 @@ import { useMutationPostList } from "@/services/handler/muation";
 const CardAllAddList = () => {
     const router = useRouter();
     const [name, setName] = useState('');
-    const {data} = useQuery("login", getLogin);
-    const user_id =data?.user_id
+    const { data } = useQuery("login", getLogin);
+    const {data:logout} = useQuery("logout", getLogout);
 
-   
-  
+    const user_id = data?.user_id
+
+
+
     const allColors = useColorsPhone()
     const mutation = useMutationPostList()
 
@@ -58,7 +60,7 @@ const CardAllAddList = () => {
                 </Box>
             </Box>
             <Formik
-                initialValues={{ name: '', user_id: data?.user_id}}
+                initialValues={{ name: '', user_id: data?.user_id }}
                 onSubmit={onCreateList}
 
             >
@@ -77,6 +79,7 @@ const CardAllAddList = () => {
                             <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" onChange={(e) => setName(e.target.value)} placeholder='create name list' />
                         </FormControl>
                         <Flex justifyContent="end">
+                            <Button onClick={()=>logout}>Logout</Button>
                             <Button
                                 mt={4}
                                 backgroundColor="purple.800"
@@ -86,11 +89,13 @@ const CardAllAddList = () => {
                             >
                                 Save
                             </Button>
+
                         </Flex>
 
                     </Form>
                 )}
             </Formik>
+
 
         </Flex>
 

@@ -154,16 +154,22 @@ func (loginRepository *LoginRepository) FindByToken(sessionToken string) (dto.Ou
 
 }
 
-func (loginRepository *LoginRepository) Logout(token string) error {
-	login, err := loginRepository.LoginRepository.FindByToken(token)
+func (loginRepository *LoginRepository) Logout(sessionToken string) (dto.OutPutLoginDto, error) {
+	loginAll, err := loginRepository.LoginRepository.FindAll()
 	if err != nil {
-		return err
+		return dto.OutPutLoginDto{Mensage: "not logout"}, err
+	}
+	for _, v := range loginAll {
+		if sessionToken == v.SessionToken {
+			v.IsLogout = true
+
+			if err := loginRepository.LoginRepository.Logout(&v); err != nil {
+				return dto.OutPutLoginDto{Mensage: "not logout"}, fmt.Errorf("failed to revoke token: %v", err)
+			}
+
+		}
 	}
 	// Revogar o token de autenticação
-	login.IsLogout = true
-	if err := loginRepository.LoginRepository.Logout(&login); err != nil {
-		return fmt.Errorf("failed to revoke token: %v", err)
-	}
 
-	return nil
+	return dto.OutPutLoginDto{Mensage: "logout"}, nil
 }

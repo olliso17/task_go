@@ -137,7 +137,7 @@ func (h *WebListHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 	}
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 	http.SetCookie(w, cookie)
 
