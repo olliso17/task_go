@@ -27,6 +27,7 @@ func RoutesAll(serverPort string, newWebTaskHandler *web.WebTaskHandler, newWebL
 
 	webserver.AddHandler("/login", newWebLoginHandler.Create)
 	webserver.AddHandler("/login/token", newWebLoginHandler.FindByToken)
+	webserver.AddHandler("/logout", newWebLoginHandler.Logout)
 
 	webserver.Start()
 }
