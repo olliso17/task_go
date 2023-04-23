@@ -110,10 +110,13 @@ func (loginRepository *LoginRepository) FindByID(id string) (entity.Login, error
 		return entity.Login{}, err
 	}
 	for _, v := range loginAll {
-		if id == v.ID {
+		if v.IsLogout != true {
 
-			return v, nil
+			if id == v.ID {
 
+				return v, nil
+
+			}
 		}
 	}
 	return entity.Login{}, err
@@ -125,10 +128,12 @@ func (loginRepository *LoginRepository) FindByUserID(userID string) (entity.Logi
 		return entity.Login{}, err
 	}
 	for _, v := range loginAll {
-		if userID == v.UserID {
+		if v.IsLogout != true {
+			if userID == v.UserID {
 
-			return v, nil
+				return v, nil
 
+			}
 		}
 	}
 	return entity.Login{}, err

@@ -7,9 +7,9 @@ import * as lightOn from "public/light_on.json";
 import { Form, Formik } from "formik";
 import { useMutation, useQuery } from "react-query";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
-import { getLogin, getLogout } from "@/services/handler/login_handler";
+import { getLogin, postLogout } from "@/services/handler/login_handler";
 import { useRouter } from "next/router"
-import { useMutationPostList } from "@/services/handler/muation";
+import { useMutationPostList, useMutationPostLogout } from "@/services/handler/muation";
 
 
 
@@ -17,7 +17,7 @@ const CardAllAddList = () => {
     const router = useRouter();
     const [name, setName] = useState('');
     const { data } = useQuery("login", getLogin);
-    const {data:logout} = useQuery("logout", getLogout);
+    const logout = useMutationPostLogout()
 
     const user_id = data?.user_id
 
@@ -79,7 +79,7 @@ const CardAllAddList = () => {
                             <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" onChange={(e) => setName(e.target.value)} placeholder='create name list' />
                         </FormControl>
                         <Flex justifyContent="end">
-                            <Button onClick={()=>logout}>Logout</Button>
+                            <Button onClick={()=>logout.mutate()}>Logout</Button>
                             <Button
                                 mt={4}
                                 backgroundColor="purple.800"

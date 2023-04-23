@@ -23,6 +23,7 @@ func NewLoginHandler(loginRepository interfaces.LoginRepositoryInterface, userRe
 }
 
 func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
+
 	token, _ := entity.GenerateJWT()
 	cookie := &http.Cookie{
 		Name:     "session_token",
@@ -140,25 +141,33 @@ func (h *WebLoginHandler) FindByToken(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *WebLoginHandler) Logout(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
+	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
 	// Obter o cookie de autenticação
 
-	cookie, _ := r.Cookie("session_token")
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 	logoutLogin := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
 	output, err := logoutLogin.Logout(cookie.Value)
+	if cookie != nil {
+		cookie = &http.Cookie{
+			Name:     "",
+			Value:    "",
+			Path:     "/",
+			MaxAge:   -1,
+			HttpOnly: true,
+			Secure:   true,
+			SameSite: http.SameSiteLaxMode,
+		}
+		http.SetCookie(w, cookie)
+	}
 
 	err = json.NewEncoder(w).Encode(output)
-
-	cookie.Name = ""
-	cookie.Value = ""
-	cookie.Path = ""
-	cookie.MaxAge = -1
-
-	http.SetCookie(w, cookie)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

@@ -22,14 +22,14 @@ const getLogin = async () => {
 
     return data
 };
-const getLogout = async () => {
+const postLogout = async () => {
 
     const url = `logout`
 
-    const res = await api.get(url);
+    const res = await api.post(url);
 
     const data = res.data;
 
     return data
 };
-export { postLogin, getLogin, getLogout }
+export { postLogin, getLogin, postLogout }
