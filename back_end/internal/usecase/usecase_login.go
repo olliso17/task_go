@@ -22,54 +22,55 @@ func NewLoginRepository(loginRepository interfaces.LoginRepositoryInterface, use
 }
 
 func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.OutPutLoginDto, error) {
-	password := entity.Hash(input.Email, os.Getenv("CRYPTO_PASSWORD"), input.Password)
-	email := entity.Hash(input.Password, os.Getenv("CRYPTO_EMAIL"), input.Email)
+	if input.Password != "" && input.Email != "" {
+		password := entity.Hash(input.Email, os.Getenv("CRYPTO_PASSWORD"), input.Password)
+		email := entity.Hash(input.Password, os.Getenv("CRYPTO_EMAIL"), input.Email)
+		user, err := loginRepository.UserRepository.CheckPassword(email, password)
 
-	user, err := loginRepository.UserRepository.CheckPassword(email, password)
-
-	if err != nil || user.Email == "" && user.Password == "" {
-		return dto.OutPutLoginDto{
-			Mensage: "Unable to create user please review your credentials",
-		}, err
-	}
-	loginFindUserId, err := loginRepository.LoginRepository.FindByUserID(user.ID)
-
-	hostname, _ := os.Hostname()
-	ip := os.Getpid()
-	token, _ := entity.GenerateJWT()
-	login, _ := entity.NewLogin(user.ID, token, string(hostname), int(ip))
-
-	if loginFindUserId.UserID != " " && loginFindUserId.UserID != login.UserID {
-
-		if err := loginRepository.LoginRepository.Create(login); err != nil {
+		if err != nil || user.Email == "" && user.Password == "" {
 			return dto.OutPutLoginDto{
-				Mensage: "Unable to create user please review your credentials",
+				Mensage: "Invalid credentials",
 			}, err
 		}
+		loginFindUserId, err := loginRepository.LoginRepository.FindByUserID(user.ID)
 
+		hostname, _ := os.Hostname()
+		ip := os.Getpid()
+		token, _ := entity.GenerateJWT()
+
+		if loginFindUserId.UserID == "" {
+			login, _ := entity.NewLogin(user.ID, token, string(hostname), int(ip))
+
+			if err := loginRepository.LoginRepository.Create(login); err != nil {
+				return dto.OutPutLoginDto{
+					Mensage: "Invalid credentials",
+				}, err
+			}
+
+			dto := dto.OutPutLoginDto{
+				Mensage: "Login successfully",
+			}
+
+			return dto, nil
+		}
+
+		loginFindUserId.SessionToken = token
+		loginFindUserId.HostName = hostname
+		loginFindUserId.IPAddress = ip
+
+		if err := loginRepository.LoginRepository.EditLogin(&loginFindUserId); err != nil {
+			return dto.OutPutLoginDto{
+				Mensage: "Invalid credentials",
+			}, err
+		}
 		dto := dto.OutPutLoginDto{
 			Mensage: "Login successfully",
 		}
 
-		return dto, nil
-	}
+		return dto, err
 
-	loginFindUserId.SessionToken = token
-	loginFindUserId.HostName = login.HostName
-	loginFindUserId.IPAddress = login.IPAddress
-	loginFindUserId.CreatedAt = login.CreatedAt
-	loginFindUserId.ExpiredAt = time.Now().Add(3 * time.Hour)
-	loginFindUserId.IsLogout = login.IsLogout
-	if err := loginRepository.LoginRepository.EditLogin(&loginFindUserId); err != nil {
-		return dto.OutPutLoginDto{
-			Mensage: "Unable to create user please review your credentials",
-		}, err
 	}
-	dto := dto.OutPutLoginDto{
-		Mensage: "Login successfully",
-	}
-
-	return dto, err
+	return dto.OutPutLoginDto{Mensage: "Invalid credentials"}, nil
 
 }
 
@@ -87,9 +88,9 @@ func (loginRepository *LoginRepository) EditLogin(login entity.Login) (entity.Lo
 		SessionToken: login.SessionToken,
 		HostName:     login.HostName,
 		IPAddress:    login.IPAddress,
-		CreatedAt:    login.CreatedAt,
-		ExpiredAt:    login.ExpiredAt,
-		IsLogout:     login.IsLogout,
+		CreatedAt:    time.Now().Local(),
+		ExpiredAt:    time.Now().Add(3 * time.Hour),
+		IsLogout:     false,
 	}
 
 	return dto, err

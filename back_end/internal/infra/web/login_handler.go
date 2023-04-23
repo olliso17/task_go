@@ -24,18 +24,6 @@ func NewLoginHandler(loginRepository interfaces.LoginRepositoryInterface, userRe
 
 func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 
-	token, _ := entity.GenerateJWT()
-	cookie := &http.Cookie{
-		Name:     "session_token",
-		Value:    token,
-		Path:     "/",
-		Expires:  time.Now().Add(1 * time.Hour),
-		MaxAge:   300,
-		HttpOnly: true,
-		Secure:   true,
-		SameSite: http.SameSiteLaxMode,
-	}
-	http.SetCookie(w, cookie)
 	if r.Method != http.MethodPost {
 
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -48,21 +36,38 @@ func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	cookie, err := r.Cookie("session_token")
 
 	createLogin := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
 	output, err := createLogin.Create(dto)
 
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	if output.Mensage == "Login successfully" {
+		token, _ := entity.GenerateJWT()
 
-	err = json.NewEncoder(w).Encode(output)
+		cookie = &http.Cookie{
+			Name:     "session_token",
+			Value:    token,
+			Path:     "/",
+			Expires:  time.Now().Add(1 * time.Hour),
+			MaxAge:   300,
+			HttpOnly: true,
+			Secure:   true,
+			SameSite: http.SameSiteLaxMode,
+		}
+		http.SetCookie(w, cookie)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		err = json.NewEncoder(w).Encode(output)
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
+	return
 
 }
 
@@ -99,19 +104,6 @@ func (h *WebLoginHandler) EditLogin(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	token, _ := entity.GenerateJWT()
-
-	cookie := &http.Cookie{
-		Name:     "session_token",
-		Value:    token,
-		Path:     "/",
-		Expires:  time.Now().Add(1 * time.Hour),
-		MaxAge:   300,
-		HttpOnly: true,
-		Secure:   true,
-		SameSite: http.SameSiteLaxMode,
-	}
-	http.SetCookie(w, cookie)
 
 	err = json.NewEncoder(w).Encode(output)
 	if err != nil {
@@ -154,18 +146,17 @@ func (h *WebLoginHandler) Logout(w http.ResponseWriter, r *http.Request) {
 	}
 	logoutLogin := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
 	output, err := logoutLogin.Logout(cookie.Value)
-	if cookie != nil {
-		cookie = &http.Cookie{
-			Name:     "",
-			Value:    "",
-			Path:     "/",
-			MaxAge:   -1,
-			HttpOnly: true,
-			Secure:   true,
-			SameSite: http.SameSiteLaxMode,
-		}
-		http.SetCookie(w, cookie)
-	}
+
+	cookie.Name = ""
+	cookie.Value = ""
+	cookie.Path = "/"
+	cookie.Expires = time.Now().Add(0 * time.Hour)
+	cookie.MaxAge = -1
+	cookie.HttpOnly = true
+	cookie.Secure = true
+	cookie.SameSite = http.SameSiteLaxMode
+
+	http.SetCookie(w, cookie)
 
 	err = json.NewEncoder(w).Encode(output)
 

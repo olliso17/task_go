@@ -47,9 +47,9 @@ const useMutationPostLogin= () => {
                 })
 
             }
-            if (data.mensage == "User created successfully") {
+            if (data.mensage == "Login successfully") {
                 toast({
-                    title: 'User created successfully',
+                    title: 'Login successfully',
                     status: 'success',
                     duration: 9000,
                     isClosable: true,
@@ -118,12 +118,14 @@ const useMutationPostUser= () => {
 }
 
 const useMutationPostLogout= () => {
+
     const toast = useToast()
     const router = useRouter();
 
     const mutation = useMutation({
-        mutationFn: postLogout, onSuccess: () => {
-            router.push('/login')
+        mutationFn: postLogout, onSuccess: (data) => {
+            console.log(data)
+            // router.push('/login')
         }, onError(error) {
             toast({
                 title: `${error} `,
