@@ -57,6 +57,7 @@ func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.Out
 		loginFindUserId.SessionToken = token
 		loginFindUserId.HostName = hostname
 		loginFindUserId.IPAddress = ip
+		loginFindUserId.IsLogout = false
 
 		if err := loginRepository.LoginRepository.EditLogin(&loginFindUserId); err != nil {
 			return dto.OutPutLoginDto{
@@ -90,7 +91,7 @@ func (loginRepository *LoginRepository) EditLogin(login entity.Login) (entity.Lo
 		IPAddress:    login.IPAddress,
 		CreatedAt:    time.Now().Local(),
 		ExpiredAt:    time.Now().Add(3 * time.Hour),
-		IsLogout:     false,
+		IsLogout:     login.IsLogout,
 	}
 
 	return dto, err

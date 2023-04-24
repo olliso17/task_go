@@ -6,7 +6,6 @@ import (
 	usecase "back_end/internal/usecase"
 	"back_end/internal/usecase/dto"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"time"
 )
@@ -160,7 +159,6 @@ func (h *WebLoginHandler) Logout(w http.ResponseWriter, r *http.Request) {
 		cookie.SameSite = http.SameSiteLaxMode
 
 		http.SetCookie(w, cookie)
-		fmt.Print(cookie.Name)
 
 		err = json.NewEncoder(w).Encode(output)
 
