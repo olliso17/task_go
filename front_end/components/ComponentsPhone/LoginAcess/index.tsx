@@ -23,7 +23,7 @@ const LoginAccess = () => {;
         <>
             <Flex flexDirection="column" height="70vh" justifyContent="center" alignItems="center">
                 <Flex width="19vw" justifyContent="end">
-                    <Button colorScheme={allColors.bgAccordionButton} backgroundColor={allColors.bgAccordionButton} rounded="full" onClick={toggleColorMode}>
+                    <Button colorScheme={allColors.bgAccordionButton} backgroundColor={allColors.bgCenter} rounded="full" onClick={toggleColorMode}>
                         <Lottie style={style} animationData={colorMode == "light" ? lightOff : lightOn} />
                     </Button>
                 </Flex>

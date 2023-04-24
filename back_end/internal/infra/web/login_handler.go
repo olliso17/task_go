@@ -144,7 +144,7 @@ func (h *WebLoginHandler) Logout(w http.ResponseWriter, r *http.Request) {
 	// Obter o cookie de autenticação
 
 	cookie, err := r.Cookie("session_token")
-	// fmt.Print(cookie.Value)
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

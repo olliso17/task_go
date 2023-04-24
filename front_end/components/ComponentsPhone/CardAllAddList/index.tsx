@@ -4,6 +4,7 @@ import { useState } from "react"
 import * as listAnimation from "public/list.json";
 import * as lightOff from "public/light_off.json";
 import * as lightOn from "public/light_on.json";
+import * as logoutAnimation from "public/logout.json";
 import { Form, Formik } from "formik";
 import { useMutation, useQuery } from "react-query";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
@@ -34,10 +35,23 @@ const CardAllAddList = () => {
     const style = { whidth: 40, height: 40, };
     return (
 
-        <Flex height="60vh" flexDirection="column" justifyContent="space-between" margin="8px" alignItems="center">
-            <Flex width="19vw" justifyContent="end">
-                <Button colorScheme={allColors.bgAccordionButton} backgroundColor={allColors.bgAccordionButton} rounded="full" onClick={toggleColorMode}>
+        <Flex height="67vh" flexDirection="column" justifyContent="space-between" margin="8px" alignItems="center">
+
+            <Flex width="100vw" justifyContent="center">
+                <Button 
+                marginRight="6vw" 
+                colorScheme={allColors.bgAccordionButton} 
+                backgroundColor={allColors.bgCenter}
+                rounded="full" onClick={toggleColorMode}>
                     <Lottie style={style} animationData={colorMode == "light" ? lightOff : lightOn} />
+                </Button>
+                <Button
+                    marginLeft="6vw"
+                    padding="0"
+                    backgroundColor={allColors.bgCenter}
+                    rounded="full"
+                    onClick={() => logout.mutate()}>
+                    <Lottie style={style} animationData={logoutAnimation} />
                 </Button>
             </Flex>
             <Box marginTop="8px">
@@ -78,10 +92,10 @@ const CardAllAddList = () => {
                             </FormLabel>
                             <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" onChange={(e) => setName(e.target.value)} placeholder='create name list' />
                         </FormControl>
-                        <Flex justifyContent="end">
-                            <Button onClick={()=>logout.mutate()}>Logout</Button>
+                        <Flex justifyContent="end" >
                             <Button
                                 mt={4}
+                                margin="0.5vw"
                                 backgroundColor="purple.800"
                                 colorScheme='purple'
                                 textColor="white"

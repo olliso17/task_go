@@ -123,9 +123,9 @@ const useMutationPostLogout= () => {
     const router = useRouter();
 
     const mutation = useMutation({
-        mutationFn: postLogout, onSuccess: (data) => {
-            console.log(data)
-            // router.push('/login')
+        mutationFn: postLogout, onSuccess: () => {
+         
+            router.push('/login')
         }, onError(error) {
             toast({
                 title: `${error} `,
