@@ -1,15 +1,19 @@
 import Head from 'next/head'
-import {Flex} from '@chakra-ui/react';
+import { Button, Flex, Stack } from '@chakra-ui/react';
 import CardStylePhone from '@/components/ComponentsPhone/CardStylePhone';
 import CardAllAddList from '@/components/ComponentsPhone/CardAllAddList';
 import ListAll from '@/components/ComponentsPhone/ListAll';
 import TabsLoginOk from '@/components/ComponentsPhone/TabsLoginOk';
 import { useColorsPhone } from '@/hooksPerson/colorsPhone';
+import { useState } from 'react';
+import CardStyleWeb from '@/components/ComponentsWeb/CardStyleWeb';
 
 
 
 export default function Home() {
-  const allColors= useColorsPhone()
+  const allColors = useColorsPhone()
+  const [active, setActive] = useState(false);
+
   return (
     <>
       <Head>
@@ -19,7 +23,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
-        <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList/>} contentListAll={<ListAll/>}/>}/>
+        <Stack margin="0.5vw">
+          <Button onClick={e => { setActive(state => !state) }}>{active == false ? "Web" : "Mobile"}</Button>
+        </Stack>
+        {active == false ? <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} /> : <CardStyleWeb content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} />}
       </Flex>
     </>
   )
