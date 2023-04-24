@@ -22,7 +22,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
-        <Stack>
+        <Stack margin="0.5vw">
           <Button onClick={e => {setActive(state => !state)}}>{active == false ? "Web" : "Mobile"}</Button>
         </Stack>
         {active == false ? <CardStylePhone content={<CreateUser />} /> : <CardStyleWeb content={<CreateUser />} />}

@@ -1,4 +1,4 @@
-import { Box, Button, Flex, FormControl, Heading, Input, Text, useColorMode} from "@chakra-ui/react"
+import { Box, Button, Flex, FormControl, Heading, Input, Link, Text, useColorMode } from "@chakra-ui/react"
 import { Form, Formik } from 'formik'
 import React, { useState } from "react"
 import * as lightOff from "public/light_off.json";
@@ -8,7 +8,8 @@ import Lottie from "lottie-react";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone"
 import { useMutationPostLogin } from "@/services/handler/muation"
 
-const LoginAccess = () => {;
+const LoginAccess = () => {
+    ;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const allColors = useColorsPhone()
@@ -17,7 +18,7 @@ const LoginAccess = () => {;
     const styleRegister = { whidth: 250, height: 250, };
     const initialValues = { email: '', password: '' }
     const mutation = useMutationPostLogin()
-    
+
 
     return (
         <>
@@ -50,7 +51,7 @@ const LoginAccess = () => {;
                 <Formik
                     initialValues={initialValues}
                     onSubmit={() => {
-                        mutation.mutate({email, password})
+                        mutation.mutate({ email, password })
 
                     }}
                 >
@@ -59,14 +60,23 @@ const LoginAccess = () => {;
                         <Form >
                             <FormControl >
                                 <Flex flexDirection="column" justifyContent="center" alignItems="center">
-                                    <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" type="email" onChange={(e) => {setEmail(e.target.value)}} placeholder='Email' />
-                                    <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" type="password" className="mt-1" onChange={(e) => {setPassword(e.target.value)}} placeholder='Password' />
+                                    <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder='Email' />
+                                    <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" type="password" className="mt-1" onChange={(e) => { setPassword(e.target.value) }} placeholder='Password' />
                                 </Flex>
 
                             </FormControl>
+                            <Flex justifyContent="center">
+                                <Text fontSize="sm">
+                                    Don't have an account?{' '}
+                                    <Link
+                                        color='teal.500'
+                                        href='http://localhost:3001/'
+                                    >Create Account</Link>
+                                </Text>
+                            </Flex>
                             <Flex justifyContent="end">
                                 <Button
-                                   
+
                                     mt={4}
                                     backgroundColor="purple.800"
                                     colorScheme='purple'
@@ -75,7 +85,7 @@ const LoginAccess = () => {;
                                 >
                                     login
                                 </Button>
-                      
+
                             </Flex>
                         </Form>
 

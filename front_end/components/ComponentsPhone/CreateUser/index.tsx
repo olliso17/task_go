@@ -1,4 +1,4 @@
-import { Box, Button, Flex, FormControl, Heading, Input, Text, useColorMode } from "@chakra-ui/react"
+import { Box, Button, Flex, FormControl, Heading, Input, Link, Text, useColorMode } from "@chakra-ui/react"
 import { Form, Formik } from 'formik'
 import React, { useState } from "react"
 import * as lightOff from "public/light_off.json";
@@ -68,9 +68,18 @@ const CreateUser = () => {
                                 </Flex>
 
                             </FormControl>
+
+                            <Flex justifyContent="center">
+                                <Text fontSize="sm">
+                                    Do you already have an account?{' '}
+                                    <Link
+                                        color='teal.500'
+                                        href='http://localhost:3001/login'
+                                       >Login</Link>
+                                </Text>
+                            </Flex>
                             <Flex justifyContent="end">
                                 <Button
-
                                     mt={4}
                                     backgroundColor="purple.800"
                                     colorScheme='purple'
