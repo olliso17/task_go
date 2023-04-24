@@ -139,25 +139,27 @@ func (h *WebListHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
-	http.SetCookie(w, cookie)
+	// http.SetCookie(w, cookie)
+	if cookie.Name == "session_token" && cookie.Value != "" {
+		input := dto.ListInputSoftDeleteDTO{}
+		err = json.NewDecoder(r.Body).Decode(&input)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
 
-	input := dto.ListInputSoftDeleteDTO{}
-	err = json.NewDecoder(r.Body).Decode(&input)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		ListDelete, err := createList.SoftDelete(input)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		json.NewEncoder(w).Encode(ListDelete)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
-	createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
-
-	ListDelete, err := createList.SoftDelete(input)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	json.NewEncoder(w).Encode(ListDelete)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
+	http.Error(w, err.Error(), http.StatusInternalServerError)
+	return
 }

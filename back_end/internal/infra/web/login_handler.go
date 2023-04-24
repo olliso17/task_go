@@ -6,6 +6,7 @@ import (
 	usecase "back_end/internal/usecase"
 	"back_end/internal/usecase/dto"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 )
@@ -120,16 +121,18 @@ func (h *WebLoginHandler) FindByToken(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	http.SetCookie(w, cookie)
+	if cookie.Name == "session_token" && cookie.Value != "" {
 
-	createLogin := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
-	output, err := createLogin.FindByToken(cookie.Value)
+		createLogin := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
+		output, err := createLogin.FindByToken(cookie.Value)
 
-	err = json.NewEncoder(w).Encode(output)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		err = json.NewEncoder(w).Encode(output)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
+	return
 }
 
 func (h *WebLoginHandler) Logout(w http.ResponseWriter, r *http.Request) {
@@ -141,28 +144,30 @@ func (h *WebLoginHandler) Logout(w http.ResponseWriter, r *http.Request) {
 	// Obter o cookie de autenticação
 
 	cookie, err := r.Cookie("session_token")
+	// fmt.Print(cookie.Value)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 	logoutLogin := *usecase.NewLoginRepository(h.LoginRepository, h.UserRepository)
 	output, err := logoutLogin.Logout(cookie.Value)
+	if cookie.Name == "session_token" {
+		cookie.Value = ""
+		cookie.Path = "/"
+		cookie.Expires = time.Unix(0, 0)
+		cookie.MaxAge = -1
+		cookie.HttpOnly = true
+		cookie.Secure = true
+		cookie.SameSite = http.SameSiteLaxMode
 
-	cookie.Name = ""
-	cookie.Value = ""
-	cookie.Path = "/"
-	cookie.Expires = time.Now().Add(0 * time.Hour)
-	cookie.MaxAge = -1
-	cookie.HttpOnly = true
-	cookie.Secure = true
-	cookie.SameSite = http.SameSiteLaxMode
+		http.SetCookie(w, cookie)
+		fmt.Print(cookie.Name)
 
-	http.SetCookie(w, cookie)
+		err = json.NewEncoder(w).Encode(output)
 
-	err = json.NewEncoder(w).Encode(output)
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 
 }
