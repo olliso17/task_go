@@ -5,6 +5,7 @@ import (
 	usecase "back_end/internal/usecase"
 	"back_end/internal/usecase/dto"
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -54,7 +55,6 @@ func (h *WebListHandler) Create(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	http.Error(w, err.Error(), http.StatusUnauthorized)
 	return
 }
 
@@ -69,6 +69,7 @@ func (h *WebListHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 	}
 	http.SetCookie(w, cookie)
 	if cookie.Name == "session_token" && cookie.Value != "" {
+		fmt.Print(cookie.Name)
 		createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
 		output, err := createList.FindAll()
 
@@ -79,8 +80,7 @@ func (h *WebListHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	http.Error(w, err.Error(), http.StatusUnauthorized)
-	return
+
 }
 
 func (h *WebListHandler) FindByID(w http.ResponseWriter, r *http.Request) {
@@ -105,8 +105,7 @@ func (h *WebListHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	http.Error(w, err.Error(), http.StatusUnauthorized)
-	return
+
 }
 func (h *WebListHandler) EditList(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPatch {
@@ -139,8 +138,7 @@ func (h *WebListHandler) EditList(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	http.Error(w, err.Error(), http.StatusUnauthorized)
-	return
+
 }
 func (h *WebListHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodDelete {
@@ -173,6 +171,5 @@ func (h *WebListHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	http.Error(w, err.Error(), http.StatusUnauthorized)
-	return
+
 }
