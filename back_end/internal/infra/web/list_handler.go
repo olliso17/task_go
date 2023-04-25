@@ -21,38 +21,41 @@ func NewListHandler(listRepository interfaces.ListRepositoryInterface, taskUseca
 }
 
 func (h *WebListHandler) Create(w http.ResponseWriter, r *http.Request) {
-	cookie, err := r.Cookie("session_token")
-	if err != nil {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
-	}
-	http.SetCookie(w, cookie)
 
 	if r.Method != http.MethodPost {
 
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-
-	var dto dto.ListInpuntDtO
-	err = json.NewDecoder(r.Body).Decode(&dto)
-
+	cookie, err := r.Cookie("session_token")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		http.Error(w, err.Error(), http.StatusUnauthorized)
 	}
-	createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
-	output, err := createList.Execute(dto)
+	http.SetCookie(w, cookie)
+	if cookie.Name == "session_token" && cookie.Value != "" {
 
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	err = json.NewEncoder(w).Encode(output)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+		var dto dto.ListInpuntDtO
+		err = json.NewDecoder(r.Body).Decode(&dto)
 
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
+		output, err := createList.Execute(dto)
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		err = json.NewEncoder(w).Encode(output)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+	http.Error(w, err.Error(), http.StatusUnauthorized)
+	return
 }
 
 func (h *WebListHandler) FindAll(w http.ResponseWriter, r *http.Request) {
@@ -62,20 +65,22 @@ func (h *WebListHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 	}
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		http.Error(w, err.Error(), http.StatusUnauthorized)
 	}
 	http.SetCookie(w, cookie)
+	if cookie.Name == "session_token" && cookie.Value != "" {
+		createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
+		output, err := createList.FindAll()
 
-	createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
-	output, err := createList.FindAll()
+		err = json.NewEncoder(w).Encode(output)
 
-	err = json.NewEncoder(w).Encode(output)
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
-
+	http.Error(w, err.Error(), http.StatusUnauthorized)
+	return
 }
 
 func (h *WebListHandler) FindByID(w http.ResponseWriter, r *http.Request) {
@@ -85,20 +90,23 @@ func (h *WebListHandler) FindByID(w http.ResponseWriter, r *http.Request) {
 	}
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		http.Error(w, err.Error(), http.StatusUnauthorized)
 	}
 	http.SetCookie(w, cookie)
+	if cookie.Name == "session_token" && cookie.Value != "" {
+		params := r.URL.Query().Get("id")
 
-	params := r.URL.Query().Get("id")
+		createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
+		output, err := createList.FindByID(params)
 
-	createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
-	output, err := createList.FindByID(params)
-
-	err = json.NewEncoder(w).Encode(output)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		err = json.NewEncoder(w).Encode(output)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
+	http.Error(w, err.Error(), http.StatusUnauthorized)
+	return
 }
 func (h *WebListHandler) EditList(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPatch {
@@ -108,27 +116,31 @@ func (h *WebListHandler) EditList(w http.ResponseWriter, r *http.Request) {
 	}
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		http.Error(w, err.Error(), http.StatusUnauthorized)
 	}
 	http.SetCookie(w, cookie)
+	if cookie.Name == "session_token" && cookie.Value != "" {
 
-	input := dto.EditListEntityInputDto{}
-	err = json.NewDecoder(r.Body).Decode(&input)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		input := dto.EditListEntityInputDto{}
+		err = json.NewDecoder(r.Body).Decode(&input)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
+		output, err := createList.EditList(input)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		err = json.NewEncoder(w).Encode(output)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
-	createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
-	output, err := createList.EditList(input)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	err = json.NewEncoder(w).Encode(output)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	http.Error(w, err.Error(), http.StatusUnauthorized)
+	return
 }
 func (h *WebListHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodDelete {
@@ -137,9 +149,10 @@ func (h *WebListHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 	}
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		http.Error(w, err.Error(), http.StatusUnauthorized)
 	}
-	// http.SetCookie(w, cookie)
+	http.SetCookie(w, cookie)
+
 	if cookie.Name == "session_token" && cookie.Value != "" {
 		input := dto.ListInputSoftDeleteDTO{}
 		err = json.NewDecoder(r.Body).Decode(&input)
@@ -160,6 +173,6 @@ func (h *WebListHandler) SoftDelete(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	http.Error(w, err.Error(), http.StatusInternalServerError)
+	http.Error(w, err.Error(), http.StatusUnauthorized)
 	return
 }
