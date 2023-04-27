@@ -2,7 +2,6 @@ import api from "../backend";
 import { CreateLoginInputDto, OutputLogintDto } from "../dto/login_dto";
 
 
-
 const postLogin = async (input: CreateLoginInputDto): Promise<OutputLogintDto> => {
 
     const url = "/login"
@@ -24,7 +23,7 @@ const getLogin = async () => {
     return data
 };
 const postLogout = async () => {
-  
+
     const url = `logout`
 
     const res = await api.post(url);

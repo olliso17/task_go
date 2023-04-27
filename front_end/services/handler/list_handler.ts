@@ -1,11 +1,18 @@
 import api from "../backend";
 import { CreateListInputDto, ListIdInputDto, OutputListDto } from "../dto/list_dto";
+import { getCookie } from 'cookies-next';
 
 
 
 
 const getListAll = async () => {
-    const url = "lists"
+    const token = getCookie('session_token');
+    if (token == "") {
+       console.log("not access")
+       return 
+    }
+    
+    const url =`/lists`
 
     const res = await api.get(url);
 
@@ -15,8 +22,12 @@ const getListAll = async () => {
 
 }
 
-const getListId = async (input: ListIdInputDto): Promise<OutputListDto> => {
-
+const getListId = async (input: ListIdInputDto) => {
+    const token = getCookie('session_token');
+    if (token == "") {
+       console.log("not access")
+       return
+    }
     const url = `list/${input}`
 
     const res = await api.get(url);
@@ -24,11 +35,17 @@ const getListId = async (input: ListIdInputDto): Promise<OutputListDto> => {
     const data = res.data;
 
     return data
+    
 };
 
 
-const postList = async (input: CreateListInputDto): Promise<OutputListDto> => {
+const postList = async (input: CreateListInputDto) => {
+    const token = getCookie('session_token');
 
+    if (token == "") {
+        console.log("not access")
+        return
+     }
     const url = `list/create`
 
     const res = await api.post(url, input);
@@ -45,4 +62,4 @@ const postList = async (input: CreateListInputDto): Promise<OutputListDto> => {
 
 
 
-export { postList, getListAll, getListId}
+export { postList, getListAll, getListId }

@@ -30,19 +30,9 @@ func (userHandler *WebUserHandler) Create(w http.ResponseWriter, r *http.Request
 		return
 	}
 	cookie, err := r.Cookie("session_token")
-
+	currentTime := time.Now()
 	token, _ := entity.GenerateJWT()
-	cookie = &http.Cookie{
-		Name:     "session_token",
-		Value:    token,
-		Path:     "/",
-		Expires:  time.Now().Add(1 * time.Hour),
-		MaxAge:   300,
-		HttpOnly: true,
-		Secure:   true,
-		SameSite: http.SameSiteLaxMode,
-	}
-	http.SetCookie(w, cookie)
+
 	var dto dto.UserInputDTO
 	err = json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
@@ -57,7 +47,19 @@ func (userHandler *WebUserHandler) Create(w http.ResponseWriter, r *http.Request
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	// fmt.Print(currentTime.Add(10 * time.Minute))
+	if output.Mensage == "User created successfully" {
+		cookie = &http.Cookie{
+			Name:     "session_token",
+			Value:    token,
+			Path:     "/",
+			Expires:  currentTime.Add(1 * time.Hour).UTC(),
+			HttpOnly: true,
+			// Secure:   true,
+			SameSite: http.SameSiteLaxMode,
+		}
+		http.SetCookie(w, cookie)
+	}
 	err = json.NewEncoder(w).Encode(output)
 
 	if err != nil {

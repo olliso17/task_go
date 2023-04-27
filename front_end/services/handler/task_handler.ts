@@ -1,24 +1,42 @@
 import api from "../backend";
 import { InputCreateTaskDto, OutputTaskDto, TaskCompletedInputDto, TaskIdInputDto, TaskStatusInputDto, TaskTitleInputDto } from "../dto/task_dto";
+import { getCookie } from 'cookies-next';
+
 
 const postTask = async (
     input: InputCreateTaskDto
-): Promise<OutputTaskDto> => {
-    const url = 'task/create';
+) => {
+    const token = getCookie('session_token');
+    if (token == "") {
+        console.log("not access")
+        return 
+     }
+     
+    const url = `task/create`;
 
     const res = await api.post(url, input);
 
     return res.data;
 };
 
-const getTaskId = async (input: TaskIdInputDto): Promise<OutputTaskDto> => {
+const getTaskId = async (input: TaskIdInputDto)=> {
+    const token = getCookie('session_token');
+    if (token == "") {
+        console.log("not access")
+        return 
+     }
     const url = `task/id/${input}`;
 
     const res = await api.get(url);
 
     return res.data;
 };
-const getTaskTitle = async (input: TaskTitleInputDto): Promise<OutputTaskDto> => {
+const getTaskTitle = async (input: TaskTitleInputDto) =>{
+    const token = getCookie('session_token');
+    if (token == "") {
+        console.log("not access")
+        return 
+     }
     const url = `task/title/${input}`;
 
     const res = await api.get(url);
@@ -26,7 +44,12 @@ const getTaskTitle = async (input: TaskTitleInputDto): Promise<OutputTaskDto> =>
     return res.data;
 };
 
-const patchTaskEdit = async (input: TaskStatusInputDto):Promise<OutputTaskDto>  => {
+const patchTaskEdit = async (input: TaskStatusInputDto)  => {
+    const token = getCookie('session_token');
+    if (token == "") {
+        console.log("not access")
+        return 
+     }
     const url = "list/edit";
 
     const res = await api.patch(url, input);
@@ -37,6 +60,11 @@ const patchTaskEdit = async (input: TaskStatusInputDto):Promise<OutputTaskDto>  
 }
 
 const getTasks = async () => {
+    const token = getCookie('session_token');
+    if (token == "") {
+        console.log("not access")
+        return 
+     }
     const url = 'tasks';
 
     const res = await api.get(url);

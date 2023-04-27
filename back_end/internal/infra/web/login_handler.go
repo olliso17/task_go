@@ -43,15 +43,14 @@ func (h *WebLoginHandler) Create(w http.ResponseWriter, r *http.Request) {
 
 	if output.Mensage == "Login successfully" {
 		token, _ := entity.GenerateJWT()
-
+		currentTime := time.Now()
 		cookie = &http.Cookie{
 			Name:     "session_token",
 			Value:    token,
 			Path:     "/",
-			Expires:  time.Now().Add(1 * time.Hour),
-			MaxAge:   300,
+			Expires:  currentTime.Add(1 * time.Hour),
 			HttpOnly: true,
-			Secure:   true,
+			// Secure:   true,
 			SameSite: http.SameSiteLaxMode,
 		}
 		http.SetCookie(w, cookie)
@@ -152,7 +151,6 @@ func (h *WebLoginHandler) Logout(w http.ResponseWriter, r *http.Request) {
 	if cookie.Name == "session_token" {
 		cookie.Value = ""
 		cookie.Path = "/"
-		cookie.Expires = time.Unix(0, 0)
 		cookie.MaxAge = -1
 		cookie.HttpOnly = true
 		cookie.Secure = true

@@ -9,7 +9,6 @@ import { useColorsPhone } from "@/hooksPerson/colorsPhone"
 import { useMutationPostLogin } from "@/services/handler/muation"
 
 const LoginAccess = () => {
-    ;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const allColors = useColorsPhone()
@@ -18,7 +17,7 @@ const LoginAccess = () => {
     const styleRegister = { whidth: 250, height: 250, };
     const initialValues = { email: '', password: '' }
     const mutation = useMutationPostLogin()
-
+    const dontLogin= "Don't have an account? "
 
     return (
         <>
@@ -67,7 +66,7 @@ const LoginAccess = () => {
                             </FormControl>
                             <Flex justifyContent="center">
                                 <Text fontSize="sm">
-                                    Don't have an account?{' '}
+                                    {dontLogin}
                                     <Link
                                         color='teal.500'
                                         href='http://localhost:3001/'

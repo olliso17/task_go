@@ -11,8 +11,7 @@ import { getLogin } from "@/services/handler/login_handler";
 
 const ListAll = () => {
     const {data:list} = useQuery("lists", getListAll);
-    const allColors = useColorsPhone()
- 
+    const allColors = useColorsPhone();
     return (
 
         list?.map((list: OutputListDto) => (
@@ -27,7 +26,7 @@ const ListAll = () => {
                                     bgClip='text'
                                     fontSize='md'
                                     fontWeight='extrabold'
-                                >{/*list.name*/}
+                                >{list.name}
                                 </Text>
                             </Tab>
                             <Tab roundedTop="2xl" textColor="white">

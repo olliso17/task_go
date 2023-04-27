@@ -4,9 +4,12 @@ import { useMutation } from "react-query"
 import { postList } from "./list_handler"
 import { postLogin, postLogout } from "./login_handler"
 import { postUser } from "./user_handler"
+import { getCookie } from 'cookies-next';
 
-const useMutationPostList= () => {
+
+const useMutationPostList = () => {
     const toast = useToast()
+    const router = useRouter();
     const mutation = useMutation({
         mutationFn: postList, onSuccess: ((data) => {
             toast({
@@ -31,10 +34,10 @@ const useMutationPostList= () => {
     return mutation
 }
 
-const useMutationPostLogin= () => {
+const useMutationPostLogin = () => {
     const toast = useToast()
     const router = useRouter();
-
+    const token = getCookie('session_token');
     const mutation = useMutation({
         mutationFn: postLogin, onSuccess: (data) => {
             if (data.mensage == "Unable to create user please review your credentials") {
@@ -55,8 +58,10 @@ const useMutationPostLogin= () => {
                     isClosable: true,
 
                 })
+                if (token != "") {
+                    router.push(`/lists`)
 
-                router.push('/lists')
+                }
             }
 
         }, onError(error) {
@@ -67,17 +72,17 @@ const useMutationPostLogin= () => {
                 isClosable: true,
 
             })
-            
+
         },
 
     })
     return mutation
 }
 
-const useMutationPostUser= () => {
+const useMutationPostUser = () => {
     const toast = useToast()
     const router = useRouter();
-
+    const token = getCookie('session_token');
     const mutation = useMutation({
         mutationFn: postUser, onSuccess: (data) => {
             if (data.mensage == "Unable to create user please review your credentials") {
@@ -99,7 +104,10 @@ const useMutationPostUser= () => {
 
                 })
 
-                router.push('/lists')
+                if (token != "") {
+                    router.push(`/lists`)
+
+                }
             }
 
         }, onError(error) {
@@ -110,21 +118,19 @@ const useMutationPostUser= () => {
                 isClosable: true,
 
             })
-            
+
         },
 
     })
     return mutation
 }
 
-const useMutationPostLogout= () => {
-
+const useMutationPostLogout = () => {
     const toast = useToast()
     const router = useRouter();
-
     const mutation = useMutation({
         mutationFn: postLogout, onSuccess: () => {
-         
+
             router.push('/login')
         }, onError(error) {
             toast({
@@ -134,11 +140,11 @@ const useMutationPostLogout= () => {
                 isClosable: true,
 
             })
-            
+
         },
 
     })
     return mutation
 }
 
-export { useMutationPostList, useMutationPostLogin, useMutationPostUser, useMutationPostLogout}
+export { useMutationPostList, useMutationPostLogin, useMutationPostUser, useMutationPostLogout }

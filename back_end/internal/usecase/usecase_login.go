@@ -58,7 +58,7 @@ func (loginRepository *LoginRepository) Create(input dto.InputLoginDto) (dto.Out
 		loginFindUserId.HostName = hostname
 		loginFindUserId.IPAddress = ip
 		loginFindUserId.IsLogout = false
-
+		loginFindUserId.ExpiredAt = time.Now().Add(3 * time.Hour)
 		if err := loginRepository.LoginRepository.EditLogin(&loginFindUserId); err != nil {
 			return dto.OutPutLoginDto{
 				Mensage: "Invalid credentials",
@@ -90,7 +90,7 @@ func (loginRepository *LoginRepository) EditLogin(login entity.Login) (entity.Lo
 		HostName:     login.HostName,
 		IPAddress:    login.IPAddress,
 		CreatedAt:    time.Now().Local(),
-		ExpiredAt:    time.Now().Add(3 * time.Hour),
+		ExpiredAt:    login.ExpiredAt,
 		IsLogout:     login.IsLogout,
 	}
 
