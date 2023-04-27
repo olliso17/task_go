@@ -31,6 +31,7 @@ const getTaskId = async (input: TaskIdInputDto)=> {
 
     return res.data;
 };
+
 const getTaskTitle = async (input: TaskTitleInputDto) =>{
     const token = getCookie('session_token');
     if (token == "") {

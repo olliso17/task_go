@@ -5,6 +5,7 @@ import { postList } from "./list_handler"
 import { postLogin, postLogout } from "./login_handler"
 import { postUser } from "./user_handler"
 import { getCookie } from 'cookies-next';
+import { postTask } from "./task_handler"
 
 
 const useMutationPostList = () => {
@@ -21,6 +22,33 @@ const useMutationPostList = () => {
             })
 
         }), onError(error) {
+            toast({
+                title: `${error} `,
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+
+            })
+
+        },
+    })
+    return mutation
+}
+
+const useMutationPostTask = () => {
+    const toast = useToast()
+    const router = useRouter();
+    const token = getCookie('session_token');
+    const mutation = useMutation({
+        mutationFn: postTask, onSuccess: () => {
+            toast({
+                title: 'Task created successfully.',
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+            window.location.reload()
+        }, onError(error) {
             toast({
                 title: `${error} `,
                 status: 'error',
@@ -147,4 +175,4 @@ const useMutationPostLogout = () => {
     return mutation
 }
 
-export { useMutationPostList, useMutationPostLogin, useMutationPostUser, useMutationPostLogout }
+export { useMutationPostList, useMutationPostLogin, useMutationPostUser, useMutationPostLogout, useMutationPostTask }

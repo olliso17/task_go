@@ -1,5 +1,5 @@
 import api from "../backend";
-import { CreateListInputDto, ListIdInputDto, OutputListDto } from "../dto/list_dto";
+import { CreateListInputDto, DeleteListInputDto, ListIdInputDto, OutputDeleteListDto, OutputListDto } from "../dto/list_dto";
 import { getCookie } from 'cookies-next';
 
 
@@ -53,7 +53,7 @@ const postList = async (input: CreateListInputDto) => {
     return res.data
 }
 // const deleteList = async (input: DeleteListInputDto): Promise<OutputDeleteListDto> => {
-//     const url = `list/delete`
+//     const url = `list/delete${input}`
 
 //     const res = await api.delete(url, input);
 
