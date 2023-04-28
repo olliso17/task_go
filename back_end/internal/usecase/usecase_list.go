@@ -83,12 +83,14 @@ func (l *ListRepository) FindAll() ([]dto.ListAllOutputDTO, error) {
 func (l *ListRepository) FindByID(id string) (dto.ListAllOutputDTO, error) {
 	list, err := l.ListRepository.FindByID(id)
 	tasks, err := l.TaskRepository.FindAll()
+
 	if err != nil {
 		return dto.ListAllOutputDTO{}, err
 	}
 	listID := dto.ListAllOutputDTO{}
 	tasksDto := dto.TaskOutputDTO{}
 	for positionTask, valueTask := range tasks {
+		//if tasks exist
 		if valueTask.ListID == list.ID && tasks[positionTask].IsDeleted != true {
 
 			tasksDto.ID = valueTask.ID
@@ -105,6 +107,12 @@ func (l *ListRepository) FindByID(id string) (dto.ListAllOutputDTO, error) {
 			listID.TypeTask = list.TypeTask
 			listID.Tasks = append(listID.Tasks, tasksDto)
 		}
+		//if not exists task
+
+		listID.ID = list.ID
+		listID.Name = list.Name
+		listID.TypeTask = list.TypeTask
+		listID.Tasks = nil
 	}
 
 	return listID, err

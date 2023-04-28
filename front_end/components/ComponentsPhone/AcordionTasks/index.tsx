@@ -16,7 +16,7 @@ const AccordionTasks = ({ task }: Props) => {
         console.log(status)
     }
     return (
-        <AccordionPanel key={task.id} height="10vh">
+        <AccordionPanel key={task.id} height="5vh">
             <Flex rounded="md" justifyContent="space-between" alignItems="center" padding="8px" width="15vw" backgroundColor={task.status == true ? "purple.400" : "white"}>
                 <Flex flexDirection="column" justifyContent="space-between" flex='1'>
                     <Text fontWeight='bold'>

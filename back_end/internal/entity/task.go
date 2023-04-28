@@ -52,13 +52,8 @@ func IsValid(task *Task) bool {
 		return false
 	}
 
-	if task.Description == "" {
-		fmt.Printf("Description is required\n")
-		return false
-	}
 	task.IsRegex(map[string]string{
-		"title":       task.Title,
-		"description": task.Description,
+		"title": task.Title,
 	})
 	return true
 }

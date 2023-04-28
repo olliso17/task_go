@@ -1,5 +1,5 @@
-import { getListAll} from "@/services/handler/list_handler";
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, Box, Flex, IconButton, Progress, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { getListAll } from "@/services/handler/list_handler";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, Box, Center, Flex, IconButton, Progress, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { OutputListDto } from "@/services/dto/list_dto";
 import CreateTask from "../CreateTask";
 import { AiFillDelete } from "react-icons/ai";
@@ -7,43 +7,35 @@ import AccordionTasks from "../AcordionTasks";
 import { useQuery } from "react-query";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
 import { getLogin } from "@/services/handler/login_handler";
+import { useEffect } from "react";
 
 
 const ListAll = () => {
-    const {data:list} = useQuery("lists", getListAll);
+    const { data: list } = useQuery("lists", getListAll);
     const allColors = useColorsPhone();
+    useEffect(() => {
+        list
+    })
     return (
 
         list?.map((list: OutputListDto) => (
             <Flex key={list.id} rounded="2xl" flexDirection="column" margin="4px">
                 <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple>
                     <Tabs variant='enclosed'>
-                        <TabList borderColor="purple.500">
-                            <Tab roundedTop="2xl" textColor="white">
-                                <Text
-                                    marginLeft="16px"
-                                    bgGradient={allColors.bgGradientColor}
-                                    bgClip='text'
-                                    fontSize='md'
-                                    fontWeight='extrabold'
-                                >{list.name}
-                                </Text>
-                            </Tab>
-                            <Tab roundedTop="2xl" textColor="white">
-                                <Text
-                                    marginLeft="16px"
-                                    bgGradient={allColors.bgGradientColor}
-                                    bgClip='text'
-                                    fontSize='md'
-                                    fontWeight='extrabold'
-                                >Create Task
-                                </Text>
-                            </Tab>
-                        </TabList>
+                        <Center roundedTop="2xl" textColor="white">
+                            <Text
+                                marginLeft="16px"
+                                bgGradient={allColors.bgGradientColor}
+                                bgClip='text'
+                                fontSize='md'
+                                fontWeight='extrabold'
+                            >{list.name}
+                            </Text>
+                        </Center>
                         <TabPanels>
                             <TabPanel>
                                 <AccordionItem>
-                                    <h2>
+                                    <Center padding="0.2vw">
                                         <AccordionButton rounded="2xl" backgroundColor={allColors.bgAccordionButton}>
                                             <Box as="span" flex='1' textAlign='left'>
                                                 <Text
@@ -52,19 +44,35 @@ const ListAll = () => {
                                                     bgClip='text'
                                                     fontSize='md'
                                                     fontWeight='extrabold'
-                                                >Tasks created
+                                                >Add Tasks
                                                 </Text>
                                             </Box>
                                             <AccordionIcon />
                                         </AccordionButton>
-                                    </h2>
+                                    </Center>
+                                    <CreateTask list_id={list.id} />
+                                </AccordionItem>
+                                <AccordionItem>
+
+                                    <Center padding="0.2vw">
+                                        <AccordionButton rounded="2xl" backgroundColor={allColors.bgAccordionButton}>
+                                            <Box as="span" flex='1' textAlign='left'>
+                                                <Text
+                                                    marginLeft="16px"
+                                                    bgGradient={allColors.bgGradientColor}
+                                                    bgClip='text'
+                                                    fontSize='md'
+                                                    fontWeight='extrabold'
+                                                >Tasks
+                                                </Text>
+                                            </Box>
+                                            <AccordionIcon />
+                                        </AccordionButton>
+                                    </Center>
                                     {list.tasks?.map((task) => (
                                         <AccordionTasks key={task.id.toString()} task={task} />
                                     ))}
                                 </AccordionItem>
-                            </TabPanel>
-                            <TabPanel>
-                                <CreateTask list_id={list.id} />
                             </TabPanel>
                         </TabPanels>
                     </Tabs>
@@ -83,8 +91,8 @@ const ListAll = () => {
                 </Accordion>
 
 
-            </Flex>
-            ))
+            </Flex >
+        ))
 
 
     )

@@ -1,9 +1,9 @@
 export interface InputCreateTaskDto {
     title: string;
-    description: string;
-    priority: boolean;
+    description?: string;
+    priority?: boolean;
     list_id: string;
-    time_select: string;
+    time_select?: string;
 }
 export interface TaskIdInputDto {
     id: string;

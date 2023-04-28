@@ -1,5 +1,5 @@
 import api from "../backend";
-import { CreateListInputDto, DeleteListInputDto, ListIdInputDto, OutputDeleteListDto, OutputListDto } from "../dto/list_dto";
+import { CreateListInputDto, DeleteListInputDto, OutputDeleteListDto, OutputListDto } from "../dto/list_dto";
 import { getCookie } from 'cookies-next';
 
 
@@ -22,13 +22,13 @@ const getListAll = async () => {
 
 }
 
-const getListId = async (input: ListIdInputDto) => {
+const getListId = async (id:string) => {
     const token = getCookie('session_token');
     if (token == "") {
        console.log("not access")
        return
     }
-    const url = `list/${input}`
+    const url = `/list/id?id=${id}`
 
     const res = await api.get(url);
 
