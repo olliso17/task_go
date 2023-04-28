@@ -15,7 +15,8 @@ type ListInputSoftDeleteDTO struct {
 	ID string `json:"id"`
 }
 type ListOutputDTO struct {
-	Name string `json:"name"`
+	Name     string `json:"name"`
+	TipeTask string `json:"tipe_task"`
 }
 
 type ListOutputMessageDTO struct {

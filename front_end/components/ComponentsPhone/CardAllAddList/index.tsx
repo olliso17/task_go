@@ -17,7 +17,7 @@ import { useMutationPostList, useMutationPostLogout } from "@/services/handler/m
 const CardAllAddList = () => {
     const router = useRouter();
     const [name, setName] = useState('');
-    const [tipeTask, setTipeTask] = useState('');
+    const [type_task, setTypeTask] = useState('');
     const { data } = useQuery("login", getLogin);
     const logout = useMutationPostLogout()
 
@@ -29,8 +29,9 @@ const CardAllAddList = () => {
     const mutation = useMutationPostList()
 
     const onCreateList = () => {
-        mutation.mutate({ name, tipeTask, user_id })
-        setTipeTask('')
+        mutation.mutate({ name, user_id, type_task  })
+        console.log(type_task)
+        setTypeTask('')
         setName('')
     }
     const { colorMode, toggleColorMode } = useColorMode()
@@ -76,7 +77,7 @@ const CardAllAddList = () => {
                 </Box>
             </Box>
             <Formik
-                initialValues={{ name: '', tipeTask: '', user_id: data?.user_id }}
+                initialValues={{ name: '', typeTask: '', user_id: data?.user_id }}
                 onSubmit={onCreateList}
 
             >
@@ -101,7 +102,8 @@ const CardAllAddList = () => {
                                     fontWeight='extrabold'
                                 >Select option card</Text>
                             </FormLabel>
-                            <Select borderColor="purple.400" borderWidth="2px" width="16vw" focusBorderColor="purple.600" backgroundColor="white" onChange={(e) => console.log(setTipeTask(e.target.value))}>
+                            <Select borderColor="purple.400" borderWidth="2px" width="16vw" focusBorderColor="purple.600" backgroundColor="white" value={type_task} onChange={(e) => {setTypeTask(e.target.value)}}>
+                                <option value=''>Select options</option>
                                 <option value='checkbox'>Checkbox</option>
                                 <option value='card'>Card</option>
                                 <option value='time'>Time</option>

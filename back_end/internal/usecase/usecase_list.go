@@ -31,7 +31,8 @@ func (l *ListRepository) Execute(input dto.ListInpuntDtO) (dto.ListOutputDTO, er
 		return dto.ListOutputDTO{}, err
 	}
 	dto := dto.ListOutputDTO{
-		Name: list.Name,
+		Name:     list.Name,
+		TipeTask: list.TypeTask,
 	}
 
 	return dto, nil
@@ -50,8 +51,10 @@ func (l *ListRepository) FindAll() ([]dto.ListAllOutputDTO, error) {
 
 	for _, valueList := range lists {
 		listAll = append(listAll, dto.ListAllOutputDTO{
-			ID:   valueList.ID,
-			Name: valueList.Name,
+			ID:       valueList.ID,
+			Name:     valueList.Name,
+			UserId:   valueList.UserId,
+			TypeTask: valueList.TypeTask,
 		})
 
 	}
@@ -99,6 +102,7 @@ func (l *ListRepository) FindByID(id string) (dto.ListAllOutputDTO, error) {
 
 			listID.ID = list.ID
 			listID.Name = list.Name
+			listID.TypeTask = list.TypeTask
 			listID.Tasks = append(listID.Tasks, tasksDto)
 		}
 	}
@@ -121,6 +125,7 @@ func (l *ListRepository) EditList(list dto.EditListEntityInputDto) (dto.EditList
 	dto := dto.EditListEntityOutputDto{
 		ID:        listEntity.ID,
 		Name:      listEntity.Name,
+		TypeTask:  listEntity.TypeTask,
 		Tasks:     listEntity.Tasks,
 		UpdatedAt: timesTamp,
 	}

@@ -5,7 +5,6 @@ import (
 	usecase "back_end/internal/usecase"
 	"back_end/internal/usecase/dto"
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
@@ -68,8 +67,8 @@ func (h *WebListHandler) FindAll(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 	}
 	http.SetCookie(w, cookie)
+
 	if cookie.Name == "session_token" && cookie.Value != "" {
-		fmt.Print(cookie.Name)
 		createList := *usecase.NewListRepository(h.ListRepository, h.TaskRepository)
 		output, err := createList.FindAll()
 

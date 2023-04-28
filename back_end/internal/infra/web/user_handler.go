@@ -47,7 +47,7 @@ func (userHandler *WebUserHandler) Create(w http.ResponseWriter, r *http.Request
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	// fmt.Print(currentTime.Add(10 * time.Minute))
+
 	if output.Mensage == "User created successfully" {
 		cookie = &http.Cookie{
 			Name:     "session_token",
