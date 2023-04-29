@@ -30,7 +30,6 @@ const CardAllAddList = () => {
 
     const onCreateList = () => {
         mutation.mutate({ name, user_id, type_task  })
-        console.log(type_task)
         setTypeTask('')
         setName('')
     }

@@ -11,16 +11,17 @@ import { useEffect } from "react";
 
 
 const ListAll = () => {
-    const { data: list } = useQuery("lists", getListAll);
+    const { data: lists } = useQuery("lists", getListAll);
     const allColors = useColorsPhone();
     useEffect(() => {
-        list
+        lists
     })
+
     return (
 
-        list?.map((list: OutputListDto) => (
-            <Flex key={list.id} rounded="2xl" flexDirection="column" margin="4px">
-                <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple>
+        lists?.map((list: OutputListDto) => (
+            <Flex key={list.id.toString()} rounded="2xl" flexDirection="column" margin="4px">
+                <Accordion  rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple>
                     <Tabs variant='enclosed'>
                         <Center roundedTop="2xl" textColor="white">
                             <Text
