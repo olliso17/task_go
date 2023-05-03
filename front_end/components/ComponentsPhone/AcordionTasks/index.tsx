@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import { useMutation, useQuery } from "react-query"
 import AccordionTasksCard from "./AcordionTasksCard"
 import AccordionTasksCheckbox from "./AcordionTasksCheckbox"
+import AccordionTasksTime from "./AcordionTasksTime"
 
 
 interface Props {
@@ -31,9 +32,11 @@ const AcordionTasks = ({ task, list_id }: Props) => {
             if (list.id == list_id) {
                 switch (list?.type_task) {
                     case "checkbox":
-                        return setTipeTaskSelect(<AccordionTasksCheckbox key={task.toString()} task={task}  />);
+                        return setTipeTaskSelect(<AccordionTasksCheckbox key={task.toString()} task={task} />);
                     case "card":
-                        return setTipeTaskSelect(<AccordionTasksCard key={task.toString()} task={task}  />);
+                        return setTipeTaskSelect(<AccordionTasksCard key={task.toString()} task={task} />);
+                    case "time":
+                        return setTipeTaskSelect(<AccordionTasksTime key={task.toString()} task={task} />);
                 }
             }
         })

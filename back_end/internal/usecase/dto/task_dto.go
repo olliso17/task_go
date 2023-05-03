@@ -15,8 +15,8 @@ type TaskOutputDTO struct {
 	Status      bool   `json:"status"`
 	Priority    bool   `json:"priority"`
 	ListID      string `json:"list_id"`
-	TimeSelect  string `json:"time_select"`
 	IsDeleted   bool   `json:"is_deleted"`
+	TimeSelect  string `json:"time_select"`
 }
 
 type TaskFindTitleInputDTO struct {
@@ -50,6 +50,6 @@ type TaskEditOutputDTO struct {
 	Description string `json:"description"`
 	Priority    bool   `json:"priority"`
 	ListID      string `json:"list_id"`
-	TimeSelect  string `json:"time_select"`
 	UpdatedAt   string `json:"update_at"`
+	TimeSelect  string `json:"time_select"`
 }

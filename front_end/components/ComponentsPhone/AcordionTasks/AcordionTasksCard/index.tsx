@@ -24,16 +24,7 @@ const AccordionTasksCard = ({ task }: Props) => {
         console.log(statusCheck, 'foi')
 
     };
-    // const [formValues, setFormValues] = useState<FormValues>({ agreeToTerms: false });
-
-    // const handleSubmit = (values: FormValues) => {
-    //     console.log(values);
-   
-    // };
-
-    // const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setFormValues({ ...formValues, agreeToTerms: event.target.checked });
-    // };
+  
     return (
         <AccordionPanel key={task.id} >
             <Flex rounded="md" justifyContent="space-between" alignItems="center" padding="8px" width="15vw" backgroundColor={task.status == true ? "purple.400" : "white"}>

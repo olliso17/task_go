@@ -6,8 +6,9 @@ import { Button, Checkbox, Flex, FormControl, FormLabel, Input, Text, useControl
 import { Form, Formik } from 'formik'
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
-import TypeTaskCard from "./TipeTaskCard"
-import TypeTaskCheckbox from "./TipeTaskCheckbox"
+import TypeTaskCard from "./TypeTaskCard"
+import TypeTaskCheckbox from "./TypeTaskCheckbox"
+import TypeTaskTime from "./TypeTaskTime"
 
 interface Props {
     list_id: string,
@@ -31,6 +32,8 @@ const CreateTask = ({ list_id }: Props) => {
                         return setTipeTaskSelect(<TypeTaskCheckbox list_id={list_id} />);
                     case "card":
                         return setTipeTaskSelect(<TypeTaskCard list_id={list_id} />);
+                    case "time":
+                        return setTipeTaskSelect(<TypeTaskTime list_id={list_id} />);
                 }
             }
         })
