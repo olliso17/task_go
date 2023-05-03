@@ -3,11 +3,13 @@ import { Accordion, AccordionButton, AccordionIcon, AccordionItem, Box, Center, 
 import { OutputListDto } from "@/services/dto/list_dto";
 import CreateTask from "../CreateTask";
 import { AiFillDelete } from "react-icons/ai";
-import AccordionTasks from "../AcordionTasks";
+import AccordionTasks from "../AcordionTasks/AcordionTasksCheckbox";
 import { useQuery } from "react-query";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
 import { getLogin } from "@/services/handler/login_handler";
 import { useEffect } from "react";
+import AccordionTasksCheckbox from "../AcordionTasks/AcordionTasksCheckbox";
+import AcordionTasks from "../AcordionTasks";
 
 
 const ListAll = () => {
@@ -21,7 +23,7 @@ const ListAll = () => {
 
         lists?.map((list: OutputListDto) => (
             <Flex key={list.id.toString()} rounded="2xl" flexDirection="column" margin="4px">
-                <Accordion  rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple>
+                <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple>
                     <Tabs variant='enclosed'>
                         <Center roundedTop="2xl" textColor="white">
                             <Text
@@ -71,7 +73,7 @@ const ListAll = () => {
                                         </AccordionButton>
                                     </Center>
                                     {list.tasks?.map((task) => (
-                                        <AccordionTasks key={task.id.toString()} task={task} />
+                                        <AcordionTasks task={task} list_id={list.id} />
                                     ))}
                                 </AccordionItem>
                             </TabPanel>

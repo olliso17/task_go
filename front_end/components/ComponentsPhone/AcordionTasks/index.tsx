@@ -1,38 +1,52 @@
-import { OutputTaskDto } from "@/services/dto/task_dto";
-import { patchTaskEdit } from "@/services/handler/task_handler";
-import { AccordionPanel, Badge, Checkbox, Flex, FormControl, IconButton, Progress, Radio, Switch, Text, Toast } from "@chakra-ui/react";
-import { useState } from "react";
-import { useMutation } from "react-query";
+import { useColorsPhone } from "@/hooksPerson/colorsPhone"
+import { OutputListDto } from "@/services/dto/list_dto"
+import { OutputTaskDto } from "@/services/dto/task_dto"
+import { getListAll, getListId } from "@/services/handler/list_handler"
+import { useMutationPostTask } from "@/services/handler/muation"
+import { patchTaskEdit } from "@/services/handler/task_handler"
+import { Button, Checkbox, Flex, FormControl, FormLabel, Input, Text, useControllableState, useToast } from "@chakra-ui/react"
+import { Form, Formik } from 'formik'
+import { useEffect, useState } from "react"
+import { useMutation, useQuery } from "react-query"
+import AccordionTasksCard from "./AcordionTasksCard"
+import AccordionTasksCheckbox from "./AcordionTasksCheckbox"
+
 
 interface Props {
     task: OutputTaskDto
+    list_id: string
 }
 
-const AccordionTasks = ({ task }: Props) => {
-    const [status, setStatus] = useState(false);
-    const mutation = useMutation({ mutationFn: patchTaskEdit })
-    const onChangeStatus = () => {
-        mutation.mutate({ status })
-        console.log(status)
+const AcordionTasks = ({ task, list_id }: Props) => {
+    const allColors = useColorsPhone();
+    const [tipeTaskSelect, setTipeTaskSelect] = useState(<></>);
+    const { data: lists } = useQuery("lists", getListAll);
+
+    useEffect(() => {
+        lists
+        valueTipeTask()
+    }, [])
+    function valueTipeTask() {
+        lists?.map((list: OutputListDto) => {
+            if (list.id == list_id) {
+                switch (list?.type_task) {
+                    case "checkbox":
+                        return setTipeTaskSelect(<AccordionTasksCheckbox key={task.toString()} task={task}  />);
+                    case "card":
+                        return setTipeTaskSelect(<AccordionTasksCard key={task.toString()} task={task}  />);
+                }
+            }
+        })
+
     }
+
     return (
-        <AccordionPanel key={task.id} height="5vh">
-            <Flex rounded="md" justifyContent="space-between" alignItems="center" padding="8px" width="15vw" backgroundColor={task.status == true ? "purple.400" : "white"}>
-                <Flex flexDirection="column" justifyContent="space-between" flex='1'>
-                    <Text fontWeight='bold'>
-                        {task.title}
-                    </Text>
-                    <Text fontSize='sm'>{task.description}</Text>
-                </Flex>
-                <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
+        <>
+            {tipeTaskSelect}
+        </>
 
-                    <Checkbox borderWidth="0.2vw" borderColor="purple.900" isDisabled={task.status} isChecked={status} onChange={ (e)=>setStatus(e.target.checked)}>
-                    </Checkbox>
 
-                </Flex>
-            </Flex>
-        </AccordionPanel>
     )
 }
 
-export default AccordionTasks;
+export default AcordionTasks
