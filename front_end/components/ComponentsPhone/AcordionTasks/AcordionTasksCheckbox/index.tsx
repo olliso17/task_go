@@ -1,6 +1,6 @@
 import { OutputTaskDto } from "@/services/dto/task_dto";
 import { patchTaskEdit } from "@/services/handler/task_handler";
-import { AccordionPanel, Badge, Checkbox, Flex, FormControl, IconButton, Progress, Radio, Switch, Text, Toast } from "@chakra-ui/react";
+import { AccordionPanel, Badge, Box, Card, CardBody, Checkbox, Flex, FormControl, Heading, IconButton, Progress, Radio, Stack, StackDivider, Switch, Text, Toast } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { useState } from "react";
 import { useMutation } from "react-query";
@@ -23,33 +23,39 @@ const AccordionTasksCheckbox = ({ task }: Props) => {
 
     };
     return (
-        <AccordionPanel key={task.id} height="5vh">
-            <Flex rounded="md" justifyContent="space-between" alignItems="center" padding="8px" width="15vw" backgroundColor={task.status == true ? "purple.400" : "white"}>
-                <Flex flexDirection="column" justifyContent="space-between" flex='1'>
-                    <Text fontWeight='bold'>
-                        {task.title}
-                    </Text>
-           
-                </Flex>
-                <Formik
-                    initialValues={{statusCheck }}
-                    onSubmit={onChangeStatus}
+        <AccordionPanel key={task.id} height="10vh">
+            <Card>
+                <CardBody>
+                    <Stack divider={<StackDivider />} spacing='4'>
+                        <Box>
+                            <Heading size='xs' textTransform='uppercase'>
+                                <Flex justifyContent="space-between">
+                                    {task.title}
+                                    <Formik
+                                        initialValues={{ statusCheck }}
+                                        onSubmit={onChangeStatus}
 
-                >
-                    {(props) => (
-                        <Form>
-                            <FormControl >
-                                <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
+                                    >
+                                        {(props) => (
+                                            <Form>
+                                                <FormControl >
+                                                    <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
 
-                                    <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={handleCheckboxChange}>
-                                    </Checkbox>
+                                                        <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={handleCheckboxChange}>
+                                                        </Checkbox>
 
+                                                    </Flex>
+                                                </FormControl>
+                                            </Form>
+                                        )}
+                                    </Formik>
                                 </Flex>
-                            </FormControl>
-                        </Form>
-                    )}
-                </Formik>
-            </Flex>
+                            </Heading>
+
+                        </Box>
+                    </Stack>
+                </CardBody>
+            </Card>
         </AccordionPanel>
     )
 }

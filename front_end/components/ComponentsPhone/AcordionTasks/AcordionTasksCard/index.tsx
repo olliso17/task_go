@@ -1,6 +1,6 @@
 import { OutputTaskDto } from "@/services/dto/task_dto";
 import { patchTaskEdit } from "@/services/handler/task_handler";
-import { AccordionPanel, Button, Checkbox, Flex, FormControl, Text } from "@chakra-ui/react";
+import { AccordionPanel, Box, Button, Card, CardBody, CardHeader, Checkbox, Flex, FormControl, Heading, Stack, StackDivider, Text } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { useState } from "react";
 import { useMutation } from "react-query";
@@ -24,37 +24,44 @@ const AccordionTasksCard = ({ task }: Props) => {
         console.log(statusCheck, 'foi')
 
     };
-  
+
     return (
-        <AccordionPanel key={task.id} >
-            <Flex rounded="md" justifyContent="space-between" alignItems="center" padding="8px" width="15vw" backgroundColor={task.status == true ? "purple.400" : "white"}>
-                <Flex flexDirection="column" justifyContent="space-between" flex='1'>
-                    <Text fontWeight='bold'>
-                        {task.title}
-                    </Text>
-                    <Text fontSize='sm'>{task.description}</Text>
-                </Flex>
-                <Formik
-                    initialValues={{statusCheck }}
-                    onSubmit={onChangeStatus}
+        <>
+            <AccordionPanel key={task.id} >
+                    <Card>
+                        <CardBody>
+                            <Stack divider={<StackDivider />} spacing='4'>
+                                <Box>
+                                    <Heading size='xs' textTransform='uppercase'>
+                                        {task.title}
+                                    </Heading>
+                                    <Text pt='2' fontSize='sm'>{task.description}</Text>
 
-                >
-                    {(props) => (
-                        <Form>
-                            <FormControl >
-                                <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
+                                    <Formik
+                                        initialValues={{ statusCheck }}
+                                        onSubmit={onChangeStatus}
 
-                                    <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={handleCheckboxChange}>
-                                    </Checkbox>
+                                    >
+                                        {(props) => (
+                                            <Form>
+                                                <FormControl >
+                                                    <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
 
-                                </Flex>
-                            </FormControl>
-                        </Form>
-                    )}
-                </Formik>
-    
-            </Flex>
-        </AccordionPanel>
+                                                        <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={handleCheckboxChange}>
+                                                        </Checkbox>
+
+                                                    </Flex>
+                                                </FormControl>
+                                            </Form>
+                                        )}
+                                    </Formik>
+
+                                </Box>
+                            </Stack>
+                        </CardBody>
+                    </Card>
+            </AccordionPanel>
+        </>
     )
 }
 
