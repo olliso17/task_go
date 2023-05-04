@@ -1,6 +1,7 @@
+import { useAllHandle } from "@/hooksPerson/countTasksTime";
 import { OutputTaskDto } from "@/services/dto/task_dto";
 import { patchTaskEdit } from "@/services/handler/task_handler";
-import { AccordionPanel, Badge, Box, Card, CardBody, Checkbox, Flex, FormControl, Heading, IconButton, Progress, Radio, Stack, StackDivider, Switch, Text, Toast } from "@chakra-ui/react";
+import { AccordionPanel, Box, Button, Card, CardBody, Checkbox, Flex, FormControl, Heading, Stack, StackDivider } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { useState } from "react";
 import { useMutation } from "react-query";
@@ -11,17 +12,17 @@ interface Props {
 
 const AccordionTasksTime = ({ task }: Props) => {
     const [statusCheck, setStatusCheck] = useState(false);
+    const [isRunning, setIsRunning] = useState(false);
     const mutation = useMutation({ mutationFn: patchTaskEdit })
-
+    const handleAll = useAllHandle(task)
     const onChangeStatus = () => {
-
         mutation.mutate({ statusCheck })
-
     }
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setStatusCheck(event.target.checked)
 
     };
+
     return (
         <AccordionPanel key={task.id} >
             <Card>
@@ -31,9 +32,6 @@ const AccordionTasksTime = ({ task }: Props) => {
                             <Heading size='xs' textTransform='uppercase'>
                                 {task.title}
                             </Heading>
-                            <Text pt='2' fontSize='sm'>
-                                {task.time_select}
-                            </Text>
 
                             <Formik
                                 initialValues={{ statusCheck }}
@@ -53,6 +51,18 @@ const AccordionTasksTime = ({ task }: Props) => {
                                     </Form>
                                 )}
                             </Formik>
+                            <Stack spacing={4} align="center">
+                                <div>{handleAll.minutes.toString().padStart(2, '0')}:
+                                    {handleAll.seconds.toString().padStart(2, '0')}</div>
+                                <Stack direction="row" spacing={4}>
+                                    
+                                    <Button onClick={handleAll.handleStart}>Start</Button>
+
+                                    <Button onClick={handleAll.handlePause}>Pause</Button>
+
+                                    <Button onClick={handleAll.handleReset}>Reset</Button>
+                                </Stack>
+                            </Stack>
                         </Box>
                     </Stack>
                 </CardBody>
