@@ -5,7 +5,7 @@ import { postList } from "./list_handler"
 import { postLogin, postLogout } from "./login_handler"
 import { postUser } from "./user_handler"
 import { getCookie } from 'cookies-next';
-import { postTask } from "./task_handler"
+import { patchTaskCompleted, postTask } from "./task_handler"
 
 
 const useMutationPostList = () => {
@@ -175,4 +175,27 @@ const useMutationPostLogout = () => {
     return mutation
 }
 
-export { useMutationPostList, useMutationPostLogin, useMutationPostUser, useMutationPostLogout, useMutationPostTask }
+const useMutationPostTaskCompleted = () => {
+    const toast = useToast()
+    const mutation = useMutation({
+        mutationFn: patchTaskCompleted, onSuccess: () => {
+            toast({
+                title: 'Task finished.',
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+        }, onError(error) {
+            toast({
+                title: `${error} `,
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+
+            })
+
+        },
+    })
+    return mutation
+}
+export { useMutationPostList, useMutationPostLogin, useMutationPostUser, useMutationPostLogout, useMutationPostTask, useMutationPostTaskCompleted }

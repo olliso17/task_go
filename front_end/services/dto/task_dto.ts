@@ -12,7 +12,8 @@ export interface TaskTitleInputDto {
     title: string;
 }
 export interface TaskStatusInputDto {
-    statusCheck: boolean;
+    id: string;
+    status: boolean;
 }
 export interface TaskCompletedInputDto {
     id: string;

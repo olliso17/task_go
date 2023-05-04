@@ -4,8 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 
 
-const useAllHandle = (task: OutputTaskDto) => {
-
+const useAllHandle = (task: OutputTaskDto, setAlert:Dispatch<SetStateAction<JSX.Element>>) => {
     const timeTask = task.time_select.split(":")
     const min = timeTask[0]
     const [time, setTime] = useState(parseInt(min) * 60) // 5 minutos em segundos
@@ -18,6 +17,7 @@ const useAllHandle = (task: OutputTaskDto) => {
         intervalId = setInterval(() => setTime(time - 1), 1000)
       } else if (isActive && time === 0) {
         setIsActive(false)
+        setAlert(<AlertComponent name={task.title} taskId={task.id}/>)
       }
   
       return () => clearInterval(intervalId)
@@ -33,12 +33,12 @@ const useAllHandle = (task: OutputTaskDto) => {
   
     const handleReset = () => {
       setIsActive(false)
-      setTime(5 * 60)
+      setTime(parseInt(min) * 60)
     }
   
     const minutes = Math.floor(time / 60)
     const seconds = time % 60
-    
+
     const allHandle = {
         handleStart, handlePause, handleReset, minutes, seconds
     }

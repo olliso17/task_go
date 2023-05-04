@@ -45,13 +45,13 @@ const getTaskTitle = async (input: TaskTitleInputDto) =>{
     return res.data;
 };
 
-const patchTaskEdit = async (input: TaskStatusInputDto)  => {
+const patchTaskCompleted = async (input: TaskStatusInputDto)  => {
     const token = getCookie('session_token');
     if (token == "") {
         console.log("not access")
         return 
      }
-    const url = "list/edit";
+    const url = "task/completed";
 
     const res = await api.patch(url, input);
 
@@ -75,4 +75,4 @@ const getTasks = async () => {
     return data;
 };
 
-export { postTask, getTaskId, getTaskTitle, getTasks, patchTaskEdit};
+export { postTask, getTaskId, getTaskTitle, getTasks, patchTaskCompleted};

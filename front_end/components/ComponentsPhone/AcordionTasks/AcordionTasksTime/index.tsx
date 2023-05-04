@@ -1,28 +1,18 @@
 import { useAllHandle } from "@/hooksPerson/countTasksTime";
 import { OutputTaskDto } from "@/services/dto/task_dto";
-import { patchTaskEdit } from "@/services/handler/task_handler";
 import { AccordionPanel, Box, Button, Card, CardBody, Checkbox, Flex, FormControl, Heading, Stack, StackDivider } from "@chakra-ui/react";
-import { Form, Formik } from "formik";
-import { useState } from "react";
-import { useMutation } from "react-query";
+import { Dispatch, SetStateAction, useState } from "react";
+import AlertComponent from "../../AlertComponent";
 
 interface Props {
     task: OutputTaskDto
+    setAlert: Dispatch<SetStateAction<JSX.Element>>
 }
 
-const AccordionTasksTime = ({ task }: Props) => {
-    const [statusCheck, setStatusCheck] = useState(false);
-    const [isRunning, setIsRunning] = useState(false);
-    const mutation = useMutation({ mutationFn: patchTaskEdit })
-    const handleAll = useAllHandle(task)
-    const onChangeStatus = () => {
-        mutation.mutate({ statusCheck })
-    }
-    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setStatusCheck(event.target.checked)
+const AccordionTasksTime = ({ task, setAlert }: Props) => {
+    const handleAll = useAllHandle(task, setAlert)
 
-    };
-
+   
     return (
         <AccordionPanel key={task.id} >
             <Card>
@@ -33,24 +23,6 @@ const AccordionTasksTime = ({ task }: Props) => {
                                 {task.title}
                             </Heading>
 
-                            <Formik
-                                initialValues={{ statusCheck }}
-                                onSubmit={onChangeStatus}
-
-                            >
-                                {(props) => (
-                                    <Form>
-                                        <FormControl >
-                                            <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
-
-                                                <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={handleCheckboxChange}>
-                                                </Checkbox>
-
-                                            </Flex>
-                                        </FormControl>
-                                    </Form>
-                                )}
-                            </Formik>
                             <Stack spacing={4} align="center">
                                 <div>{handleAll.minutes.toString().padStart(2, '0')}:
                                     {handleAll.seconds.toString().padStart(2, '0')}</div>

@@ -1,29 +1,77 @@
-import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@chakra-ui/react"
+import { useMutationPostTaskCompleted } from "@/services/handler/muation";
+import { patchTaskCompleted } from "@/services/handler/task_handler"
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Center, CloseButton, Flex, FormControl, Toast, useDisclosure, useToast } from "@chakra-ui/react"
+import { Form, Formik } from "formik";
+import { useState } from "react";
+import { useMutation } from "react-query"
+
+interface Props {
+  taskId: string;
+  name: string;
+}
 
 
 
+const AlertComponent = ({ taskId, name }: Props) => {
+  const toast = useToast()
+  const {
+    isOpen: isVisible,
+    onClose,
+    onOpen,
+  } = useDisclosure({ defaultIsOpen: true })
 
-const AlertComponent = () => {
-  return (
-    <>
-      <Alert
-        status='success'
-        variant='subtle'
-        flexDirection='column'
-        alignItems='center'
-        justifyContent='center'
-        textAlign='center'
-        height='200px'
-      >
-        <AlertIcon boxSize='40px' mr={0} />
-        <AlertTitle mt={4} mb={1} fontSize='lg'>
-          Application submitted!
-        </AlertTitle>
-        <AlertDescription maxWidth='sm'>
-          Thanks for submitting your application. Our team will get back to you soon.
+  const mutation = useMutationPostTaskCompleted()
+  function postCompleted() {
+    mutation.mutate({ id: taskId, status: true })
+  }
+  return isVisible ? (
+    <Alert status='success'>
+      <Box>
+        <AlertTitle>Success in the task {name}</AlertTitle>
+        <AlertDescription>
+          Your time has expired. Do you want to complete the task or restart it?
         </AlertDescription>
-      </Alert>
-    </>
+        <Center>
+          <Flex>
+            <Button
+              mt={4}
+              margin="0.1vw"
+              backgroundColor="red.700"
+              colorScheme='red'
+              textColor="white"
+              type='submit'
+              onClick={onClose}
+            >Restart</Button>
+            <Formik
+              initialValues={{ id: '', status: false }}
+              onSubmit={postCompleted}
+
+            >
+              {(props) => (
+                <Form key={taskId}>
+                  <FormControl>
+
+                    <Button
+                      mt={4}
+                      margin="0.1vw"
+                      backgroundColor="green.700"
+                      colorScheme='green'
+                      textColor="white"
+                      type='submit'
+                      onClick={onClose}
+                    >Finalize</Button>
+                  </FormControl>
+                </Form>
+              )}
+            </Formik>
+          </Flex>
+        </Center>
+
+      </Box >
+
+    </Alert >
+  ) : (
+    <></>
   )
 }
 

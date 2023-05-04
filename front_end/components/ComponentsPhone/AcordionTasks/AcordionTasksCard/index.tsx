@@ -1,5 +1,5 @@
 import { OutputTaskDto } from "@/services/dto/task_dto";
-import { patchTaskEdit } from "@/services/handler/task_handler";
+import { patchTaskCompleted} from "@/services/handler/task_handler";
 import { AccordionPanel, Box, Button, Card, CardBody, CardHeader, Checkbox, Flex, FormControl, Heading, Stack, StackDivider, Text } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { useState } from "react";
@@ -13,10 +13,10 @@ interface FormValues {
 }
 const AccordionTasksCard = ({ task }: Props) => {
     const [statusCheck, setStatusCheck] = useState(false);
-    const mutation = useMutation({ mutationFn: patchTaskEdit })
+    const mutation = useMutation({ mutationFn: patchTaskCompleted })
     const onChangeStatus = () => {
 
-        mutation.mutate({ statusCheck })
+        mutation.mutate({ id: task.id, status: statusCheck })
 
     }
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,38 +28,38 @@ const AccordionTasksCard = ({ task }: Props) => {
     return (
         <>
             <AccordionPanel key={task.id} >
-                    <Card>
-                        <CardBody>
-                            <Stack divider={<StackDivider />} spacing='4'>
-                                <Box>
-                                    <Heading size='xs' textTransform='uppercase'>
-                                        {task.title}
-                                    </Heading>
-                                    <Text pt='2' fontSize='sm'>{task.description}</Text>
+                <Card>
+                    <CardBody>
+                        <Stack divider={<StackDivider />} spacing='4'>
+                            <Box>
+                                <Heading size='xs' textTransform='uppercase'>
+                                    {task.title}
+                                </Heading>
+                                <Text pt='2' fontSize='sm'>{task.description}</Text>
 
-                                    <Formik
-                                        initialValues={{ statusCheck }}
-                                        onSubmit={onChangeStatus}
+                                <Formik
+                                    initialValues={{ statusCheck }}
+                                    onSubmit={onChangeStatus}
 
-                                    >
-                                        {(props) => (
-                                            <Form>
-                                                <FormControl >
-                                                    <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
+                                >
+                                    {(props) => (
+                                        <Form>
+                                            <FormControl >
+                                                <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
 
-                                                        <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={handleCheckboxChange}>
-                                                        </Checkbox>
+                                                    <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={handleCheckboxChange}>
+                                                    </Checkbox>
 
-                                                    </Flex>
-                                                </FormControl>
-                                            </Form>
-                                        )}
-                                    </Formik>
+                                                </Flex>
+                                            </FormControl>
+                                        </Form>
+                                    )}
+                                </Formik>
 
-                                </Box>
-                            </Stack>
-                        </CardBody>
-                    </Card>
+                            </Box>
+                        </Stack>
+                    </CardBody>
+                </Card>
             </AccordionPanel>
         </>
     )

@@ -135,6 +135,7 @@ func (c *TaskRepository) EditTask(task dto.TaskEditInputDTO) (dto.TaskEditOutput
 
 		}
 		if task.ID == v.ID {
+			v.ID = task.ID
 			v.Title = task.Title
 			v.Description = task.Description
 			v.ListID = task.ListID
@@ -147,6 +148,7 @@ func (c *TaskRepository) EditTask(task dto.TaskEditInputDTO) (dto.TaskEditOutput
 
 	c.TaskRepository.EditTask(&taskEdit)
 	dto := dto.TaskEditOutputDTO{
+		ID:          taskEdit.ID,
 		Title:       taskEdit.Title,
 		Description: taskEdit.Description,
 		Priority:    taskEdit.Priority,
@@ -159,6 +161,9 @@ func (c *TaskRepository) EditTask(task dto.TaskEditInputDTO) (dto.TaskEditOutput
 }
 
 func (c *TaskRepository) TaskCompleted(input dto.TaskInputCompletedDTO) (dto.TaskOutputMessageDTO, error) {
+	if input.ID == "" {
+		return dto.TaskOutputMessageDTO{}, errors.New("credential not provided")
+	}
 	task, err := c.TaskRepository.FindByID(input.ID)
 	timestamp := time.Now()
 	if err != nil {

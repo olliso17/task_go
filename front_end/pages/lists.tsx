@@ -1,8 +1,7 @@
 import Head from 'next/head'
 import { useColorsPhone } from '@/hooksPerson/colorsPhone';
 import Cookies from 'js-cookie'
-import GetTokenValid from '@/components/ComponentsPhone/GetTokenValid';
-import { Button, Flex, Stack } from '@chakra-ui/react';
+import { Button, Center, Flex, Stack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import CardStylePhone from '@/components/ComponentsPhone/CardStylePhone';
 import CardStyleWeb from '@/components/ComponentsWeb/CardStyleWeb';
@@ -15,9 +14,10 @@ export default function Home() {
   const allColors = useColorsPhone();
   const [active, setActive] = useState(false);
   const [cookieValue, setCookieValue] = useState<string | undefined>(undefined);
+  const [alert, setAlert] = useState(<></>)
+
   useEffect(() => {
     const cookie = Cookies.get('session_token');
-    // console.log(cookie);
     setCookieValue(cookie)
   }, [])
 
@@ -35,7 +35,11 @@ export default function Home() {
           <Stack margin="0.5vw">
             <Button onClick={e => { setActive(state => !state) }}>{active == false ? "Web" : "Mobile"}</Button>
           </Stack>
-          {active == false ? <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} /> : <CardStyleWeb content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} />}
+          <Center>
+             {alert}
+          </Center>
+
+          {active == false ? <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll setAlert={setAlert} />} />} /> : <CardStyleWeb content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll setAlert={setAlert} />} />} />}
         </Flex >
 
       </>

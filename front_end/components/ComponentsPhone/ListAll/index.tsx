@@ -5,13 +5,17 @@ import CreateTask from "../CreateTask";
 import { AiFillDelete } from "react-icons/ai";
 import { useQuery } from "react-query";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
-import { useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import AcordionTasks from "../AcordionTasks";
 
+interface Props {
+    setAlert: Dispatch<SetStateAction<JSX.Element>>
+}
 
-const ListAll = () => {
+const ListAll = ({setAlert}:Props) => {
     const { data: lists } = useQuery("lists", getListAll);
     const allColors = useColorsPhone();
+
     useEffect(() => {
         lists
     })
@@ -70,7 +74,7 @@ const ListAll = () => {
                                                 </AccordionButton>
                                             </Center>
                                             {list.tasks?.map((task) => (
-                                                <AcordionTasks task={task} list_id={list.id} />
+                                                <AcordionTasks setAlert={setAlert} task={task} list_id={list.id} />
                                             ))}
                                         </AccordionItem>
                                     </TabPanel>

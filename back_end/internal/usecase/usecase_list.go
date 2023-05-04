@@ -63,6 +63,7 @@ func (l *ListRepository) FindAll() ([]dto.ListAllOutputDTO, error) {
 		for positionTask, valueTask := range tasks {
 			if listAll[positionList].ID == tasks[positionTask].ListID && tasks[positionTask].IsDeleted != true {
 				tasksList = dto.TaskOutputDTO{
+					ID:          valueTask.ID,
 					Title:       valueTask.Title,
 					Description: valueTask.Description,
 					Status:      valueTask.Status,

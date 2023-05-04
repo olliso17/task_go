@@ -49,16 +49,7 @@ const TypeTaskCard = ({ list_id }: Props) => {
                                                     >Description</Text>
                                                 </FormLabel>
                                                 <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="12vw" className="mt-1" onChange={(e) => setDescription(e.target.value)} placeholder='create description' />
-                                                {/* <FormLabel fontWeight="bold" margin="0.2vw">
-                                <Text
-                                    bgGradient={allColors.bgGradientColor}
-                                    bgClip='text'
-                                    fontSize='sm'
-                                    fontWeight='extrabold'
-                                >Time</Text>
-                            </FormLabel>
-                            <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" onChange={(e) => setTimeSelect(e.target.value)} type="time" /> */}
-
+                                        
                                             </FormControl>
 
                                             <Button

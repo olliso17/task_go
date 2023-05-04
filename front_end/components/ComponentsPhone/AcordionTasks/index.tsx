@@ -1,13 +1,9 @@
 import { useColorsPhone } from "@/hooksPerson/colorsPhone"
 import { OutputListDto } from "@/services/dto/list_dto"
 import { OutputTaskDto } from "@/services/dto/task_dto"
-import { getListAll, getListId } from "@/services/handler/list_handler"
-import { useMutationPostTask } from "@/services/handler/muation"
-import { patchTaskEdit } from "@/services/handler/task_handler"
-import { Button, Checkbox, Flex, FormControl, FormLabel, Input, Text, useControllableState, useToast } from "@chakra-ui/react"
-import { Form, Formik } from 'formik'
-import { useEffect, useState } from "react"
-import { useMutation, useQuery } from "react-query"
+import { getListAll } from "@/services/handler/list_handler"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { useQuery } from "react-query"
 import AccordionTasksCard from "./AcordionTasksCard"
 import AccordionTasksCheckbox from "./AcordionTasksCheckbox"
 import AccordionTasksTime from "./AcordionTasksTime"
@@ -16,9 +12,10 @@ import AccordionTasksTime from "./AcordionTasksTime"
 interface Props {
     task: OutputTaskDto
     list_id: string
+    setAlert: Dispatch<SetStateAction<JSX.Element>>
 }
 
-const AcordionTasks = ({ task, list_id }: Props) => {
+const AcordionTasks = ({ task, list_id, setAlert }: Props) => {
     const allColors = useColorsPhone();
     const [tipeTaskSelect, setTipeTaskSelect] = useState(<></>);
     const { data: lists } = useQuery("lists", getListAll);
@@ -32,11 +29,11 @@ const AcordionTasks = ({ task, list_id }: Props) => {
             if (list.id == list_id) {
                 switch (list?.type_task) {
                     case "checkbox":
-                        return setTipeTaskSelect(<AccordionTasksCheckbox key={task.toString()} task={task} />);
+                        return setTipeTaskSelect(<AccordionTasksCheckbox key={task.id} task={task} />);
                     case "card":
-                        return setTipeTaskSelect(<AccordionTasksCard key={task.toString()} task={task} />);
+                        return setTipeTaskSelect(<AccordionTasksCard key={task.id} task={task} />);
                     case "time":
-                        return setTipeTaskSelect(<AccordionTasksTime key={task.toString()} task={task} />);
+                        return setTipeTaskSelect(<AccordionTasksTime setAlert={setAlert} key={task.id} task={task} />);
                 }
             }
         })
