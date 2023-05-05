@@ -27,7 +27,7 @@ const AccordionTasksCard = ({ task }: Props) => {
 
     return (
         <>
-            <AccordionPanel key={task.id} >
+              <AccordionPanel padding="0.2vw" margin="0.1vw" key={task.id} >
                 <Card>
                     <CardBody>
                         <Stack divider={<StackDivider />} spacing='4'>

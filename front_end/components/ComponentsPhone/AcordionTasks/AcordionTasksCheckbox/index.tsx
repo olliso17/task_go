@@ -1,5 +1,5 @@
 import { OutputTaskDto } from "@/services/dto/task_dto";
-import { patchTaskEdit } from "@/services/handler/task_handler";
+import { patchTaskCompleted } from "@/services/handler/task_handler";
 import { AccordionPanel, Badge, Box, Card, CardBody, Checkbox, Flex, FormControl, Heading, IconButton, Progress, Radio, Stack, StackDivider, Switch, Text, Toast } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { useState } from "react";
@@ -11,10 +11,10 @@ interface Props {
 
 const AccordionTasksCheckbox = ({ task }: Props) => {
     const [statusCheck, setStatusCheck] = useState(false);
-    const mutation = useMutation({ mutationFn: patchTaskEdit })
+    const mutation = useMutation({ mutationFn: patchTaskCompleted})
     const onChangeStatus = () => {
 
-        mutation.mutate({ statusCheck })
+        // mutation.mutate({ statusCheck }) 
 
     }
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +23,7 @@ const AccordionTasksCheckbox = ({ task }: Props) => {
 
     };
     return (
-        <AccordionPanel key={task.id} height="10vh">
+        <AccordionPanel padding="0.2vw" margin="0.1vw">
             <Card>
                 <CardBody>
                     <Stack divider={<StackDivider />} spacing='4'>

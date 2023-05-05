@@ -1,6 +1,6 @@
 import { useColorModeValue } from "@chakra-ui/react";
 
-const useBgAccordion = ()=>useColorModeValue('purple.300', 'purple.800')
+const useBgAccordion = ()=>useColorModeValue('purple.200', 'purple.800')
 const useBgAccordionButton =()=> useColorModeValue('purple.400', 'purple.900')
 const useBgGradientColor =()=> useColorModeValue('linear(to-l, purple.900, purple.700)', 'linear(to-l, purple.500, purple.200)')
 const useBg =()=> useColorModeValue('white', 'purple.700')

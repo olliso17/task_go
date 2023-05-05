@@ -1,6 +1,6 @@
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
 import { useMutationPostTask } from "@/services/handler/muation";
-import { AccordionPanel, Box, Button, Card, CardBody, FormControl, FormLabel, Input, Stack, StackDivider, Text } from "@chakra-ui/react"
+import { AccordionPanel, Box, Button, Card, CardBody, Flex, FormControl, FormLabel, Input, Stack, StackDivider, Text } from "@chakra-ui/react"
 import { Form, Formik } from "formik";
 import { useState } from "react";
 
@@ -17,7 +17,7 @@ const TypeTaskCard = ({ list_id }: Props) => {
     const allColors = useColorsPhone();
 
     return (
-        <AccordionPanel>
+        <AccordionPanel padding="0.2vw" margin="0.1vw">
             <Card>
                 <CardBody>
                     <Stack divider={<StackDivider />} spacing='4'>
@@ -39,7 +39,7 @@ const TypeTaskCard = ({ list_id }: Props) => {
                                                         fontWeight='extrabold'
                                                     >Title</Text>
                                                 </FormLabel>
-                                                <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="12vw" onChange={(e) => setTitle(e.target.value)} placeholder='create title' />
+                                                <Input  backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="0.2vw" width="12vw" height="5vh" onChange={(e) => setTitle(e.target.value)} placeholder='create title' />
                                                 <FormLabel fontWeight="bold" margin="0.2vw">
                                                     <Text
                                                         bgGradient={allColors.bgGradientColor}
@@ -48,20 +48,20 @@ const TypeTaskCard = ({ list_id }: Props) => {
                                                         fontWeight='extrabold'
                                                     >Description</Text>
                                                 </FormLabel>
-                                                <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="12vw" className="mt-1" onChange={(e) => setDescription(e.target.value)} placeholder='create description' />
+                                                <Input  backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="0.2vw" width="12vw" height="5vh" onChange={(e) => setDescription(e.target.value)} placeholder='create description' />
                                         
                                             </FormControl>
-
-                                            <Button
-                                                mt={4}
-                                                margin="0.5vw"
-                                                backgroundColor="purple.900"
-                                                colorScheme='purple'
-                                                textColor="white"
-                                                type='submit'
-                                            >
-                                                Save
-                                            </Button>
+                                            <Flex justifyContent="end">
+                                                <Button
+                                                    mt={4}
+                                                    backgroundColor="purple.900"
+                                                    colorScheme='purple'
+                                                    textColor="white"
+                                                    type='submit'
+                                                >
+                                                    Save
+                                                </Button>
+                                            </Flex>
                                         </CardBody>
                                     </Form>
                                 )}

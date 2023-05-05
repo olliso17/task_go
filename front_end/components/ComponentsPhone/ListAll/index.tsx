@@ -12,7 +12,7 @@ interface Props {
     setAlert: Dispatch<SetStateAction<JSX.Element>>
 }
 
-const ListAll = ({setAlert}:Props) => {
+const ListAll = ({ setAlert }: Props) => {
     const { data: lists } = useQuery("lists", getListAll);
     const allColors = useColorsPhone();
 
@@ -24,42 +24,44 @@ const ListAll = ({setAlert}:Props) => {
 
         lists?.map((list: OutputListDto) => (
             <SimpleGrid key={list.id.toString()} spacing={4} margin="0.5vw">
-                <Card padding="0" rounded="2xl">
+                <Card padding="0" rounded="2xl" boxShadow="dark-lg">
                     <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple>
                         <Tabs variant='enclosed' >
-                            <CardHeader padding="0.5vw">
-                                <Heading size='xs' textTransform='uppercase'
-                                    marginLeft="16px"
-                                    bgGradient={allColors.bgGradientColor}
-                                    bgClip='text'
-                                    fontSize='md'
-                                    fontWeight='extrabold'>{list.name}
-                                </Heading>
-                            </CardHeader>
+                            <Center>
+                                <CardHeader padding="0.5vw" >
+                                    <Heading  size='xs' textTransform='uppercase'
+                                        marginLeft="0.5vw"
+                                        bgGradient={allColors.bgHeadingGradientColor}
+                                        bgClip='text'
+                                        fontSize='md'
+                                        fontWeight='extrabold'>{list.name}
+                                    </Heading>
+                                </CardHeader>
+                            </Center>
                             <CardBody padding="0">
                                 <TabPanels>
                                     <TabPanel>
                                         <AccordionItem>
-                                            <AccordionButton rounded="2xl" backgroundColor={allColors.bgAccordionButton}>
-                                                <Box as="span" flex='1' textAlign='left'>
-                                                    <Text
-                                                        marginLeft="16px"
-                                                        bgGradient={allColors.bgGradientColor}
-                                                        bgClip='text'
-                                                        fontSize='md'
-                                                        fontWeight='extrabold'
-                                                    >Add Tasks
-                                                    </Text>
-                                                </Box>
-                                                <AccordionIcon />
-                                            </AccordionButton>
-
+                                            <Center padding="0.2vw">
+                                                <AccordionButton padding="0" height="5vh" boxShadow="dark-lg" rounded="0.5vw" backgroundColor={allColors.bgAccordionButton}>
+                                                    <Box as="span" flex='1' textAlign='left'>
+                                                        <Text
+                                                            marginLeft="0.5vw"
+                                                            bgGradient={allColors.bgGradientColor}
+                                                            bgClip='text'
+                                                            fontSize='md'
+                                                            fontWeight='extrabold'
+                                                        >Add Tasks
+                                                        </Text>
+                                                    </Box>
+                                                    <AccordionIcon />
+                                                </AccordionButton>
+                                            </Center>
                                             <CreateTask list_id={list.id} />
                                         </AccordionItem>
                                         <AccordionItem>
-
                                             <Center padding="0.2vw">
-                                                <AccordionButton rounded="2xl" backgroundColor={allColors.bgAccordionButton}>
+                                                <AccordionButton padding="0" height="5vh" boxShadow="dark-lg" rounded="0.5vw" backgroundColor={allColors.bgAccordionButton}>
                                                     <Box as="span" flex='1' textAlign='left'>
                                                         <Text
                                                             marginLeft="16px"
@@ -84,9 +86,10 @@ const ListAll = ({setAlert}:Props) => {
                         <CardFooter justifyContent="end" padding="0.3vw">
                             <Progress colorScheme="purple" hasStripe value={64} />
                             <IconButton
+                                boxShadow="dark-lg"
                                 width="2vw"
-                                marginRight="8px"
-                                backgroundColor="purple.600"
+                                marginRight="0.2vw"
+                                backgroundColor="red.700"
                                 rounded="full"
                                 textColor="white"
                                 aria-label='Delete name'

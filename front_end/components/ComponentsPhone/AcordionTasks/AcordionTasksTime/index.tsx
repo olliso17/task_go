@@ -14,7 +14,7 @@ const AccordionTasksTime = ({ task, setAlert }: Props) => {
 
    
     return (
-        <AccordionPanel key={task.id} >
+        <AccordionPanel padding="0.2vw" margin="0.1vw" key={task.id} >
             <Card>
                 <CardBody>
                     <Stack divider={<StackDivider />} spacing='4'>
@@ -26,13 +26,13 @@ const AccordionTasksTime = ({ task, setAlert }: Props) => {
                             <Stack spacing={4} align="center">
                                 <div>{handleAll.minutes.toString().padStart(2, '0')}:
                                     {handleAll.seconds.toString().padStart(2, '0')}</div>
-                                <Stack direction="row" spacing={4}>
+                                <Stack direction="row" spacing={2}>
                                     
-                                    <Button onClick={handleAll.handleStart}>Start</Button>
+                                    <Button backgroundColor="purple.900" colorScheme='purple' width="2.5vw" onClick={handleAll.handleStart}>Start</Button>
 
-                                    <Button onClick={handleAll.handlePause}>Pause</Button>
+                                    <Button backgroundColor="purple.900" colorScheme='purple' width="2.5vw" onClick={handleAll.handlePause}>Pause</Button>
 
-                                    <Button onClick={handleAll.handleReset}>Reset</Button>
+                                    <Button backgroundColor="purple.900" colorScheme='purple' width="2.5vw" onClick={handleAll.handleReset}>Reset</Button>
                                 </Stack>
                             </Stack>
                         </Box>

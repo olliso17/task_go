@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Button, Flex, Stack } from '@chakra-ui/react';
+import { Box, Button, Flex, Stack } from '@chakra-ui/react';
 import CardStylePhone from '@/components/ComponentsPhone/CardStylePhone';
 import LoginAccess from '@/components/ComponentsPhone/LoginAcess';
 import { useColorsPhone } from '@/hooksPerson/colorsPhone';
@@ -16,15 +16,10 @@ export default function Home() {
   const mutation = useMutation({ mutationFn: postLogout, })
   const logout = useMutationPostLogout()
   const [active, setActive] = useState(false);
-  // useEffect(() => {
-  //   mutation.mutate()
-
-  // }, []);
-
 
   return (
 
-    <>
+    <Box width="100vw" height="100vh">
 
       <Head>
         <title>List Task</title>
@@ -39,6 +34,6 @@ export default function Home() {
         {active == false ? <CardStylePhone content={<LoginAccess />} /> : <CardStyleWeb content={<LoginAccess />} />}
     
       </Flex>
-    </>
+    </Box>
   )
 }
