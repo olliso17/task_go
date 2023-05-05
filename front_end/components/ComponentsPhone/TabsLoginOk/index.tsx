@@ -19,10 +19,10 @@ const TableLoginOk = ({ contentCreateList, contentListAll }: Props) => {
                 <TabNameAdd nameTab="ListAll" />
             </TabList>
             <TabPanels>
-                <TabPanel height="68vh" backgroundColor={allColors.bgCenter} width="19vw" padding="0">
+                <TabPanel height="40vh" backgroundColor={allColors.bgCenter} width="20vw" padding="0">
                     {contentCreateList}
                 </TabPanel>
-                <TabPanel height="68vh" backgroundColor={allColors.bgCenter} width="19vw" overflow="auto" padding="0">
+                <TabPanel rounded="2xl" height="67vh" backgroundColor={allColors.bgCenter} width="20vw" overflow="auto" padding="0">
                     {contentListAll}
                 </TabPanel>
 

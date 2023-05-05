@@ -29,17 +29,17 @@ const CardAllAddList = () => {
     const mutation = useMutationPostList()
 
     const onCreateList = () => {
-        mutation.mutate({ name, user_id, type_task  })
+        mutation.mutate({ name, user_id, type_task })
         setTypeTask('')
         setName('')
     }
     const { colorMode, toggleColorMode } = useColorMode()
     const style = { whidth: 40, height: 40, };
+    const styleRegister = { whidth: "25vw", height: "25vh", };
     return (
 
-        <Flex height="67vh" flexDirection="column" justifyContent="space-between" margin="8px" alignItems="center">
-
-            <Flex width="100vw" justifyContent="center">
+        <Flex flexDirection="column" justifyContent="space-between" alignItems="center">
+            <Flex  justifyContent="center">
                 <Button
                     marginRight="6vw"
                     colorScheme={allColors.bgAccordionButton}
@@ -56,8 +56,8 @@ const CardAllAddList = () => {
                     <Lottie style={style} animationData={logoutAnimation} />
                 </Button>
             </Flex>
-            <Box marginTop="8px">
-                <Heading marginLeft="16px" size='3xl'>
+            <Box height="40vh" marginTop="0.5vw">
+                <Heading marginLeft="0.5vw" size='2xl'>
                     <Text
                         bgGradient={allColors.bgHeadingGradientColor}
                         bgClip='text'
@@ -65,67 +65,49 @@ const CardAllAddList = () => {
                     >Hello,</Text>
                 </Heading>
                 <Text
-                    marginLeft="16px"
+                    marginLeft="0.5vw"
                     bgGradient={allColors.bgGradientColor}
                     bgClip='text'
-                    fontSize='2xl'
+                    fontSize='1xl'
                     fontWeight='extrabold'
                 >Add your to-do list</Text>
-                <Box marginTop="20px">
-                    <Lottie animationData={listAnimation} />
+                <Box >
+                    <Lottie style={styleRegister} animationData={listAnimation} />
                 </Box>
+                <Formik
+                    initialValues={{ name: '', typeTask: '', user_id: data?.user_id }}
+                    onSubmit={onCreateList}
+
+                >
+                    {(props) => (
+
+                        <Form>
+                            <FormControl >
+                                <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="0.2vw" width="16vw" height="5vh" type="text" onChange={(e) => setName(e.target.value)} placeholder='create name list' />
+                                <Select borderColor="purple.400" borderWidth="0.2vw" width="16vw" height="5vh" focusBorderColor="purple.600" backgroundColor="white" value={type_task} onChange={(e) => { setTypeTask(e.target.value) }}>
+                                    <option value=''>Select options</option>
+                                    <option value='checkbox'>Checkbox</option>
+                                    <option value='card'>Card</option>
+                                    <option value='time'>Time</option>
+                                </Select>
+                            </FormControl>
+                            <Flex justifyContent="end">
+                                <Button 
+                                    mt={4}
+                                    backgroundColor="purple.800"
+                                    colorScheme='purple'
+                                    textColor="white"
+                                    type='submit'
+                                >
+                                    Save
+                                </Button>
+
+                            </Flex>
+
+                        </Form>
+                    )}
+                </Formik>
             </Box>
-            <Formik
-                initialValues={{ name: '', typeTask: '', user_id: data?.user_id }}
-                onSubmit={onCreateList}
-
-            >
-                {(props) => (
-
-                    <Form>
-                        <FormControl >
-                            <FormLabel fontWeight="bold" margin="0.2vw">
-                                <Text
-                                    bgGradient={allColors.bgGradientColor}
-                                    bgClip='text'
-                                    fontSize='sm'
-                                    fontWeight='extrabold'
-                                >Name List</Text>
-                            </FormLabel>
-                            <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="2px" width="16vw" onChange={(e) => setName(e.target.value)} placeholder='create name list' />
-                            <FormLabel fontWeight="bold" margin="0.2vw">
-                                <Text
-                                    bgGradient={allColors.bgGradientColor}
-                                    bgClip='text'
-                                    fontSize='sm'
-                                    fontWeight='extrabold'
-                                >Select option card</Text>
-                            </FormLabel>
-                            <Select borderColor="purple.400" borderWidth="2px" width="16vw" focusBorderColor="purple.600" backgroundColor="white" value={type_task} onChange={(e) => {setTypeTask(e.target.value)}}>
-                                <option value=''>Select options</option>
-                                <option value='checkbox'>Checkbox</option>
-                                <option value='card'>Card</option>
-                                <option value='time'>Time</option>
-                            </Select>
-                        </FormControl>
-                        <Flex justifyContent="end" >
-                            <Button
-                                mt={4}
-                                margin="0.5vw"
-                                backgroundColor="purple.800"
-                                colorScheme='purple'
-                                textColor="white"
-                                type='submit'
-                            >
-                                Save
-                            </Button>
-
-                        </Flex>
-
-                    </Form>
-                )}
-            </Formik>
-
 
         </Flex>
 

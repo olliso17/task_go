@@ -1,0 +1,18 @@
+settings:
+  legacy_watchers: true
+
+tasks:
+  dev:
+    desc: "Starts the development server"
+    cmds:
+      - go run *go
+    watch:
+      - "**/*.go"
+Inicie o realize usando o comando realize start.
+Agora, sempre que um arquivo .go for salvo, o realize irá automaticamente executar o comando go run main.go para que você possa ver as atualizações em tempo real.
+
+
+
+
+
+
