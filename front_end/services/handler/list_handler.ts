@@ -60,14 +60,10 @@ const deleteList = async (input: DeleteListInputDto)=>{
         console.log("not access")
         
     }
-
+    const params = {id: input.id};
     const url = `list/delete`
 
-    const res = await api.delete(url, { 
-        data: { 
-          chave: input
-        } });
-
+    const res = await api.delete(url, {data: params});
     return res.data
 }
 

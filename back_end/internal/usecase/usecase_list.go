@@ -147,23 +147,26 @@ func (l *ListRepository) SoftDelete(input dto.ListInputSoftDeleteDTO) (dto.ListO
 	timestamp := time.Now().Local().String()
 	list, err := l.ListRepository.FindByID(input.ID)
 	tasks, err := l.TaskRepository.FindAll()
+
 	if err != nil {
-		return dto.ListOutputMessageDTO{}, err
+		return dto.ListOutputMessageDTO{Message: "list not deleted"}, err
 	}
-	for positionTask, valueTask := range tasks {
-		if tasks[positionTask].ListID == list.ID && tasks[positionTask].IsDeleted != true {
-			tasks[positionTask].IsDeleted = true
-			tasks[positionTask].DeletedAt = timestamp
-			l.TaskRepository.SoftDelete(&tasks[positionTask])
-			list.Tasks = append(list.Tasks, valueTask)
+	if list.IsDeleted != true {
+		for positionTask, valueTask := range tasks {
+			if tasks[positionTask].ListID == list.ID && tasks[positionTask].IsDeleted != true {
+				tasks[positionTask].IsDeleted = true
+				tasks[positionTask].DeletedAt = timestamp
+				l.TaskRepository.SoftDelete(&tasks[positionTask])
+				list.Tasks = append(list.Tasks, valueTask)
+			}
+
 		}
-
+		list.IsDeleted = true
+		list.DeletedAt = timestamp
+		l.ListRepository.SoftDelete(&list)
+		return IsValidDeleteList(&list), nil
 	}
-	list.IsDeleted = true
-	list.DeletedAt = timestamp
-	l.ListRepository.SoftDelete(&list)
-	return IsValidDeleteList(&list), nil
-
+	return dto.ListOutputMessageDTO{Message: "list not deleted"}, err
 }
 
 func IsValidDeleteList(list *entity.ListEntity) dto.ListOutputMessageDTO {

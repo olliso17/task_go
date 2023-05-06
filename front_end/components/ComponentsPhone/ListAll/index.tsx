@@ -17,7 +17,6 @@ interface Props {
 const ListAll = ({ setAlert }: Props) => {
     const { data: lists } = useQuery("lists", getListAll);
     const allColors = useColorsPhone();
-    const [id, setId] = useState('')
     const mutation = useMutationDeleteList();
     const initialValues = { id: '' };
     useEffect(() => {
@@ -90,16 +89,13 @@ const ListAll = ({ setAlert }: Props) => {
                         <Formik
                             initialValues={initialValues}
                             onSubmit={() => {
-                                mutation.mutate({ id })
+                                mutation.mutate({ id:list.id })
 
                             }}
                         >
                             {(props) => (
 
                                 <Form >
-                                    <FormControl >
-                                        <Input hidden={true} onChange={() => { setId(list.id) }} />
-                                    </FormControl>
                                     <CardFooter justifyContent="end" padding="0.3vw">
                                     <Button
                                         mt={4}
