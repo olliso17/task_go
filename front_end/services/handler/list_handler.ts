@@ -1,6 +1,7 @@
 import api from "../backend";
 import { CreateListInputDto, DeleteListInputDto, OutputDeleteListDto, OutputListDto } from "../dto/list_dto";
 import { getCookie } from 'cookies-next';
+import { AxiosResponse } from "axios";
 
 
 
@@ -52,14 +53,24 @@ const postList = async (input: CreateListInputDto) => {
 
     return res.data
 }
-// const deleteList = async (input: DeleteListInputDto): Promise<OutputDeleteListDto> => {
-//     const url = `list/delete${input}`
+const deleteList = async (input: DeleteListInputDto)=>{
+    const token = getCookie('session_token');
 
-//     const res = await api.delete(url, input);
+    if (token == "") {
+        console.log("not access")
+        
+    }
 
-//     return res.data
-// }
+    const url = `list/delete`
+
+    const res = await api.delete(url, { 
+        data: { 
+          chave: input
+        } });
+
+    return res.data
+}
 
 
 
-export { postList, getListAll, getListId }
+export { postList, getListAll, getListId, deleteList }

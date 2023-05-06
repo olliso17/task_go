@@ -50,12 +50,14 @@ func (l *ListRepository) FindAll() ([]dto.ListAllOutputDTO, error) {
 	var tasksList dto.TaskOutputDTO
 
 	for _, valueList := range lists {
-		listAll = append(listAll, dto.ListAllOutputDTO{
-			ID:       valueList.ID,
-			Name:     valueList.Name,
-			UserId:   valueList.UserId,
-			TypeTask: valueList.TypeTask,
-		})
+		if valueList.IsDeleted != true {
+			listAll = append(listAll, dto.ListAllOutputDTO{
+				ID:       valueList.ID,
+				Name:     valueList.Name,
+				UserId:   valueList.UserId,
+				TypeTask: valueList.TypeTask,
+			})
+		}
 
 	}
 	for positionList := range listAll {

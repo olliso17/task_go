@@ -1,5 +1,5 @@
 import { getListAll } from "@/services/handler/list_handler";
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, Box, Card, CardBody, CardFooter, CardHeader, Center, Flex, Heading, IconButton, Progress, SimpleGrid, Stack, StackDivider, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Flex, FormControl, Heading, IconButton, Input, Progress, SimpleGrid, Stack, StackDivider, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { OutputListDto } from "@/services/dto/list_dto";
 import CreateTask from "../CreateTask";
 import { AiFillDelete } from "react-icons/ai";
@@ -7,6 +7,8 @@ import { useQuery } from "react-query";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import AcordionTasks from "../AcordionTasks";
+import { Form, Formik } from "formik";
+import { useMutationDeleteList } from "@/services/handler/muation";
 
 interface Props {
     setAlert: Dispatch<SetStateAction<JSX.Element>>
@@ -15,7 +17,9 @@ interface Props {
 const ListAll = ({ setAlert }: Props) => {
     const { data: lists } = useQuery("lists", getListAll);
     const allColors = useColorsPhone();
-
+    const [id, setId] = useState('')
+    const mutation = useMutationDeleteList();
+    const initialValues = { id: '' };
     useEffect(() => {
         lists
     })
@@ -29,7 +33,7 @@ const ListAll = ({ setAlert }: Props) => {
                         <Tabs variant='enclosed' >
                             <Center>
                                 <CardHeader padding="0.5vw" >
-                                    <Heading  size='xs' textTransform='uppercase'
+                                    <Heading size='xs' textTransform='uppercase'
                                         marginLeft="0.5vw"
                                         bgGradient={allColors.bgHeadingGradientColor}
                                         bgClip='text'
@@ -83,19 +87,35 @@ const ListAll = ({ setAlert }: Props) => {
                                 </TabPanels>
                             </CardBody>
                         </Tabs>
-                        <CardFooter justifyContent="end" padding="0.3vw">
-                            <Progress colorScheme="purple" hasStripe value={64} />
-                            <IconButton
-                                boxShadow="dark-lg"
-                                width="2vw"
-                                marginRight="0.2vw"
-                                backgroundColor="red.700"
-                                rounded="full"
-                                textColor="white"
-                                aria-label='Delete name'
-                                icon={<AiFillDelete />}
-                            />
-                        </CardFooter>
+                        <Formik
+                            initialValues={initialValues}
+                            onSubmit={() => {
+                                mutation.mutate({ id })
+
+                            }}
+                        >
+                            {(props) => (
+
+                                <Form >
+                                    <FormControl >
+                                        <Input hidden={true} onChange={() => { setId(list.id) }} />
+                                    </FormControl>
+                                    <CardFooter justifyContent="end" padding="0.3vw">
+                                    <Button
+                                        mt={4}
+                                        backgroundColor="red.600"
+                                        colorScheme='red'
+                                        textColor="white"
+                                        type='submit'
+                                    >
+                                        Delete
+                                    </Button>
+                                    </CardFooter>
+                                </Form>
+
+
+                            )}
+                        </Formik>
                     </Accordion>
 
                 </Card>

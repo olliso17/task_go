@@ -15,6 +15,7 @@ const postTask = async (
     const url = `task/create`;
 
     const res = await api.post(url, input);
+    console.log(res.data)
 
     return res.data;
 };

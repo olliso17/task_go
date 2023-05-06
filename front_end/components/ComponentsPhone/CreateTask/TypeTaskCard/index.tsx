@@ -15,7 +15,6 @@ const TypeTaskCard = ({ list_id }: Props) => {
     const [title, setTitle] = useState('');
     const mutation = useMutationPostTask()
     const allColors = useColorsPhone();
-
     return (
         <AccordionPanel padding="0.2vw" margin="0.1vw">
             <Card>

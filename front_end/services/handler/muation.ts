@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useMutation } from "react-query"
-import { postList } from "./list_handler"
+import { deleteList, postList } from "./list_handler"
 import { postLogin, postLogout } from "./login_handler"
 import { postUser } from "./user_handler"
 import { getCookie } from 'cookies-next';
@@ -198,4 +198,32 @@ const useMutationPostTaskCompleted = () => {
     })
     return mutation
 }
-export { useMutationPostList, useMutationPostLogin, useMutationPostUser, useMutationPostLogout, useMutationPostTask, useMutationPostTaskCompleted }
+
+const useMutationDeleteList = () => {
+    const toast = useToast()
+    const router = useRouter();
+    const mutation = useMutation({
+        mutationFn: deleteList, onSuccess: () => {
+            toast({
+                title: 'List deleted.',
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+            window.location.reload()
+
+        }, onError(error) {
+            toast({
+                title: `${error} `,
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+
+            })
+
+        },
+
+    })
+    return mutation
+}
+export { useMutationPostList, useMutationPostLogin, useMutationPostUser, useMutationPostLogout, useMutationPostTask, useMutationPostTaskCompleted, useMutationDeleteList }
