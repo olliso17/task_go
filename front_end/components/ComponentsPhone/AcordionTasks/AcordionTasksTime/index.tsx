@@ -1,8 +1,12 @@
 import { useAllHandle } from "@/hooksPerson/countTasksTime";
 import { OutputTaskDto } from "@/services/dto/task_dto";
-import { AccordionPanel, Box, Button, Card, CardBody, Checkbox, Flex, FormControl, Heading, Stack, StackDivider } from "@chakra-ui/react";
+import { AccordionPanel, Box, Button, Card, CardBody, Checkbox, Flex, FormControl, Heading, IconButton, Stack, StackDivider } from "@chakra-ui/react";
 import { Dispatch, SetStateAction, useState } from "react";
-import AlertComponent from "../../AlertComponent";
+import Lottie from "lottie-react";
+import * as playAnimation from "public/play.json";
+import * as pauseAnimation from "public/pause.json";
+import * as resetAnimation from "public/reset.json";
+import { useColorsPhone } from "@/hooksPerson/colorsPhone";
 
 interface Props {
     task: OutputTaskDto
@@ -11,11 +15,14 @@ interface Props {
 
 const AccordionTasksTime = ({ task, setAlert }: Props) => {
     const handleAll = useAllHandle(task, setAlert)
+    const style = { whidth: 55, height: 55};
+    const styleReset = { whidth: 40, height: 40, };
+    const [active, setActive] = useState(false);
+    const allColors = useColorsPhone();
 
-   
     return (
         <AccordionPanel padding="0.2vw" margin="0.1vw" key={task.id} >
-            <Card>
+            <Card backgroundColor={allColors.bg}>
                 <CardBody>
                     <Stack divider={<StackDivider />} spacing='4'>
                         <Box>
@@ -27,12 +34,10 @@ const AccordionTasksTime = ({ task, setAlert }: Props) => {
                                 <div>{handleAll.minutes.toString().padStart(2, '0')}:
                                     {handleAll.seconds.toString().padStart(2, '0')}</div>
                                 <Stack direction="row" spacing={2}>
+                                    <IconButton type="submit" aria-label="" backgroundColor={allColors.bg} icon={active == false ? <Lottie style={style} animationData={playAnimation} onClick={handleAll.handleStart}/>:<Lottie style={style} animationData={pauseAnimation} onClick={handleAll.handlePause}/>} onClick={e => { setActive(state => !state) }} />
+
+                                    <IconButton type="submit" aria-label="reset" backgroundColor={allColors.bg} icon={<Lottie style={styleReset} animationData={resetAnimation} onClick={handleAll.handleReset}/>}  onClick={e => { setActive(false) }}/>
                                     
-                                    <Button backgroundColor="purple.900" colorScheme='purple' width="2.5vw" onClick={handleAll.handleStart}>Start</Button>
-
-                                    <Button backgroundColor="purple.900" colorScheme='purple' width="2.5vw" onClick={handleAll.handlePause}>Pause</Button>
-
-                                    <Button backgroundColor="purple.900" colorScheme='purple' width="2.5vw" onClick={handleAll.handleReset}>Reset</Button>
                                 </Stack>
                             </Stack>
                         </Box>

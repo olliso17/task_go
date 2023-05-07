@@ -1,3 +1,4 @@
+import { useColorsPhone } from "@/hooksPerson/colorsPhone";
 import { OutputTaskDto } from "@/services/dto/task_dto";
 import { patchTaskCompleted} from "@/services/handler/task_handler";
 import { AccordionPanel, Box, Button, Card, CardBody, CardHeader, Checkbox, Flex, FormControl, Heading, Stack, StackDivider, Text } from "@chakra-ui/react";
@@ -13,6 +14,7 @@ interface FormValues {
 }
 const AccordionTasksCard = ({ task }: Props) => {
     const [statusCheck, setStatusCheck] = useState(false);
+    const allColors = useColorsPhone();
     const mutation = useMutation({ mutationFn: patchTaskCompleted })
     const onChangeStatus = () => {
 
@@ -28,7 +30,7 @@ const AccordionTasksCard = ({ task }: Props) => {
     return (
         <>
               <AccordionPanel padding="0.2vw" margin="0.1vw" key={task.id} >
-                <Card>
+              <Card backgroundColor={allColors.bg}>
                     <CardBody>
                         <Stack divider={<StackDivider />} spacing='4'>
                             <Box>
