@@ -1,5 +1,5 @@
 import { getListAll } from "@/services/handler/list_handler";
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Flex, FormControl, Heading, IconButton, Input, Progress, SimpleGrid, Stack, StackDivider, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Flex, FormControl, Heading, IconButton, Input, Progress, SimpleGrid, Stack, StackDivider, TabPanel, TabPanels, Tabs, Text, useColorMode } from "@chakra-ui/react";
 import { OutputListDto } from "@/services/dto/list_dto";
 import CreateTask from "../CreateTask";
 import { AiFillDelete } from "react-icons/ai";
@@ -9,6 +9,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import AcordionTasks from "../AcordionTasks";
 import { Form, Formik } from "formik";
 import { useMutationDeleteList } from "@/services/handler/muation";
+import Lottie from "lottie-react";
+import * as deleteAnimation from "public/delete.json";
 
 interface Props {
     setAlert: Dispatch<SetStateAction<JSX.Element>>
@@ -18,6 +20,8 @@ const ListAll = ({ setAlert }: Props) => {
     const { data: lists } = useQuery("lists", getListAll);
     const allColors = useColorsPhone();
     const mutation = useMutationDeleteList();
+    const { colorMode, toggleColorMode } = useColorMode()
+    const style = { whidth:50, height:50, };
     const initialValues = { id: '' };
     useEffect(() => {
         lists
@@ -89,24 +93,16 @@ const ListAll = ({ setAlert }: Props) => {
                         <Formik
                             initialValues={initialValues}
                             onSubmit={() => {
-                                mutation.mutate({ id:list.id })
+                                mutation.mutate({ id: list.id })
 
                             }}
                         >
                             {(props) => (
 
                                 <Form >
-                                    <CardFooter justifyContent="end" padding="0.3vw">
-                                    <Button
-                                        mt={4}
-                                        backgroundColor="red.600"
-                                        colorScheme='red'
-                                        textColor="white"
-                                        type='submit'
-                                    >
-                                        Delete
-                                    </Button>
-                                    </CardFooter>
+                                    <Flex justifyContent="end">
+                                        <IconButton type="submit" aria-label="" backgroundColor={allColors.bgAccordion} icon={<Lottie style={style} animationData={deleteAnimation} />}/>
+                                    </Flex>
                                 </Form>
 
 
