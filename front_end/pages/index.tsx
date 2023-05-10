@@ -3,15 +3,14 @@ import { Flex, Stack, Button, Box } from '@chakra-ui/react';
 import { useColorsWeb } from '@/hooksPerson/colorsWeb';
 import CardStylePhone from '@/components/ComponentsPhone/CardStylePhone';
 import CreateUser from '@/components/ComponentsPhone/CreateUser';
-import { } from '@chakra-ui/react'
 import CardStyleWeb from '@/components/ComponentsWeb/CardStyleWeb';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { MyContext } from '@/context/cookieContext';
 
 
 export default function Home() {
   const allColors = useColorsWeb()
-  const [active, setActive] = useState(false);
-
+  const value = useContext(MyContext)
 
   return (
     <Box width="100vw" height="100vh">
@@ -21,12 +20,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
-        <Stack margin="0.5vw">
-          <Button onClick={e => {setActive(state => !state)}}>{active == false ? "Web" : "Mobile"}</Button>
-        </Stack>
-        {active == false ? <CardStylePhone content={<CreateUser />} /> : <CardStyleWeb content={<CreateUser />} />}
-      </Flex>
+      {value}
     </Box>
   )
 }

@@ -1,9 +1,9 @@
 import { Box, Center, Flex } from "@chakra-ui/react"
 import { useColorsPhone } from "@/hooksPerson/colorsPhone"
+import { ReactNode } from "react"
 
 interface Props {
     content: JSX.Element
-
 }
 
 const CardStylePhone = ({content}: Props) => {

@@ -3,20 +3,19 @@ import { Box, Button, Flex, Stack } from '@chakra-ui/react';
 import CardStylePhone from '@/components/ComponentsPhone/CardStylePhone';
 import LoginAccess from '@/components/ComponentsPhone/LoginAcess';
 import { useColorsPhone } from '@/hooksPerson/colorsPhone';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { postLogout } from '@/services/handler/login_handler';
 import { useMutation } from 'react-query';
 import { useMutationPostLogout } from '@/services/handler/muation';
 import CardStyleWeb from '@/components/ComponentsWeb/CardStyleWeb';
-
+import { MyContext } from '@/context/cookieContext';
 
 
 export default function Home() {
   const allColors = useColorsPhone()
   const mutation = useMutation({ mutationFn: postLogout, })
   const logout = useMutationPostLogout()
-  const [active, setActive] = useState(false);
-
+  const value = useContext(MyContext)
   return (
 
     <Box width="100vw" height="100vh">
@@ -27,13 +26,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
-        <Stack margin="0.5vw">
-          <Button onClick={e => { setActive(state => !state) }}>{active == false ? "Web" : "Mobile"}</Button>
-        </Stack>
-        {active == false ? <CardStylePhone content={<LoginAccess />} /> : <CardStyleWeb content={<LoginAccess />} />}
-    
-      </Flex>
+
+      {value == false ? <CardStylePhone content={<LoginAccess />} /> : <CardStyleWeb content={<LoginAccess />} />}
+
     </Box>
   )
 }

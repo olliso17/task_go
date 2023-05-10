@@ -12,16 +12,16 @@ import { useMutationDeleteList } from "@/services/handler/muation";
 import Lottie from "lottie-react";
 import * as deleteAnimation from "public/delete.json";
 
-interface Props {
-    setAlert: Dispatch<SetStateAction<JSX.Element>>
-}
 
-const ListAll = ({ setAlert }: Props) => {
+
+const ListAll = () => {
     const { data: lists } = useQuery("lists", getListAll);
     const allColors = useColorsPhone();
     const mutation = useMutationDeleteList();
     const { colorMode, toggleColorMode } = useColorMode()
-    const style = { whidth:50, height:50, };
+    const [alert, setAlert] = useState(<></>)
+
+    const style = { whidth: 50, height: 50, };
     const initialValues = { id: '' };
     useEffect(() => {
         lists
@@ -101,7 +101,7 @@ const ListAll = ({ setAlert }: Props) => {
 
                                 <Form >
                                     <Flex justifyContent="end">
-                                        <IconButton type="submit" aria-label="" backgroundColor={allColors.bgAccordion} icon={<Lottie style={style} animationData={deleteAnimation} />}/>
+                                        <IconButton type="submit" aria-label="" backgroundColor={allColors.bgAccordion} icon={<Lottie style={style} animationData={deleteAnimation} />} />
                                     </Flex>
                                 </Form>
 

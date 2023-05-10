@@ -1,6 +1,7 @@
 
 import { useColorsWeb } from "@/hooksPerson/colorsWeb"
 import { Box, Center, Flex, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useColorModeValue } from "@chakra-ui/react"
+import { ReactNode } from "react"
 
 interface Props {
     content: JSX.Element

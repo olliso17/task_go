@@ -2,27 +2,22 @@ import Head from 'next/head'
 import { useColorsPhone } from '@/hooksPerson/colorsPhone';
 import Cookies from 'js-cookie'
 import { Box, Button, Center, Flex, Stack } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CardStylePhone from '@/components/ComponentsPhone/CardStylePhone';
 import CardStyleWeb from '@/components/ComponentsWeb/CardStyleWeb';
 import ListAll from '@/components/ComponentsPhone/ListAll';
 import CardAllAddList from '@/components/ComponentsPhone/CardAllAddList';
 import TabsLoginOk from '@/components/ComponentsPhone/TabsLoginOk';
+import { MyContext } from '@/context/cookieContext';
 
 
 export default function Home() {
   const allColors = useColorsPhone();
-  const [active, setActive] = useState(false);
-  const [cookieValue, setCookieValue] = useState<string | undefined>(undefined);
-  const [alert, setAlert] = useState(<></>)
-
-  useEffect(() => {
-    const cookie = Cookies.get('session_token');
-    setCookieValue(cookie)
-  }, [])
+  const value = useContext(MyContext)
 
 
   return (
+
     <Box width="100vw" height="100vh">
       <Head>
         <title>List Task</title>
@@ -31,15 +26,8 @@ export default function Home() {
 
       </Head>
 
-      < Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh" >
-        <Stack margin="0.5vw">
-          <Button onClick={e => { setActive(state => !state) }}>{active == false ? "Web" : "Mobile"}</Button>
-        </Stack>
-        <Center>
-          {alert}
-        </Center>
-        {active == false ? <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll setAlert={setAlert} />} />} /> : <CardStyleWeb content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll setAlert={setAlert} />} />} />}
-      </Flex >
+      {value == false ? <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} /> : <CardStyleWeb content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} />}
+
     </Box>
   )
 
