@@ -3,7 +3,7 @@ import { useColorsPhone } from "@/hooksPerson/colorsPhone"
 import { ReactNode } from "react"
 
 interface Props {
-    content: JSX.Element
+    content: JSX.Element|JSX.Element[],
 }
 
 const CardStylePhone = ({content}: Props) => {

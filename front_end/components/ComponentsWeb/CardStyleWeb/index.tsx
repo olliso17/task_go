@@ -4,7 +4,7 @@ import { Box, Center, Flex, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useCo
 import { ReactNode } from "react"
 
 interface Props {
-    content: JSX.Element
+    content: JSX.Element|JSX.Element[],
 
 }
 
