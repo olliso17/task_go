@@ -30,6 +30,9 @@ export class List{
     get _userId() {
         return this.props._userId;
     }
+    get _tasks() {
+        return this.props._tasks;
+    }
     get _updatedAt(){
         return this.props._updatedAt;
     }
@@ -46,6 +49,7 @@ export class List{
             typeTask: this._typeTask,
             createdAt: this._createdAt,
             userId: this._userId,
+            tasks:this._tasks,
             updatedAt: this._updatedAt,
             deletedAt: this._deletedAt,
             isDeleted: this._isDeleted,

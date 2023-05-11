@@ -1,6 +1,3 @@
-import { getCookie } from 'cookies-next'
-import { useRouter } from "next/router";
-import { useMutation, useQuery } from "react-query";
 import api from "../backend";
 import { CreateUserInputDto, OutputUsertDto } from "../dto/user_dto";
 
