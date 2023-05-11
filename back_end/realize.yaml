@@ -1,67 +1,42 @@
 settings:
-    legacy:
-        force: true             // force polling watcher instead fsnotifiy
-        interval: 100ms         // polling interval
-    resources:                  // files names
-        outputs: outputs.log
-        logs: logs.log
-        errors: errors.log
+  recovery:
+    index: true       # print files indexing
+    events: false     # print each event
+    tools: false      # print each tool
+  legacy:
+    force: false      # enable polling watcher
+    interval: 0s      # polling interval
 server:
-    status: false               // server status
-    open: false                 // open browser at start
-    host: localhost             // server host
-    port: 5001                  // server port
+  status: false       # web panel
+  open: true          # open in default browser
+  port: 8080         # server port
+  host: localhost     # server host
 schema:
-- name: coin
-  path: coin              // project path
-  env:            // env variables available at startup
-        test: test
-        myvar: value
-  commands:               // go commands supported
-    vet:
-        status: true
-    fmt:
-        status: true
-        args:
-        - -s
-        - -w
-    test:
-        status: true
-        method: gb test    // support different build tools
-    generate:
-        status: true
-    install:
-        status: true
-    build:
-        status: false
-        method: gb build    // support differents build tool
-        args:               // additional params for the command
-        - -race
-    run:
-        status: true
-  args:                     // arguments to pass at the project
-  - --myarg
+- name: realize       # project name
+  path: .             # project path, '.' is for wdir path
+  commands:           # all go commands supported
+    generate:         # go generate
+      status: true
+    install:          # go install
+      status: true
+    vet:              # go vet
+      status: true
+    test:             # go test
+      status: true
+    fmt:              # go fmt
+      status: true
   watcher:
-      paths:                 // watched paths
-      - /
-      ignore_paths:          // ignored paths
-      - vendor
-      extensions:                  // watched extensions
-      - go
-      - html
-      scripts:
-      - type: before
-        command: echo before global
-        global: true
-        output: true
-      - type: before
-        command: echo before change
-        output: true
-      - type: after
-        command: echo after change
-        output: true
-      - type: after
-        command: echo after global
-        global: true
-        output: true
-      errorOutputPattern: mypattern   //custom error pattern
+    paths:            # paths watched
+    - /back_end
+    extensions:       # extensions watched
+    - go
+    - html
+    - css
+    - js
+    ignored_paths:    # paths ignored
+    - .git
+    - .realize
+    - .idea
+    - vendor
+    - realize/assets
+    - realize/bindata.go
