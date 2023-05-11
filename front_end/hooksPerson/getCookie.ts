@@ -1,15 +1,9 @@
-import Cookies from "js-cookie";
-import { useRouter } from "next/router"
-import { useState } from "react";
+import { cookies } from 'next/headers';
 
-export const useGetCookie = () => {
-    const router = useRouter();
-    const cookie = Cookies.get('session_token');
-    const [token, setToken] = useState<boolean>(false);
+const page = async () => {
+    //     const nextCookies = cookies().get('session_token');
 
-    if (cookie == undefined) {
-        setToken(false)
-    }
-    setToken(true);
-    return token
+    //    return nextCookies?.value
+   
+    return cookieName
 }

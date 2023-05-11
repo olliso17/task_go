@@ -25,7 +25,7 @@ const ListAll = () => {
     const initialValues = { id: '' };
     useEffect(() => {
         lists
-    })
+    },lists)
 
     return (
 
@@ -50,7 +50,7 @@ const ListAll = () => {
                                     <TabPanel>
                                         <AccordionItem>
                                             <Center padding="0.2vw">
-                                                <AccordionButton padding="0" height="5vh" boxShadow="dark-lg" rounded="0.5vw" backgroundColor={allColors.bgAccordionButton}>
+                                                <AccordionButton  padding="0" height="5vh" boxShadow="dark-lg" rounded="0.5vw" backgroundColor={allColors.bgAccordionButton}>
                                                     <Box as="span" flex='1' textAlign='left'>
                                                         <Text
                                                             marginLeft="0.5vw"

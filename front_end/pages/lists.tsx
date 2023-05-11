@@ -8,15 +8,18 @@ import CardStyleWeb from '@/components/ComponentsWeb/CardStyleWeb';
 import ListAll from '@/components/ComponentsPhone/ListAll';
 import CardAllAddList from '@/components/ComponentsPhone/CardAllAddList';
 import TabsLoginOk from '@/components/ComponentsPhone/TabsLoginOk';
-import { MyContext } from '@/context/cookieContext';
+import { LayoutContext } from '@/context/cookieContext';
 
 
 export default function Home() {
   const allColors = useColorsPhone();
-  const value = useContext(MyContext)
+  const value = useContext(LayoutContext)
 
+
+  useEffect(()=>{value.token},[value.token]);
   return (
-      value == false ? <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} /> : <CardStyleWeb content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} />
+      /*value.token!= ''?*/
+      value.active == false ? <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} /> : <CardStyleWeb content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} />/*:<>Not Acesss</>*/
 
   )
 

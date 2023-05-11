@@ -1,31 +1,38 @@
-import React, { Children, ReactNode, useContext, useEffect, useState } from "react";
-import { useGetCookie } from "@/hooksPerson/getCookie";
+import React, { ReactNode, useEffect, useState } from "react";
 import { Box, Button, Center, Flex, Stack } from "@chakra-ui/react";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
-import CardStylePhone from "@/components/ComponentsPhone/CardStylePhone";
-import CreateUser from "@/components/ComponentsPhone/CreateUser";
-import CardStyleWeb from "@/components/ComponentsWeb/CardStyleWeb";
 import Head from "next/head";
+import Cookies from "js-cookie";
+
 
 
 
 type Props = {
-
     children: ReactNode,
-
-
-
 };
-export const MyContext = React.createContext(false);
+type Value = {
+    active: boolean,
+    token: string,
+};
+
+export const LayoutContext = React.createContext({} as Value);
 
 
-export const MyProvider = ({
+export const LayoutProvider = ({
     children
 }: Props) => {
     const [active, setActive] = useState(false);
+    const [token, setToken] = useState('');
     const allColors = useColorsPhone()
+    useEffect(() => {
+        const cookie = Cookies.get('session_token')
+        if (cookie !== undefined) {
+            setToken(cookie)
+        }
+    }, [token])
+
     return (
-        <MyContext.Provider value={active}>
+        <LayoutContext.Provider value={{ active, token }}>
             <Box width="100vw" height="100vh">
                 <Head>
                     <title>List Task</title>
@@ -34,17 +41,16 @@ export const MyProvider = ({
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
                 <Center margin="0.3vw">
-                    <Button width="10vw" onClick={e => { setActive(state => !state) }}>{active == false ? "Web" : "Mobile"}</Button>
+
+                    {/*token != '' ?*/ <Button width="10vw" onClick={e => { setActive(state => !state) }}>{active == false ? "Web" : "Mobile"}</Button> /*: <></>*/}
                 </Center>
                 <Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
                     {children}
                 </Flex>
 
             </Box>
-        </MyContext.Provider>
+        </LayoutContext.Provider>
     );
 };
 
-function teste() {
 
-}
