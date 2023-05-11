@@ -1,6 +1,5 @@
 import { Task } from "@/@core/domain/entities/task";
 import { TaskGateway } from "@/@core/domain/gateways/task.gateway";
-import api from "@/services/backend";
 import { AxiosInstance } from "axios";
 import { getCookie } from "cookies-next";
 
@@ -25,7 +24,7 @@ export class TaskHttpGateway implements TaskGateway {
             throw new Error
         }
 
-        const task = await api.post("/task/create", input);
+        const task = await this.http.post("/task/create", input);
 
         const newTask = new Task({
             _id: task.data.id,
@@ -45,7 +44,7 @@ export class TaskHttpGateway implements TaskGateway {
             console.log("not access")
             throw new Error
         }
-        const task = await api.get(`task/id/${id}`);
+        const task = await this.http.get(`task/id/${id}`);
 
         const findedTask = new Task({
             _id: task.data.id,
@@ -65,7 +64,7 @@ export class TaskHttpGateway implements TaskGateway {
             console.log("not access")
             throw new Error
         }
-        const task = await api.get(`task/title/${title}`);
+        const task = await this.http.get(`task/title/${title}`);
 
         const findedTask = new Task({
             _id: task.data.id,
@@ -90,7 +89,7 @@ export class TaskHttpGateway implements TaskGateway {
         }
         const url = "task/completed";
 
-        const task = await api.patch(url, input);
+        const task = await this.http.patch(url, input);
         const findedTask = new Task({
             _id: task.data.id,
             _title: task.data.title,
@@ -111,7 +110,7 @@ export class TaskHttpGateway implements TaskGateway {
         }
         const url = 'tasks';
 
-        const tasks = await api.get(url);
+        const tasks = await this.http.get(url);
         const alltasks: Task[] = [];
         tasks.data.map((task: any) => {
             alltasks.push(task);
