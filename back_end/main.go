@@ -17,7 +17,6 @@ import (
 // }
 
 func main() {
-
 	db_postgres, err := db.OpenConnectionPostgres()
 	if err != nil {
 		panic(err)
