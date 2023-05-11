@@ -2,7 +2,7 @@ import { Task } from "@/@core/domain/entities/task";
 import { TaskGateway } from "@/@core/domain/gateways/task.gateway";
 
 
-export class CreateTaskUseCase {
+export class PostTaskUseCase {
     constructor(private taskGateway: TaskGateway) { }
 
     async execute(

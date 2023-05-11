@@ -1,7 +1,7 @@
 import { User } from "../entities/user";
 
 export interface UserGateway {
-    postList(
+    postUser(
         name: string,
         email: string,
         password: string

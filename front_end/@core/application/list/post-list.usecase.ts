@@ -1,7 +1,7 @@
 import { List } from "@/@core/domain/entities/list";
 import { ListGateway } from "@/@core/domain/gateways/list.gateway";
 
-export class CreateListUseCase {
+export class PostListUseCase {
     constructor(private listGateway: ListGateway) { }
 
     async execute(

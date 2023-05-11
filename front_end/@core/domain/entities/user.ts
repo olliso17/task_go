@@ -5,12 +5,12 @@ export type UserProps ={
     _email:string,
     _name:string,
     _password:string,
-    _isAdmin:boolean,
-    _lists:List[],
+    _isAdmin?:boolean,
+    _lists?:List[],
     _createdAt?:string,
     _updatedAt?:string,
     _deletedAt?:string,
-    _isDeleted:boolean,
+    _isDeleted?:boolean,
 
 }
 

@@ -5,7 +5,7 @@ export interface LoginGateway {
         email: string,
         password: string,
     ): Promise<Login>;
-    getLogin():Promise<Login>;
+    // getLogin():Promise<Login>;
     postLogout(): Promise<Login>;
     
 }
