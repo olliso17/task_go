@@ -1,18 +1,67 @@
 settings:
-  legacy_watchers: true
-
-tasks:
-  dev:
-    desc: "Starts the development server"
-    cmds:
-      - go run *go
-    watch:
-      - "**/*.go"
-Inicie o realize usando o comando realize start.
-Agora, sempre que um arquivo .go for salvo, o realize irá automaticamente executar o comando go run main.go para que você possa ver as atualizações em tempo real.
-
-
-
-
-
-
+    legacy:
+        force: true             // force polling watcher instead fsnotifiy
+        interval: 100ms         // polling interval
+    resources:                  // files names
+        outputs: outputs.log
+        logs: logs.log
+        errors: errors.log
+server:
+    status: false               // server status
+    open: false                 // open browser at start
+    host: localhost             // server host
+    port: 5001                  // server port
+schema:
+- name: coin
+  path: coin              // project path
+  env:            // env variables available at startup
+        test: test
+        myvar: value
+  commands:               // go commands supported
+    vet:
+        status: true
+    fmt:
+        status: true
+        args:
+        - -s
+        - -w
+    test:
+        status: true
+        method: gb test    // support different build tools
+    generate:
+        status: true
+    install:
+        status: true
+    build:
+        status: false
+        method: gb build    // support differents build tool
+        args:               // additional params for the command
+        - -race
+    run:
+        status: true
+  args:                     // arguments to pass at the project
+  - --myarg
+  watcher:
+      paths:                 // watched paths
+      - /
+      ignore_paths:          // ignored paths
+      - vendor
+      extensions:                  // watched extensions
+      - go
+      - html
+      scripts:
+      - type: before
+        command: echo before global
+        global: true
+        output: true
+      - type: before
+        command: echo before change
+        output: true
+      - type: after
+        command: echo after change
+        output: true
+      - type: after
+        command: echo after global
+        global: true
+        output: true
+      errorOutputPattern: mypattern   //custom error pattern
