@@ -19,7 +19,7 @@ const ListAll = () => {
     const allColors = useColorsPhone();
     const mutation = useMutationDeleteList();
     const { colorMode, toggleColorMode } = useColorMode()
-    const [alert, setAlert] = useState(<></>)
+  
 
     const style = { whidth: 50, height: 50, };
     const initialValues = { id: '' };
@@ -83,7 +83,7 @@ const ListAll = () => {
                                                 </AccordionButton>
                                             </Center>
                                             {list.tasks?.map((task) => (
-                                                <AcordionTasks setAlert={setAlert} task={task} list_id={list.id} />
+                                                <AcordionTasks task={task} list_id={list.id} />
                                             ))}
                                         </AccordionItem>
                                     </TabPanel>

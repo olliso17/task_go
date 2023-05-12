@@ -12,10 +12,10 @@ import AccordionTasksTime from "./AcordionTasksTime"
 interface Props {
     task: OutputTaskDto
     list_id: string
-    setAlert: Dispatch<SetStateAction<JSX.Element>>
+   
 }
 
-const AcordionTasks = ({ task, list_id, setAlert }: Props) => {
+const AcordionTasks = ({ task, list_id }: Props) => {
     const allColors = useColorsPhone();
     const [tipeTaskSelect, setTipeTaskSelect] = useState(<></>);
     const { data: lists } = useQuery("lists", getListAll);
@@ -33,7 +33,7 @@ const AcordionTasks = ({ task, list_id, setAlert }: Props) => {
                     case "card":
                         return setTipeTaskSelect(<AccordionTasksCard key={task.id} task={task} />);
                     case "time":
-                        return setTipeTaskSelect(<AccordionTasksTime setAlert={setAlert} key={task.id} task={task} />);
+                        return setTipeTaskSelect(<AccordionTasksTime key={task.id} task={task} />);
                 }
             }
         })

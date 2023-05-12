@@ -10,10 +10,11 @@ import { useColorsPhone } from "@/hooksPerson/colorsPhone";
 
 interface Props {
     task: OutputTaskDto
-    setAlert: Dispatch<SetStateAction<JSX.Element>>
+   
 }
 
-const AccordionTasksTime = ({ task, setAlert }: Props) => {
+const AccordionTasksTime = ({ task}: Props) => {
+    const [alert,setAlert]=useState(<></>)
     const handleAll = useAllHandle(task, setAlert)
     const style = { whidth: 55, height: 55};
     const styleReset = { whidth: 40, height: 40, };
@@ -23,6 +24,7 @@ const AccordionTasksTime = ({ task, setAlert }: Props) => {
     return (
         <AccordionPanel padding="0.2vw" margin="0.1vw" key={task.id} >
             <Card backgroundColor={allColors.bg}>
+                {alert}
                 <CardBody>
                     <Stack divider={<StackDivider />} spacing='4'>
                         <Box>
