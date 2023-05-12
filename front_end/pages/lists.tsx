@@ -9,18 +9,43 @@ import ListAll from '@/components/ComponentsPhone/ListAll';
 import CardAllAddList from '@/components/ComponentsPhone/CardAllAddList';
 import TabsLoginOk from '@/components/ComponentsPhone/TabsLoginOk';
 import { LayoutContext } from '@/context/cookieContext';
+import { GetServerSideProps } from 'next';
 
 
-export default function Home() {
+export default function Home(props: any) {
   const allColors = useColorsPhone();
   const value = useContext(LayoutContext)
 
 
-  useEffect(()=>{value.token},[value.token]);
+  useEffect(() => {
+    props.token
+    value.setToken(props.token)
+
+  }, []);
+  
   return (
-      /*value.token!= ''?*/
-      value.active == false ? <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} /> : <CardStyleWeb content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} />/*:<>Not Acesss</>*/
+    props.token != "" ?
+      value.active == false ? <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} /> : <CardStyleWeb content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} /> : <>Not Acesss</>
 
   )
 
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+ 
+  var token = context.req.cookies.session_token
+  if (token == undefined) {
+      token = ""
+      return {
+        props: {
+          token: token
+        }
+      }
+  }
+  
+  return {
+    props: {
+      token: token
+    }
+  }
+};
