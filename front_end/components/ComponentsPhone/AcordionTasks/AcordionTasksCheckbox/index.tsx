@@ -13,17 +13,8 @@ interface Props {
 const AccordionTasksCheckbox = ({ task }: Props) => {
     const [statusCheck, setStatusCheck] = useState(false);
     const allColors = useColorsPhone();
-    const mutation = useMutation({ mutationFn: patchTaskCompleted})
-    const onChangeStatus = () => {
+    const mutation = useMutation({ mutationFn: patchTaskCompleted })
 
-        // mutation.mutate({ statusCheck }) 
-
-    }
-    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setStatusCheck(event.target.checked)
-        console.log(statusCheck, 'foi')
-
-    };
     return (
         <AccordionPanel padding="0.2vw" margin="0.1vw">
             <Card backgroundColor={allColors.bg}>
@@ -33,24 +24,19 @@ const AccordionTasksCheckbox = ({ task }: Props) => {
                             <Heading size='xs' textTransform='uppercase'>
                                 <Flex justifyContent="space-between">
                                     {task.title}
-                                    <Formik
-                                        initialValues={{ statusCheck }}
-                                        onSubmit={onChangeStatus}
 
-                                    >
-                                        {(props) => (
-                                            <Form>
-                                                <FormControl >
-                                                    <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
+                                    <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
 
-                                                        <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={handleCheckboxChange}>
-                                                        </Checkbox>
+                                        <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={(e) => {
+                                            setStatusCheck(e.target.checked);
+                                          
+                                            mutation.mutate({ id: task.id, status: statusCheck })
+                                        }
+                                        }>
+                                        </Checkbox>
 
-                                                    </Flex>
-                                                </FormControl>
-                                            </Form>
-                                        )}
-                                    </Formik>
+                                    </Flex>
+
                                 </Flex>
                             </Heading>
 

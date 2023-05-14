@@ -25,9 +25,8 @@ export class LoginHttpGateway implements LoginGateway {
         const login= await this.http.post("/login", input);
 
         const newLogin= new Login({
-            _id: login.data.id,
-            _sessionToken: login.data.se_sessionToken,
-            _userId: login.data.userId,
+            _email: login.data.email,
+            _password: login.data.password
         });
 
         return newLogin;
@@ -43,9 +42,8 @@ export class LoginHttpGateway implements LoginGateway {
         const login= await this.http.post("/logout");
 
         const newLogin= new Login({
-            _id: login.data.id,
-            _sessionToken: login.data.se_sessionToken,
-            _userId: login.data.userId,
+            _email: login.data.email,
+            _password: login.data.password
         });
 
         return newLogin;

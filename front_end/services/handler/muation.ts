@@ -186,6 +186,7 @@ const useMutationPostTaskCompleted = () => {
                 duration: 9000,
                 isClosable: true,
             })
+            console.log('sucesso')
         }, onError(error) {
             toast({
                 title: `${error} `,
