@@ -7,6 +7,7 @@ import {LayoutContext } from '@/context/cookieContext';
 import LoginAccess from '@/components/ComponentsPhone/LoginAcess';
 import CardStylePhone from '@/components/ComponentsPhone/CardStylePhone';
 import CardStyleWeb from '@/components/ComponentsWeb/CardStyleWeb';
+import CreateUserWeb from '@/components/ComponentsWeb/CreateUserWeb';
 
 
 export default function Home() {
@@ -15,7 +16,7 @@ export default function Home() {
 
   return (
 
-      value.active == false ? <CardStylePhone content={<CreateUser/>} /> : <CardStyleWeb content={<CreateUser/>} />
+      value.active == false ? <CardStylePhone content={<CreateUser/>} /> : <CardStyleWeb content={<CreateUserWeb/>} />
 
 
   )

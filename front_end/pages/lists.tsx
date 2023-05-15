@@ -10,6 +10,8 @@ import CardAllAddList from '@/components/ComponentsPhone/CardAllAddList';
 import TabsLoginOk from '@/components/ComponentsPhone/TabsLoginOk';
 import { LayoutContext } from '@/context/cookieContext';
 import { GetServerSideProps } from 'next';
+import CardAllAddListWeb from '@/components/ComponentsWeb/CardAllAddListWeb';
+import ListAllWeb from '@/components/ComponentsWeb/ListAllWeb';
 
 
 export default function Home(props: any) {
@@ -22,27 +24,29 @@ export default function Home(props: any) {
     value.setToken(props.token)
 
   }, []);
-  
+
   return (
     props.token != "" ?
-      value.active == false ? <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} /> : <CardStyleWeb content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} /> : <>Not Acesss</>
+      value.active == false ? <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} /> : <CardStyleWeb content={
+
+        <CardAllAddListWeb />} /> : <>Not Acesss</>
 
   )
 
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
- 
+
   var token = context.req.cookies.session_token
   if (token == undefined) {
-      token = ""
-      return {
-        props: {
-          token: token
-        }
+    token = ""
+    return {
+      props: {
+        token: token
       }
+    }
   }
-  
+
   return {
     props: {
       token: token

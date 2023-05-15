@@ -34,8 +34,8 @@ export const LayoutProvider = ({
                 <Center margin="0.3vw">
 
                      {
-                        token != "" ?
-                        <Button width="10vw" onClick={e => { setActive(state => !state) }}>{active == false ? "Web" : "Mobile"}</Button>:<></>}
+                        // token != "" ?
+                        <Button width="10vw" onClick={e => { setActive(state => !state) }}>{active == false ? "Web" : "Mobile"}</Button>/*:<></>*/}
                 </Center>
                 <Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
                     {children}

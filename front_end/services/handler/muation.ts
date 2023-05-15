@@ -20,7 +20,7 @@ const useMutationPostList = () => {
                 duration: 9000,
                 isClosable: true,
             })
-            window.location.reload()
+            // window.location.reload()
 
         }), onError(error) {
             toast({
