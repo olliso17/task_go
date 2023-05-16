@@ -11,6 +11,8 @@ import Lottie from "lottie-react";
 import * as deleteAnimation from "public/delete.json";
 import CreateTask from "@/components/ComponentsPhone/CreateTask";
 import AcordionTasks from "@/components/ComponentsPhone/AcordionTasks";
+import CreateTaskWeb from "../CreateTaskWeb";
+import ListTasksWeb from "../ListTasksWeb";
 
 
 
@@ -28,12 +30,30 @@ const ListAllWeb = () => {
     }, lists)
 
     return (
-    <Flex alignItems="start" justifyContent="space-between" wrap="wrap">
+        <Flex alignItems="start" justifyContent="space-between" wrap="wrap">
             {lists?.map((list: OutputListDto) => (
 
                 <SimpleGrid key={list.id.toString()} spacing={4} margin="0.5vw">
-                    <Card padding="0" width="20vw" rounded="2xl" boxShadow="dark-lg">
-                        <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple>
+                    <Card padding="0" width="20vw" height="60vh" overflow="auto" __css={{
+                        '&::-webkit-scrollbar-button': {
+                            w: '1',
+                            h: '1',
+                        },
+                        '&::-webkit-scrollbar': {
+                            w: '1',
+                            h: '1',
+                        },
+                        '&::-webkit-scrollbar-track': {
+                            w: '1',
+                            h: '1',
+                        },
+                        '&::-webkit-scrollbar-thumb': {
+                            borderRadius: '10',
+                            bg: `purple.500`,
+                        },
+                       
+                    }} rounded="2xl" boxShadow="dark-lg">
+                        <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion}>
                             <Tabs variant='enclosed' >
                                 <Center>
                                     <CardHeader padding="0.5vw" >
@@ -47,46 +67,13 @@ const ListAllWeb = () => {
                                     </CardHeader>
                                 </Center>
                                 <CardBody padding="0">
+                                    <CreateTaskWeb list_id={list.id} />
+
                                     <TabPanels>
                                         <TabPanel>
-                                            <AccordionItem>
-                                                <Center padding="0.2vw">
-                                                    <AccordionButton padding="0" height="5vh" boxShadow="dark-lg" rounded="0.5vw" backgroundColor={allColors.bgAccordionButton}>
-                                                        <Box as="span" flex='1' textAlign='left'>
-                                                            <Text
-                                                                marginLeft="0.5vw"
-                                                                bgGradient={allColors.bgGradientColor}
-                                                                bgClip='text'
-                                                                fontSize='md'
-                                                                fontWeight='extrabold'
-                                                            >Add Tasks
-                                                            </Text>
-                                                        </Box>
-                                                        <AccordionIcon />
-                                                    </AccordionButton>
-                                                </Center>
-                                                <CreateTask list_id={list.id} />
-                                            </AccordionItem>
-                                            <AccordionItem>
-                                                <Center padding="0.2vw">
-                                                    <AccordionButton padding="0" height="5vh" boxShadow="dark-lg" rounded="0.5vw" backgroundColor={allColors.bgAccordionButton}>
-                                                        <Box as="span" flex='1' textAlign='left'>
-                                                            <Text
-                                                                marginLeft="16px"
-                                                                bgGradient={allColors.bgGradientColor}
-                                                                bgClip='text'
-                                                                fontSize='md'
-                                                                fontWeight='extrabold'
-                                                            >Tasks
-                                                            </Text>
-                                                        </Box>
-                                                        <AccordionIcon />
-                                                    </AccordionButton>
-                                                </Center>
-                                                {list.tasks?.map((task) => (
-                                                    <AcordionTasks task={task} list_id={list.id} />
-                                                ))}
-                                            </AccordionItem>
+                                            {list.tasks?.map((task) => (
+                                                <ListTasksWeb task={task} list_id={list.id} />
+                                            ))}
                                         </TabPanel>
                                     </TabPanels>
                                 </CardBody>
