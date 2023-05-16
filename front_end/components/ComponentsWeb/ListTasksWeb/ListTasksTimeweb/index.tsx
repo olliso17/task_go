@@ -22,29 +22,25 @@ const ListTasksTimeweb = ({ task }: Props) => {
     const allColors = useColorsPhone();
 
     return (
-        <Card backgroundColor={allColors.bg}>
+        <>
             {alert}
-            <CardBody>
-                <Stack divider={<StackDivider />} spacing='4'>
-                    <Box>
-                        <Heading size='xs' textTransform='uppercase'>
-                            {task.title}
-                        </Heading>
 
-                        <Stack spacing={4} align="center">
-                            <div>{handleAll.minutes.toString().padStart(2, '0')}:
-                                {handleAll.seconds.toString().padStart(2, '0')}</div>
-                            <Stack direction="row" spacing={2}>
-                                <IconButton type="submit" aria-label="" backgroundColor={allColors.bg} icon={active == false ? <Lottie style={style} animationData={playAnimation} onClick={handleAll.handleStart} /> : <Lottie style={style} animationData={pauseAnimation} onClick={handleAll.handlePause} />} onClick={e => { setActive(state => !state) }} />
+            <Heading size='xs' textTransform='uppercase'>
+                {task.title}
+            </Heading>
 
-                                <IconButton type="submit" aria-label="reset" backgroundColor={allColors.bg} icon={<Lottie style={styleReset} animationData={resetAnimation} onClick={handleAll.handleReset} />} onClick={e => { setActive(false) }} />
+            <Stack spacing={4} align="center">
+                <div>{handleAll.minutes.toString().padStart(2, '0')}:
+                    {handleAll.seconds.toString().padStart(2, '0')}</div>
+                <Stack direction="row" spacing={2}>
+                    <IconButton type="submit" aria-label="" backgroundColor={allColors.bg} icon={active == false ? <Lottie style={style} animationData={playAnimation} onClick={handleAll.handleStart} /> : <Lottie style={style} animationData={pauseAnimation} onClick={handleAll.handlePause} />} onClick={e => { setActive(state => !state) }} />
 
-                            </Stack>
-                        </Stack>
-                    </Box>
+                    <IconButton type="submit" aria-label="reset" backgroundColor={allColors.bg} icon={<Lottie style={styleReset} animationData={resetAnimation} onClick={handleAll.handleReset} />} onClick={e => { setActive(false) }} />
+
                 </Stack>
-            </CardBody>
-        </Card>
+            </Stack>
+
+        </>
     )
 }
 

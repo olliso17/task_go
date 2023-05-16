@@ -39,7 +39,7 @@ const CardAllAddListWeb = () => {
     const styleRegister = { whidth: "25vw", height: "25vh", };
     return (
 
-        <Flex flexDirection="column" justifyContent="space-between" alignItems="center">
+        <Flex flexDirection="column"  justifyContent="space-between" alignItems="center">
             <Flex justifyContent="space-between" width="90vw" marginTop="1vw">
                 <Button
                     marginRight="6vw"
@@ -110,7 +110,25 @@ const CardAllAddListWeb = () => {
                         )}
                     </Formik>
                 </Box>
-                <Card width="70vw" height="70vh" overflow="auto" backgroundColor={allColors.bgHeadingGradientColor}>  <ListAllWeb /></Card>
+                <Card alignItems="center" width="70vw" height="72vh" rounded="2xl" boxShadow="dark-lg" overflow="auto" backgroundColor={allColors.bgAccordionButton}  __css={{
+                        '&::-webkit-scrollbar-button': {
+                            w: '2',
+                         
+                        },
+                        '&::-webkit-scrollbar': {
+                            w: '2',
+                       
+                        },
+                        '&::-webkit-scrollbar-track': {
+                            w: '2',
+                           
+                        },
+                        '&::-webkit-scrollbar-thumb': {
+                            borderRadius: '10',
+                            bg: `purple.300`,
+                        },
+
+                    }}>  <ListAllWeb /></Card>
 
             </Flex>
         </Flex>

@@ -32,29 +32,28 @@ const ListAllWeb = () => {
     return (
         <Flex alignItems="start" justifyContent="space-between" wrap="wrap">
             {lists?.map((list: OutputListDto) => (
-
                 <SimpleGrid key={list.id.toString()} spacing={4} margin="0.5vw">
-                    <Card padding="0" width="20vw" height="60vh" overflow="auto" __css={{
+                    <Card padding="0" width="20vw" height="60vh" rounded="2xl" backgroundColor={allColors.bgCenter} boxShadow="dark-lg">
+                        <Flex width="20vw" height="56vh" overflow="auto"  __css={{
                         '&::-webkit-scrollbar-button': {
-                            w: '1',
-                            h: '1',
+                            w: '2',
+                         
                         },
                         '&::-webkit-scrollbar': {
-                            w: '1',
-                            h: '1',
+                            w: '2',
+                       
                         },
                         '&::-webkit-scrollbar-track': {
-                            w: '1',
-                            h: '1',
+                            w: '2',
+                           
                         },
                         '&::-webkit-scrollbar-thumb': {
                             borderRadius: '10',
                             bg: `purple.500`,
                         },
-                       
-                    }} rounded="2xl" boxShadow="dark-lg">
-                        <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion}>
-                            <Tabs variant='enclosed' >
+
+                    }}>
+                            <Tabs>
                                 <Center>
                                     <CardHeader padding="0.5vw" >
                                         <Heading size='xs' textTransform='uppercase'
@@ -68,7 +67,6 @@ const ListAllWeb = () => {
                                 </Center>
                                 <CardBody padding="0">
                                     <CreateTaskWeb list_id={list.id} />
-
                                     <TabPanels>
                                         <TabPanel>
                                             {list.tasks?.map((task) => (
@@ -78,25 +76,26 @@ const ListAllWeb = () => {
                                     </TabPanels>
                                 </CardBody>
                             </Tabs>
-                            <Formik
-                                initialValues={initialValues}
-                                onSubmit={() => {
-                                    mutation.mutate({ id: list.id })
+                        </Flex>
 
-                                }}
-                            >
-                                {(props) => (
+                        <Formik
+                            initialValues={initialValues}
+                            onSubmit={() => {
+                                mutation.mutate({ id: list.id })
 
-                                    <Form >
-                                        <Flex justifyContent="end">
-                                            <IconButton type="submit" aria-label="" backgroundColor={allColors.bgAccordion} icon={<Lottie style={style} animationData={deleteAnimation} />} />
-                                        </Flex>
-                                    </Form>
+                            }}
+                        >
+                            {(props) => (
+
+                                <Form >
+                                    <Flex justifyContent="end" >
+                                        <IconButton type="submit" aria-label="" backgroundColor={allColors.bgAccordion} icon={<Lottie style={style} animationData={deleteAnimation} />} />
+                                    </Flex>
+                                </Form>
 
 
-                                )}
-                            </Formik>
-                        </Accordion>
+                            )}
+                        </Formik>
 
                     </Card>
                 </SimpleGrid >

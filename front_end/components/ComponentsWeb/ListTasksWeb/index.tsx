@@ -10,12 +10,13 @@ import AccordionTasksTime from "./ListTasksTimeweb"
 import ListTasksCardWeb from "./ListTasksCardWeb"
 import ListTasksCheckboxWeb from "./ListTasksCheckboxWeb"
 import ListTasksTimeweb from "./ListTasksTimeweb"
+import { Box, Card, CardBody, Stack, StackDivider } from "@chakra-ui/react"
 
 
 interface Props {
     task: OutputTaskDto
     list_id: string
-   
+
 }
 
 const ListTasksWeb = ({ task, list_id }: Props) => {
@@ -44,9 +45,15 @@ const ListTasksWeb = ({ task, list_id }: Props) => {
     }
 
     return (
-        <>
-            {tipeTaskSelect}
-        </>
+        <Card backgroundColor={allColors.bg} margin="0.5vw">
+            <CardBody>
+                <Stack divider={<StackDivider />} spacing='4'>
+                    <Box>
+                        {tipeTaskSelect}
+                    </Box>
+                </Stack>
+            </CardBody>
+        </Card>
 
 
     )

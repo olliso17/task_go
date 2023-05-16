@@ -28,38 +28,34 @@ const ListTasksCardWeb = ({ task }: Props) => {
     };
 
     return (
-        <Card backgroundColor={allColors.bg}>
-            <CardBody>
-                <Stack divider={<StackDivider />} spacing='4'>
-                    <Box>
-                        <Heading size='xs' textTransform='uppercase'>
-                            {task.title}
-                        </Heading>
-                        <Text pt='2' fontSize='sm'>{task.description}</Text>
 
-                        <Formik
-                            initialValues={{ statusCheck }}
-                            onSubmit={onChangeStatus}
+        <>
+            <Heading size='xs' textTransform='uppercase'>
+                {task.title}
+            </Heading>
+            <Text pt='2' fontSize='sm'>{task.description}</Text>
 
-                        >
-                            {(props) => (
-                                <Form>
-                                    <FormControl >
-                                        <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
+            <Formik
+                initialValues={{ statusCheck }}
+                onSubmit={onChangeStatus}
 
-                                            <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={handleCheckboxChange}>
-                                            </Checkbox>
+            >
+                {(props) => (
+                    <Form>
+                        <FormControl >
+                            <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
 
-                                        </Flex>
-                                    </FormControl>
-                                </Form>
-                            )}
-                        </Formik>
+                                <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={handleCheckboxChange}>
+                                </Checkbox>
 
-                    </Box>
-                </Stack>
-            </CardBody>
-        </Card>
+                            </Flex>
+                        </FormControl>
+                    </Form>
+                )}
+            </Formik>
+
+        </>
+
 
     )
 }
