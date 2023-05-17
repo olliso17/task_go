@@ -27,10 +27,8 @@ export default function Home(props: any) {
 
   return (
     props.token != "" ?
-      value.active == false ? <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} /> : <CardStyleWeb content={
-
-        <CardAllAddListWeb />} /> : <>Not Acesss</>
-
+      value.active == false ? <CardStyleWeb content={
+        <CardAllAddListWeb />} /> : <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} /> : <>Not Acesss</>
   )
 
 }

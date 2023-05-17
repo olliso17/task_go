@@ -21,12 +21,11 @@ const CreateUserWeb = () => {
     const mutation = useMutationPostUser()
 
     return (
-
-        <Flex flexDirection="column" justifyContent="center" alignItems="center">
+        <Flex flexDirection="column" justifyContent="center" height="80vh" alignItems="center">
             <Button colorScheme={allColors.bgAccordionButton} backgroundColor={allColors.bgCenter} rounded="full" onClick={toggleColorMode}>
                 <Lottie style={style} animationData={colorMode == "light" ? lightOff : lightOn} />
             </Button>
-            <Box height="88vh" marginTop="0.5vw">
+            <Box height="50vh" marginTop="0.5vw">
                 <Heading marginLeft="0.5vw" size='2xl'>
                     <Text
                         bgGradient={allColors.bgHeadingGradientColor}
@@ -94,7 +93,6 @@ const CreateUserWeb = () => {
                 </Formik>
             </Box>
         </Flex>
-
 
     )
 }

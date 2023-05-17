@@ -1,4 +1,4 @@
-import { Box, Button, Card, Flex, FormControl, FormLabel, Heading, Input, Select, Text, useColorMode } from "@chakra-ui/react"
+import { Box, Button, Card, Center, Flex, FormControl, FormLabel, Heading, Input, Select, Text, useColorMode } from "@chakra-ui/react"
 import Lottie from "lottie-react";
 import { useState } from "react"
 import * as listAnimation from "public/list.json";
@@ -39,7 +39,7 @@ const CardAllAddListWeb = () => {
     const styleRegister = { whidth: "25vw", height: "25vh", };
     return (
 
-        <Flex flexDirection="column"  justifyContent="space-between" alignItems="center">
+        <Flex flexDirection="column" justifyContent="space-between" alignItems="center">
             <Flex justifyContent="space-between" width="90vw" marginTop="1vw">
                 <Button
                     marginRight="6vw"
@@ -57,8 +57,8 @@ const CardAllAddListWeb = () => {
                     <Lottie style={style} animationData={logoutAnimation} />
                 </Button>
             </Flex>
-            <Flex width="90vw" justifyContent="space-evenly" alignItems="baseline">
-                <Box height="88vh" marginTop="2vw">
+            <Flex width="90vw" height="80vh" justifyContent="center" alignItems="center">
+                <Box margin="2vw" alignItems="center" justifyContent="center">
                     <Heading marginLeft="2vw" size='2xl'>
                         <Text
                             bgGradient={allColors.bgHeadingGradientColor}
@@ -86,11 +86,11 @@ const CardAllAddListWeb = () => {
                             <Form >
                                 <FormControl >
                                     <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="0.2vw" width="16vw" height="5vh" type="text" onChange={(e) => setName(e.target.value)} placeholder='create name list' />
-                                    <Select borderColor="purple.400" borderWidth="0.2vw" width="16vw" height="5vh" focusBorderColor="purple.600" backgroundColor="white" value={type_task} onChange={(e) => { setTypeTask(e.target.value) }}>
-                                        <option value=''>Select options</option>
-                                        <option value='checkbox'>Checkbox</option>
-                                        <option value='card'>Card</option>
-                                        <option value='time'>Time</option>
+                                    <Select borderColor="purple.400" borderWidth="0.2vw" width="16vw" height="5vh" focusBorderColor="purple.600" backgroundColor={allColors.colorCard} value={type_task} onChange={(e) => { setTypeTask(e.target.value) }}>
+                                        <option  value=''>Select options</option>
+                                        <option  value='checkbox'>Checkbox</option>
+                                        <option  value='card'>Card</option>
+                                        <option  value='time'>Time</option>
                                     </Select>
                                 </FormControl>
                                 <Flex justifyContent="end">
@@ -110,25 +110,25 @@ const CardAllAddListWeb = () => {
                         )}
                     </Formik>
                 </Box>
-                <Card alignItems="center" width="70vw" height="72vh" rounded="2xl" boxShadow="dark-lg" overflow="auto" backgroundColor={allColors.bgAccordionButton}  __css={{
-                        '&::-webkit-scrollbar-button': {
-                            w: '2',
-                         
-                        },
-                        '&::-webkit-scrollbar': {
-                            w: '2',
-                       
-                        },
-                        '&::-webkit-scrollbar-track': {
-                            w: '2',
-                           
-                        },
-                        '&::-webkit-scrollbar-thumb': {
-                            borderRadius: '10',
-                            bg: `purple.300`,
-                        },
+                <Card alignItems="center" width="75vw" height="75vh" rounded="2xl" boxShadow="dark-lg" overflow="auto" backgroundColor={allColors.bgAccordionButton} __css={{
+                    '&::-webkit-scrollbar-button': {
+                        w: '2',
 
-                    }}>  <ListAllWeb /></Card>
+                    },
+                    '&::-webkit-scrollbar': {
+                        w: '2',
+
+                    },
+                    '&::-webkit-scrollbar-track': {
+                        w: '2',
+
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                        borderRadius: '10',
+                        bg: `purple.300`,
+                    },
+
+                }}>  <ListAllWeb /></Card>
 
             </Flex>
         </Flex>

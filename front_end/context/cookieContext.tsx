@@ -35,7 +35,7 @@ export const LayoutProvider = ({
 
                      {
                         // token != "" ?
-                        <Button width="10vw" onClick={e => { setActive(state => !state) }}>{active == false ? "Web" : "Mobile"}</Button>/*:<></>*/}
+                        <Button width="10vw" onClick={e => { setActive(state => !state) }}>{active == false ?"Mobile" :"Web" }</Button>/*:<></>*/}
                 </Center>
                 <Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
                     {children}
