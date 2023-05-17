@@ -30,10 +30,10 @@ const ListAll = () => {
     return (
 
         lists?.map((list: OutputListDto) => (
-            <SimpleGrid key={list.id.toString()} spacing={4} margin="0.5vw">
+            <SimpleGrid key={list.id.toString()} spacing={4} margin="0.5vw" >
                 <Card padding="0" rounded="2xl" boxShadow="dark-lg">
-                    <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple>
-                        <Tabs variant='enclosed' >
+                    <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple >
+                        <Tabs variant='enclosed'  >
                             <Center>
                                 <CardHeader padding="0.5vw" >
                                     <Heading size='xs' textTransform='uppercase'
@@ -45,7 +45,7 @@ const ListAll = () => {
                                     </Heading>
                                 </CardHeader>
                             </Center>
-                            <CardBody padding="0">
+                            <CardBody padding="0" >
                                 <TabPanels>
                                     <TabPanel>
                                         <AccordionItem>

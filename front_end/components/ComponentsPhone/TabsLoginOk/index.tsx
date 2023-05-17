@@ -1,5 +1,5 @@
 import { useColorsPhone } from "@/hooksPerson/colorsPhone"
-import { TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react"
+import { Box, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react"
 import TabNameAdd from "../CardStylePhone/TabNameAdd"
 
 interface Props {
@@ -22,8 +22,27 @@ const TableLoginOk = ({ contentCreateList, contentListAll }: Props) => {
                 <TabPanel height="40vh" backgroundColor={allColors.bgCenter} width="20vw" padding="0">
                     {contentCreateList}
                 </TabPanel>
-                <TabPanel rounded="2xl" height="67vh" backgroundColor={allColors.bgCenter} width="20vw" overflow="auto" padding="0">
-                    {contentListAll}
+                <TabPanel  padding="0">
+                    <Box rounded="2xl" height="70vh" backgroundColor={allColors.bgCenter} width="20vw" overflow="auto" padding="0" __css={{
+                        '&::-webkit-scrollbar-button': {
+                            w: '2',
+                         
+                        },
+                        '&::-webkit-scrollbar': {
+                            w: '2',
+                       
+                        },
+                        '&::-webkit-scrollbar-track': {
+                            w: '2',
+                           
+                        },
+                        '&::-webkit-scrollbar-thumb': {
+                            borderRadius: '10',
+                            bg: `purple.300`,
+                        },
+
+                    }}>{contentListAll}</Box>
+                    
                 </TabPanel>
 
             </TabPanels>

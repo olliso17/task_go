@@ -1,5 +1,5 @@
 
-import { useColorsWeb } from "@/hooksPerson/colorsWeb"
+import { useColorsPhone } from "@/hooksPerson/colorsPhone"
 import { Box, Center, Flex, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useColorModeValue } from "@chakra-ui/react"
 import { ReactNode } from "react"
 
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const CardStyleWeb = ({content}: Props) => {
-    const allColors = useColorsWeb()
+    const allColors = useColorsPhone()
 
     return (
         <Flex width="100vw" justifyContent="start" alignItems="center" flexDirection="column" height="100vh">

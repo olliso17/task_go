@@ -51,7 +51,7 @@ const CreateTaskWeb = ({ list_id }: Props) => {
     }
 
     return (
-        <Card margin="1vw">
+        <Card margin="1vw" backgroundColor={allColors.colorCard}>
             <CardBody>
                 <Stack divider={<StackDivider />} spacing='4'>
                     <Box>

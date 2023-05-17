@@ -6,6 +6,7 @@ const useBgGradientColor =()=> useColorModeValue('linear(to-l, purple.900, purpl
 const useBg =()=> useColorModeValue('white', 'purple.700')
 const useBgCenter = ()=>useColorModeValue('purple.200', 'purple.900')
 const useColorCenter =()=> useColorModeValue('gray.700', 'gray.900')
+const useColorCard =()=> useColorModeValue('#fff', 'purple.600')
 const useTextColor = ()=>useColorModeValue('gray.700', 'white')
 const useBgHeadingGradientColor =()=>useColorModeValue('linear(to-l, purple.500, purple.900)', 'linear(to-l, purple.600, purple.200)')
 
@@ -18,9 +19,10 @@ const useColorsPhone=()=>{
     const bg =useBg()
     const colorCenter = useColorCenter()
     const textColor = useTextColor()
+    const colorCard = useColorCard()
     const bgHeadingGradientColor = useBgHeadingGradientColor()
     const allColors={
-        bgAccordion, bgAccordionButton, bgGradientColor, bg, bgCenter, colorCenter, textColor, bgHeadingGradientColor
+        bgAccordion,colorCard, bgAccordionButton, bgGradientColor, bg, bgCenter, colorCenter, textColor, bgHeadingGradientColor
     }
     return allColors
 }

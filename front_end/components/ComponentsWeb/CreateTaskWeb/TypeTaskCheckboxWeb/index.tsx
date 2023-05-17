@@ -24,6 +24,14 @@ const TypeTaskCheckboxWeb = ({ list_id }: Props) => {
                 <Form key={list_id}>
                     <CardBody padding="0">
                         <FormControl >
+                            <FormLabel fontWeight="bold" margin="0.2vw">
+                                <Text
+                                    bgGradient={allColors.bgGradientColor}
+                                    bgClip='text'
+                                    fontSize='sm'
+                                    fontWeight='extrabold'
+                                >Title</Text>
+                            </FormLabel>
                             <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="0.2vw" width="12vw" height="5vh" type="text" onChange={(e) => setTitle(e.target.value)} placeholder='create title' />
                         </FormControl>
                         <Flex justifyContent="end">
