@@ -4,7 +4,7 @@ import { OutputListDto } from "@/services/dto/list_dto";
 import { AiFillDelete } from "react-icons/ai";
 import { useQuery } from "react-query";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { Form, Formik } from "formik";
 import { useMutationDeleteList } from "@/services/handler/muation";
 import Lottie from "lottie-react";
@@ -13,25 +13,24 @@ import CreateTask from "@/components/ComponentsPhone/CreateTask";
 import AcordionTasks from "@/components/ComponentsPhone/AcordionTasks";
 import CreateTaskWeb from "../CreateTaskWeb";
 import ListTasksWeb from "../ListTasksWeb";
+import { LayoutContext } from "@/context/cookieContext";
 
 
 
 const ListAllWeb = () => {
-    const { data: lists } = useQuery("lists", getListAll);
+    // const { data: lists } = useQuery("lists", getListAll);
     const allColors = useColorsPhone();
     const mutation = useMutationDeleteList();
     const { colorMode, toggleColorMode } = useColorMode()
-
+    const value = useContext(LayoutContext) 
 
     const style = { whidth: 50, height: 50, };
     const initialValues = { id: '' };
-    useEffect(() => {
-        lists
-    }, lists)
 
+    useEffect(() =>{value.lists},[value.lists])
     return (
         <Flex alignItems="start" justifyContent="space-between" wrap="wrap">
-            {lists?.map((list: OutputListDto) => (
+            {value.lists?.map((list: OutputListDto) => (
                 <SimpleGrid key={list.id.toString()} spacing={4} margin="0.5vw">
                     <Card padding="0" width="20vw" height="60vh" rounded="2xl" backgroundColor={allColors.bgCenter} boxShadow="dark-lg">
                         <Flex width="20vw" height="56vh" overflow="auto"  __css={{

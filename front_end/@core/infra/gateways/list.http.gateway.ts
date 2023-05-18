@@ -1,6 +1,7 @@
 import { List } from "@/@core/domain/entities/list";
 import { ListGateway } from "@/@core/domain/gateways/list.gateway";
 import api from "@/services/backend";
+import { OutputListDto } from "@/services/dto/list_dto";
 import { AxiosInstance } from "axios";
 import { getCookie } from "cookies-next";
 
@@ -75,7 +76,7 @@ export class ListHttpGateway implements ListGateway {
 
     };
     
-    async getListAll(): Promise<List[]>  {
+    async getListAll(): Promise<OutputListDto[]>  {
         const token = getCookie('session_token');
         if (token == "") {
             console.log("not access")
@@ -84,11 +85,7 @@ export class ListHttpGateway implements ListGateway {
         const url = 'lists';
 
         const lists = await api.get(url);
-        const alllists: List[] = [];
-        lists.data.map((list: any) => {
-            alllists.push(list);
-        });
 
-        return alllists;
+        return lists.data;
     };
 }

@@ -1,6 +1,6 @@
 import { Box, Button, Card, Center, Flex, FormControl, FormLabel, Heading, Input, Select, Text, useColorMode } from "@chakra-ui/react"
 import Lottie from "lottie-react";
-import { useState } from "react"
+import { useContext, useState } from "react"
 import * as listAnimation from "public/list.json";
 import * as lightOff from "public/light_off.json";
 import * as lightOn from "public/light_on.json";
@@ -12,6 +12,8 @@ import { getLogin, postLogout } from "@/services/handler/login_handler";
 import { useRouter } from "next/router"
 import { useMutationPostList, useMutationPostLogout } from "@/services/handler/muation";
 import ListAllWeb from "../ListAllWeb";
+import { LayoutContext } from "@/context/cookieContext";
+
 
 
 
@@ -20,10 +22,11 @@ const CardAllAddListWeb = () => {
     const [name, setName] = useState('');
     const [type_task, setTypeTask] = useState('');
     const { data } = useQuery("login", getLogin);
+    const value = useContext(LayoutContext) 
+
     const logout = useMutationPostLogout()
 
     const user_id = data?.user_id
-
 
 
     const allColors = useColorsPhone()

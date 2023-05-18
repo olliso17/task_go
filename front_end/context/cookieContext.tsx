@@ -3,13 +3,21 @@ import { Box, Button, Center, Flex, Stack } from "@chakra-ui/react";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
+import { useGetListAll } from "@/services/handler/facace_list";
+import { List } from "@/@core/domain/entities/list";
+import { ListHttpGateway } from "@/@core/infra/gateways/list.http.gateway";
+import api from "@/services/backend";
+import { GetListAlltUseCase } from "@/@core/application/list/get-list-all.usecase";
+import { OutputListDto } from "@/services/dto/list_dto";
 
 type Props = {
     children: ReactNode,
+
 };
 type Value = {
     active: boolean,
-    setToken:React.Dispatch<React.SetStateAction<string>>
+    setToken: React.Dispatch<React.SetStateAction<string>>
+    lists: OutputListDto[]
 };
 
 export const LayoutContext = React.createContext({} as Value);
@@ -21,9 +29,22 @@ export const LayoutProvider = ({
     const [active, setActive] = useState(false);
     const [token, setToken] = useState('');
     const allColors = useColorsPhone()
+    const [lists, setLists] = useState<OutputListDto[]>([]);
+    async function getListAll() {
+        try {
+            const getList = await useGetListAll();
+            setLists(getList)
+       
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    useEffect(() => {
+        getListAll();
+    }, []);
 
     return (
-        <LayoutContext.Provider value={{ active, setToken}}>
+        <LayoutContext.Provider value={{ active, setToken, lists }}>
             <Box width="100vw" height="100vh">
                 <Head>
                     <title>List Task</title>
@@ -33,9 +54,9 @@ export const LayoutProvider = ({
                 </Head>
                 <Center margin="0.3vw">
 
-                     {
+                    {
                         // token != "" ?
-                        <Button width="10vw" onClick={e => { setActive(state => !state) }}>{active == false ?"Mobile" :"Web" }</Button>/*:<></>*/}
+                        <Button width="10vw" onClick={e => { setActive(state => !state) }}>{active == false ? "Mobile" : "Web"}</Button>/*:<></>*/}
                 </Center>
                 <Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
                     {children}
@@ -45,4 +66,3 @@ export const LayoutProvider = ({
         </LayoutContext.Provider>
     );
 };
-

@@ -8,6 +8,7 @@ import { useMutationPostLogout } from '@/services/handler/muation';
 import CardStyleWeb from '@/components/ComponentsWeb/CardStyleWeb';
 import { LayoutContext } from '@/context/cookieContext';
 import LoginAccessWeb from '@/components/ComponentsWeb/LoginAcessWeb';
+import { List } from '@/@core/domain/entities/list';
 
 
 export default function Home() {

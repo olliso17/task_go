@@ -11,7 +11,7 @@ import { useColorsPhone } from "@/hooksPerson/colorsPhone";
 import { getLogin, postLogout } from "@/services/handler/login_handler";
 import { useRouter } from "next/router"
 import { useMutationPostList, useMutationPostLogout } from "@/services/handler/muation";
-
+import { List } from "@/@core/domain/entities/list";
 
 
 const CardAllAddList = () => {

@@ -12,6 +12,12 @@ import { LayoutContext } from '@/context/cookieContext';
 import { GetServerSideProps } from 'next';
 import CardAllAddListWeb from '@/components/ComponentsWeb/CardAllAddListWeb';
 import ListAllWeb from '@/components/ComponentsWeb/ListAllWeb';
+import { useGetListAll } from '@/services/handler/facace_list';
+import { ListHttpGateway } from '@/@core/infra/gateways/list.http.gateway';
+import { GetListAlltUseCase } from '@/@core/application/list/get-list-all.usecase';
+import api from '@/services/backend';
+import { List } from '@/@core/domain/entities/list';
+import { OutputListDto } from '@/services/dto/list_dto';
 
 
 export default function Home(props: any) {
@@ -19,7 +25,9 @@ export default function Home(props: any) {
   const value = useContext(LayoutContext)
 
 
+  console.log(props.lists)
   useEffect(() => {
+
     props.token
     value.setToken(props.token)
 
@@ -44,6 +52,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       }
     }
   }
+ 
 
   return {
     props: {
