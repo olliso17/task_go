@@ -24,10 +24,7 @@ export default function Home(props: any) {
   const allColors = useColorsPhone();
   const value = useContext(LayoutContext)
 
-
-  console.log(props.lists)
   useEffect(() => {
-
     props.token
     value.setToken(props.token)
 
