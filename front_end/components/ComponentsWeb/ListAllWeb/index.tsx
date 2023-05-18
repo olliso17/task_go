@@ -27,7 +27,7 @@ const ListAllWeb = () => {
     const style = { whidth: 50, height: 50, };
     const initialValues = { id: '' };
 
-    useEffect(() =>{value.lists},[value.lists])
+    useEffect(() =>{value.lists},[])
     return (
         <Flex alignItems="start" justifyContent="space-between" wrap="wrap">
             {value.lists?.map((list: OutputListDto) => (
