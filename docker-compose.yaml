@@ -30,7 +30,7 @@ services:
     build:
       context: ./front_end
       dockerfile: DockerFile
-    command: node_modules/.bin/nodemon --exec npm start
+    command: npm run dev
     ports:
       - "3000:3001"
     volumes:

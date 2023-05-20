@@ -52,12 +52,12 @@ export const LayoutProvider = ({
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
-                <Center margin="0.3vw">
+                {/* <Center margin="0.3vw">
 
                     {
                         // token != "" ?
-                        <Button width="10vw" onClick={e => { setActive(state => !state) }}>{active == false ? "Mobile" : "Web"}</Button>/*:<></>*/}
-                </Center>
+                        <Button width="10vw" onClick={e => { setActive(state => !state) }}>{active == false ? "Mobile" : "Web"}</Button>:<></>}
+                </Center> */}
                 <Flex backgroundColor={allColors.bg} width="100vw" justifyContent="center" alignItems="center" flexDirection="column" height="100vh">
                     {children}
                 </Flex>

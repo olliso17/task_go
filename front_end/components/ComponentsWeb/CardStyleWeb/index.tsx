@@ -13,8 +13,8 @@ const CardStyleWeb = ({ content }: Props) => {
 
     return (
         <Flex width="100vw" justifyContent="start" alignItems="center" flexDirection="column" height="100vh">
-            <Center backgroundColor={allColors.colorCenter} width="95vw" height="90vh" padding="8px" boxShadow='dark-lg' rounded="2xl">
-                <Box justifyContent="center" alignItems="center" backgroundColor={allColors.bgCenter} width="94vw" height="88vh">
+            <Center margin="1vw" backgroundColor={allColors.colorCenter} width="95vw" height="95vh" padding="8px" boxShadow='dark-lg' rounded="2xl">
+                <Box justifyContent="center" rounded="2xl" alignItems="center" backgroundColor={allColors.bgCenter} width="94vw" height="93vh">
                     {content}
                 </Box>
 

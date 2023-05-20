@@ -21,7 +21,6 @@ const ListAllWeb = () => {
     const [lists, setLists]= useState<OutputListDto[]>([]);
     const style = { whidth: 50, height: 50, };
     const initialValues = { id: '' };
-    // const lists = useContext(LayoutContext).lists
    
     async function  getListAll() {
         try {

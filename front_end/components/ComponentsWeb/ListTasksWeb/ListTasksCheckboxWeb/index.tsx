@@ -16,33 +16,26 @@ const ListTasksCheckboxWeb = ({ task }: Props) => {
     const mutation = useMutation({ mutationFn: patchTaskCompleted })
 
     return (
-            <Card backgroundColor={allColors.bg}>
-                <CardBody>
-                    <Stack divider={<StackDivider />} spacing='4'>
-                        <Box>
-                            <Heading size='xs' textTransform='uppercase'>
-                                <Flex justifyContent="space-between">
-                                    {task.title}
 
-                                    <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
+        <Heading size='xs' textTransform='uppercase'>
+            <Flex justifyContent="space-between">
+                {task.title}
 
-                                        <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={(e) => {
-                                            setStatusCheck(e.target.checked);
-                                          
-                                            mutation.mutate({ id: task.id, status: statusCheck })
-                                        }
-                                        }>
-                                        </Checkbox>
+                <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
 
-                                    </Flex>
+                    <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={(e) => {
+                        setStatusCheck(e.target.checked);
 
-                                </Flex>
-                            </Heading>
+                        mutation.mutate({ id: task.id, status: statusCheck })
+                    }
+                    }>
+                    </Checkbox>
 
-                        </Box>
-                    </Stack>
-                </CardBody>
-            </Card>
+                </Flex>
+
+            </Flex>
+        </Heading>
+
     )
 }
 

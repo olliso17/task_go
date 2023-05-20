@@ -1,4 +1,4 @@
-import { Box, Button, Card, Center, Flex, FormControl, FormLabel, Heading, Input, Select, Text, useColorMode } from "@chakra-ui/react"
+import { Box, Button, Card,  Flex, FormControl, Heading, Input, Select, Text, useColorMode } from "@chakra-ui/react"
 import Lottie from "lottie-react";
 import { useContext, useEffect, useState } from "react"
 import * as listAnimation from "public/list.json";
@@ -6,7 +6,7 @@ import * as lightOff from "public/light_off.json";
 import * as lightOn from "public/light_on.json";
 import * as logoutAnimation from "public/logout.json";
 import { Form, Formik } from "formik";
-import { useMutation, useQuery } from "react-query";
+import {  useQuery } from "react-query";
 import { useColorsPhone } from "@/hooksPerson/colorsPhone";
 import { getLogin, postLogout } from "@/services/handler/login_handler";
 import { useRouter } from "next/router"
@@ -14,12 +14,7 @@ import { useMutationPostList, useMutationPostLogout } from "@/services/handler/m
 import ListAllWeb from "../ListAllWeb";
 import { LayoutContext } from "@/context/cookieContext";
 import { OutputListDto } from "@/services/dto/list_dto";
-import { GetServerSideProps } from "next";
 import { useGetListAll } from "@/services/handler/facace_list";
-import { ListHttpGateway } from "@/@core/infra/gateways/list.http.gateway";
-import { ApiError } from "next/dist/server/api-utils";
-import api from "@/services/backend";
-import { GetListAlltUseCase } from "@/@core/application/list/get-list-all.usecase";
 
 
 
@@ -30,13 +25,13 @@ const CardAllAddListWeb = () => {
     const [type_task, setTypeTask] = useState('');
     const { data } = useQuery("login", getLogin);
     const value = useContext(LayoutContext)
-    const [lists, setLists] = useState<OutputListDto[]>([])
     const logout = useMutationPostLogout()
-   
     const user_id = data?.user_id
     const allColors = useColorsPhone()
     const mutation = useMutationPostList()
-
+    const { colorMode, toggleColorMode } = useColorMode()
+    const style = { whidth: 40, height: 40, };
+    const styleRegister = { whidth: "25vw", height: "25vh", };
     const onCreateList = () => {
         mutation.mutate({ name, user_id, type_task })
         setTypeTask('')
@@ -44,10 +39,6 @@ const CardAllAddListWeb = () => {
 
     }
 
-
-    const { colorMode, toggleColorMode } = useColorMode()
-    const style = { whidth: 40, height: 40, };
-    const styleRegister = { whidth: "25vw", height: "25vh", };
     return (
 
         <Flex flexDirection="column" justifyContent="space-between" alignItems="center">
