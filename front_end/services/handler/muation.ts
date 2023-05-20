@@ -6,6 +6,8 @@ import { postLogin, postLogout } from "./login_handler"
 import { postUser } from "./user_handler"
 import { getCookie } from 'cookies-next';
 import { patchTaskCompleted, postTask } from "./task_handler"
+import { Dispatch, SetStateAction } from "react"
+import { OutputListDto } from "../dto/list_dto"
 
 
 const useMutationPostList = () => {
@@ -20,7 +22,7 @@ const useMutationPostList = () => {
                 duration: 9000,
                 isClosable: true,
             })
-            // window.location.reload()
+     
 
         }), onError(error) {
             toast({
@@ -48,7 +50,7 @@ const useMutationPostTask = () => {
                 duration: 9000,
                 isClosable: true,
             })
-            window.location.reload()
+        
         }, onError(error) {
             toast({
                 title: `${error} `,
@@ -212,7 +214,7 @@ const useMutationDeleteList = () => {
                 duration: 9000,
                 isClosable: true,
             })
-            window.location.reload()
+         
 
         }, onError(error) {
             toast({

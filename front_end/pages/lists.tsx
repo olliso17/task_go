@@ -33,7 +33,7 @@ export default function Home(props: any) {
   return (
     props.token != "" ?
       value.active == false ? <CardStyleWeb content={
-        <CardAllAddListWeb />} /> : <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll />} />} /> : <>Not Acesss</>
+        <CardAllAddListWeb />} /> : <CardStylePhone content={<TabsLoginOk contentCreateList={<CardAllAddList />} contentListAll={<ListAll/>} />} /> : <>Not Acesss</>
   )
 
 }
