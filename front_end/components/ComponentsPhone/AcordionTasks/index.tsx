@@ -10,31 +10,30 @@ import AccordionTasksTime from "./AcordionTasksTime"
 
 
 interface Props {
-    task: OutputTaskDto
-    list_id: string
-   
+    list: OutputListDto
+
 }
 
-const AcordionTasks = ({ task, list_id }: Props) => {
+const AcordionTasks = ({ list }: Props) => {
     const allColors = useColorsPhone();
     const [tipeTaskSelect, setTipeTaskSelect] = useState(<></>);
-    const { data: lists } = useQuery("lists", getListAll);
-
     useEffect(() => {
-        lists
+        list
         valueTipeTask()
-    }, [])
+    }, [list])
+
+
     function valueTipeTask() {
-        lists?.map((list: OutputListDto) => {
-            if (list.id == list_id) {
-                switch (list?.type_task) {
-                    case "checkbox":
-                        return setTipeTaskSelect(<AccordionTasksCheckbox key={task.id} task={task} />);
-                    case "card":
-                        return setTipeTaskSelect(<AccordionTasksCard key={task.id} task={task} />);
-                    case "time":
-                        return setTipeTaskSelect(<AccordionTasksTime key={task.id} task={task} />);
-                }
+        list.tasks?.map(task => {
+            console.log(task)
+            switch (list?.type_task) {
+                case "checkbox":
+                    return setTipeTaskSelect(<AccordionTasksCheckbox key={task.id} task={task} />);
+                case "card":
+                    return setTipeTaskSelect(<AccordionTasksCard key={task.id} task={task} />);
+                case "time":
+                    return setTipeTaskSelect(<AccordionTasksTime key={task.id} task={task} />);
+
             }
         })
 

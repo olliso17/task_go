@@ -11,32 +11,28 @@ import TypeTaskCheckbox from "./TypeTaskCheckbox"
 import TypeTaskTime from "./TypeTaskTime"
 
 interface Props {
-    list_id: string,
+    list: OutputListDto,
 }
 
-const CreateTask = ({ list_id }: Props) => {
+const CreateTask = ({ list }: Props) => {
     const [time_select, setTimeSelect] = useState('');
     const allColors = useColorsPhone();
     const [tipeTaskSelect, setTipeTaskSelect] = useState(<></>);
-    const { data: lists } = useQuery("lists", getListAll);
+
 
     useEffect(() => {
-        lists
+        list
         valueTipeTask()
-    }, [])
+    }, [list])
     function valueTipeTask() {
-        lists?.map((list: OutputListDto) => {
-            if (list.id == list_id) {
-                switch (list?.type_task) {
-                    case "checkbox":
-                        return setTipeTaskSelect(<TypeTaskCheckbox list_id={list_id} />);
-                    case "card":
-                        return setTipeTaskSelect(<TypeTaskCard list_id={list_id} />);
-                    case "time":
-                        return setTipeTaskSelect(<TypeTaskTime list_id={list_id} />);
-                }
-            }
-        })
+        switch (list?.type_task) {
+            case "checkbox":
+                return setTipeTaskSelect(<TypeTaskCheckbox list_id={list.id} />);
+            case "card":
+                return setTipeTaskSelect(<TypeTaskCard list_id={list.id} />);
+            case "time":
+                return setTipeTaskSelect(<TypeTaskTime list_id={list.id} />);
+        }
 
     }
 

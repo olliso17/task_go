@@ -16,27 +16,33 @@ const ListTasksCheckboxWeb = ({ task }: Props) => {
     const mutation = useMutation({ mutationFn: patchTaskCompleted })
 
     return (
+            <Card backgroundColor={allColors.bg}>
+                <CardBody>
+                    <Stack divider={<StackDivider />} spacing='4'>
+                        <Box>
+                            <Heading size='xs' textTransform='uppercase'>
+                                <Flex justifyContent="space-between">
+                                    {task.title}
 
-        <Heading size='xs' textTransform='uppercase'>
-            <Flex justifyContent="space-between">
-                {task.title}
+                                    <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
 
-                <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
+                                        <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={(e) => {
+                                            setStatusCheck(e.target.checked);
+                                          
+                                            mutation.mutate({ id: task.id, status: statusCheck })
+                                        }
+                                        }>
+                                        </Checkbox>
 
-                    <Checkbox borderWidth="0.2vw" colorScheme="purple" borderColor="purple.900" isChecked={statusCheck} onChange={(e) => {
-                        setStatusCheck(e.target.checked);
+                                    </Flex>
 
-                        mutation.mutate({ id: task.id, status: statusCheck })
-                    }
-                    }>
-                    </Checkbox>
+                                </Flex>
+                            </Heading>
 
-                </Flex>
-
-            </Flex>
-        </Heading>
-
-
+                        </Box>
+                    </Stack>
+                </CardBody>
+            </Card>
     )
 }
 

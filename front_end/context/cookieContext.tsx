@@ -17,7 +17,7 @@ type Props = {
 type Value = {
     active: boolean,
     setToken: React.Dispatch<React.SetStateAction<string>>
-    lists: OutputListDto[]
+    // lists: OutputListDto[]
 };
 
 export const LayoutContext = React.createContext({} as Value);
@@ -29,22 +29,22 @@ export const LayoutProvider = ({
     const [active, setActive] = useState(false);
     const [token, setToken] = useState('');
     const allColors = useColorsPhone()
-    const [lists, setLists] = useState<OutputListDto[]>([]);
-    async function getListAll() {
-        try {
-            const getList = await useGetListAll();
-            setLists(getList)
-       
-        } catch (err) {
-            console.log(err);
-        }
-    }
-    useEffect(() => {
-        getListAll();
-    }, []);
+    // const [lists, setLists] = useState<OutputListDto[]>([]);
+    // async function getListAll() {
+    //     try {
+    //         const getList = await useGetListAll();
+    //         setLists(getList)
+
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // }
+    // useEffect(() => {
+    //     getListAll();
+    // }, []);
 
     return (
-        <LayoutContext.Provider value={{ active, setToken, lists }}>
+        <LayoutContext.Provider value={{ active, setToken }}>
             <Box width="100vw" height="100vh">
                 <Head>
                     <title>List Task</title>

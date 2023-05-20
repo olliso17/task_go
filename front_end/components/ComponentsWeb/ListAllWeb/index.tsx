@@ -9,29 +9,40 @@ import { Form, Formik } from "formik";
 import { useMutationDeleteList } from "@/services/handler/muation";
 import Lottie from "lottie-react";
 import * as deleteAnimation from "public/delete.json";
-import CreateTask from "@/components/ComponentsPhone/CreateTask";
-import AcordionTasks from "@/components/ComponentsPhone/AcordionTasks";
 import CreateTaskWeb from "../CreateTaskWeb";
 import ListTasksWeb from "../ListTasksWeb";
-import { LayoutContext } from "@/context/cookieContext";
+import { useGetListAll } from "@/services/handler/facace_list";
 
 
 
 const ListAllWeb = () => {
-    // const { data: lists } = useQuery("lists", getListAll);
     const allColors = useColorsPhone();
     const mutation = useMutationDeleteList();
-    const { colorMode, toggleColorMode } = useColorMode()
-    const value = useContext(LayoutContext) 
-
+    const [lists, setLists]= useState<OutputListDto[]>([]);
     const style = { whidth: 50, height: 50, };
     const initialValues = { id: '' };
+    // const lists = useContext(LayoutContext).lists
+   
+    async function  getListAll() {
+        try {
+            const getList = await useGetListAll();
+            setLists(getList)
+       
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    
+    useEffect(() =>{
+     
+        getListAll()
+    },[lists])
 
-    useEffect(() =>{value.lists},[])
     return (
         <Flex alignItems="start" justifyContent="space-between" wrap="wrap">
-            {value.lists?.map((list: OutputListDto) => (
+            {lists?.map((list: OutputListDto) => (
                 <SimpleGrid key={list.id.toString()} spacing={4} margin="0.5vw">
+                    
                     <Card padding="0" width="20vw" height="60vh" rounded="2xl" backgroundColor={allColors.bgCenter} boxShadow="dark-lg">
                         <Flex width="20vw" height="56vh" overflow="auto"  __css={{
                         '&::-webkit-scrollbar-button': {
@@ -65,11 +76,11 @@ const ListAllWeb = () => {
                                     </CardHeader>
                                 </Center>
                                 <CardBody padding="0">
-                                    <CreateTaskWeb list_id={list.id} />
+                                    <CreateTaskWeb list={list} />
                                     <TabPanels>
                                         <TabPanel>
                                             {list.tasks?.map((task) => (
-                                                <ListTasksWeb task={task} list_id={list.id} />
+                                                <ListTasksWeb task={task} list_id={list.id}/>
                                             ))}
                                         </TabPanel>
                                     </TabPanels>
@@ -104,3 +115,4 @@ const ListAllWeb = () => {
     )
 }
 export default ListAllWeb
+

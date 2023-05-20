@@ -14,39 +14,35 @@ import TypeTaskTimeWeb from "./TypeTaskTimeWeb"
 import TypeTaskTime from "./TypeTaskTimeWeb"
 
 interface Props {
-    list_id: string,
+    list: OutputListDto
+
 }
 
-const CreateTaskWeb = ({ list_id }: Props) => {
+
+const CreateTaskWeb = ({ list }: Props) => {
     const [time_select, setTimeSelect] = useState('');
     const allColors = useColorsPhone();
     const [tipeTaskSelect, setTipeTaskSelect] = useState(<></>);
-    const { data: lists } = useQuery("lists", getListAll);
+  
 
     useEffect(() => {
-        lists
+        list
         valueTipeTask()
-    }, [])
-
+    }, [list])
 
 
 
     function valueTipeTask() {
-        lists?.map((list: OutputListDto) => {
-            if (list.id == list_id) {
-                switch (list?.type_task) {
-                    case "checkbox":
-                        return setTipeTaskSelect(<TypeTaskCheckboxWeb list_id={list_id} />);
-                    case "card":
-                        return setTipeTaskSelect(<TypeTaskCardWeb list_id={list_id} />);
-                    case "time":
-                        return setTipeTaskSelect(<TypeTaskTimeWeb list_id={list_id} />);
-                }
 
+        switch (list?.type_task) {
+            case "checkbox":
+                return setTipeTaskSelect(<TypeTaskCheckboxWeb list_id={list.id} />);
+            case "card":
+                return setTipeTaskSelect(<TypeTaskCardWeb list_id={list.id} />);
+            case "time":
+                return setTipeTaskSelect(<TypeTaskTimeWeb list_id={list.id} />);
+        }
 
-
-            }
-        })
 
     }
 

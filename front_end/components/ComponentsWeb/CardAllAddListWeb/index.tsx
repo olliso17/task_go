@@ -1,6 +1,6 @@
 import { Box, Button, Card, Center, Flex, FormControl, FormLabel, Heading, Input, Select, Text, useColorMode } from "@chakra-ui/react"
 import Lottie from "lottie-react";
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import * as listAnimation from "public/list.json";
 import * as lightOff from "public/light_off.json";
 import * as lightOn from "public/light_on.json";
@@ -13,6 +13,13 @@ import { useRouter } from "next/router"
 import { useMutationPostList, useMutationPostLogout } from "@/services/handler/muation";
 import ListAllWeb from "../ListAllWeb";
 import { LayoutContext } from "@/context/cookieContext";
+import { OutputListDto } from "@/services/dto/list_dto";
+import { GetServerSideProps } from "next";
+import { useGetListAll } from "@/services/handler/facace_list";
+import { ListHttpGateway } from "@/@core/infra/gateways/list.http.gateway";
+import { ApiError } from "next/dist/server/api-utils";
+import api from "@/services/backend";
+import { GetListAlltUseCase } from "@/@core/application/list/get-list-all.usecase";
 
 
 
@@ -22,13 +29,11 @@ const CardAllAddListWeb = () => {
     const [name, setName] = useState('');
     const [type_task, setTypeTask] = useState('');
     const { data } = useQuery("login", getLogin);
-    const value = useContext(LayoutContext) 
-
+    const value = useContext(LayoutContext)
+    const [lists, setLists] = useState<OutputListDto[]>([])
     const logout = useMutationPostLogout()
-
+   
     const user_id = data?.user_id
-
-
     const allColors = useColorsPhone()
     const mutation = useMutationPostList()
 
@@ -36,7 +41,10 @@ const CardAllAddListWeb = () => {
         mutation.mutate({ name, user_id, type_task })
         setTypeTask('')
         setName('')
+
     }
+
+
     const { colorMode, toggleColorMode } = useColorMode()
     const style = { whidth: 40, height: 40, };
     const styleRegister = { whidth: "25vw", height: "25vh", };
@@ -90,10 +98,10 @@ const CardAllAddListWeb = () => {
                                 <FormControl >
                                     <Input backgroundColor="white" focusBorderColor="purple.600" borderColor="purple.400" borderWidth="0.2vw" width="16vw" height="5vh" type="text" onChange={(e) => setName(e.target.value)} placeholder='create name list' />
                                     <Select borderColor="purple.400" borderWidth="0.2vw" width="16vw" height="5vh" focusBorderColor="purple.600" backgroundColor={allColors.colorCard} value={type_task} onChange={(e) => { setTypeTask(e.target.value) }}>
-                                        <option  value=''>Select options</option>
-                                        <option  value='checkbox'>Checkbox</option>
-                                        <option  value='card'>Card</option>
-                                        <option  value='time'>Time</option>
+                                        <option value=''>Select options</option>
+                                        <option value='checkbox'>Checkbox</option>
+                                        <option value='card'>Card</option>
+                                        <option value='time'>Time</option>
                                     </Select>
                                 </FormControl>
                                 <Flex justifyContent="end">
@@ -139,3 +147,4 @@ const CardAllAddListWeb = () => {
     )
 }
 export default CardAllAddListWeb
+

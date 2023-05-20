@@ -11,26 +11,39 @@ import { Form, Formik } from "formik";
 import { useMutationDeleteList } from "@/services/handler/muation";
 import Lottie from "lottie-react";
 import * as deleteAnimation from "public/delete.json";
+import { useGetListAll } from "@/services/handler/facace_list";
 
 
 
 const ListAll = () => {
-    const { data: lists } = useQuery("lists", getListAll);
+
     const allColors = useColorsPhone();
     const mutation = useMutationDeleteList();
     const { colorMode, toggleColorMode } = useColorMode()
-  
-
     const style = { whidth: 50, height: 50, };
-    const initialValues = { id: '' };
-    useEffect(() => {
-        lists
-    },lists)
+    const [lists, setLists] = useState<OutputListDto[]>([]);
 
+    const initialValues = { id: '' };
+
+
+    async function getListAll() {
+        try {
+            const getList = await useGetListAll();
+            setLists(getList)
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+
+        getListAll()
+    }, [lists])
     return (
 
         lists?.map((list: OutputListDto) => (
-            <SimpleGrid key={list.id.toString()} spacing={4} margin="0.5vw" >
+            <SimpleGrid key={list.id} spacing={4} margin="0.5vw" >
                 <Card padding="0" rounded="2xl" boxShadow="dark-lg">
                     <Accordion rounded="2xl" backgroundColor={allColors.bgAccordion} defaultIndex={[0]} allowMultiple >
                         <Tabs variant='enclosed'  >
@@ -50,7 +63,7 @@ const ListAll = () => {
                                     <TabPanel>
                                         <AccordionItem>
                                             <Center padding="0.2vw">
-                                                <AccordionButton  padding="0" height="5vh" boxShadow="dark-lg" rounded="0.5vw" backgroundColor={allColors.bgAccordionButton}>
+                                                <AccordionButton padding="0" height="5vh" boxShadow="dark-lg" rounded="0.5vw" backgroundColor={allColors.bgAccordionButton}>
                                                     <Box as="span" flex='1' textAlign='left'>
                                                         <Text
                                                             marginLeft="0.5vw"
@@ -64,7 +77,7 @@ const ListAll = () => {
                                                     <AccordionIcon />
                                                 </AccordionButton>
                                             </Center>
-                                            <CreateTask list_id={list.id} />
+                                            <CreateTask list={list} />
                                         </AccordionItem>
                                         <AccordionItem>
                                             <Center padding="0.2vw">
@@ -82,9 +95,7 @@ const ListAll = () => {
                                                     <AccordionIcon />
                                                 </AccordionButton>
                                             </Center>
-                                            {list.tasks?.map((task) => (
-                                                <AcordionTasks task={task} list_id={list.id} />
-                                            ))}
+                                            <AcordionTasks list={list} />
                                         </AccordionItem>
                                     </TabPanel>
                                 </TabPanels>
