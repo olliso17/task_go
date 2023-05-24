@@ -84,12 +84,10 @@ func (loginRepository *LoginRepository) EditLogin(login entity.Login) (entity.Lo
 
 	loginRepository.LoginRepository.EditLogin(&loginUserId)
 	dto := entity.Login{
-		ID:           login.ID,
 		UserID:       login.UserID,
 		SessionToken: login.SessionToken,
 		HostName:     login.HostName,
 		IPAddress:    login.IPAddress,
-		CreatedAt:    time.Now().Local(),
 		ExpiredAt:    login.ExpiredAt,
 		IsLogout:     login.IsLogout,
 	}
