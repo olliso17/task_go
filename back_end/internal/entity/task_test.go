@@ -1,34 +1,52 @@
-package entity
+package entity_test
 
 import (
+	"back_end/internal/entity"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestTask(t *testing.T) {
-	var newTask Task
-	var segTask Task
-	newTask.Title = "new task"
-	newTask.ID = "akdashdahs"
-	newTask.Description = "asdasd"
-	segTask.Title = "new tas"
-	segTask.ID = "akd"
+	_, err := entity.NewTask("nome", "https://www.youtube.com/watch?v=JP-D1In0juw", "fullcycle", "adasasd")
+	require.Nil(t, err)
 
-	if newTask.Title == "" {
-		t.Error("Title is empty", newTask.Title)
-	}
-	if newTask.Title == segTask.Title {
-		t.Error("Task already exists", newTask.Title)
-	}
+	_, err = entity.NewTask("nome", "", "fullcycle", "adasasd")
+	require.Nil(t, err)
 
-	if newTask.ID == "" {
-		t.Error("ID is empty", newTask.ID)
-	}
+	_, err = entity.NewTask("nome", "https://www.youtube.com/watch?v=JP-D1In0juw", "fullcycle", "")
+	require.Nil(t, err)
 
-	if newTask.ID == segTask.ID {
-		t.Error("Task already exists", newTask.ID)
-	}
+	_, err = entity.NewTask("nome", "", "fullcycle", "")
+	require.Nil(t, err)
 
-	if newTask.Description == "" {
-		t.Error("Description is empty", newTask.Description)
-	}
+	_, err = entity.NewTask("", "https://www.youtube.com/watch?v=JP-D1In0juw", "fullcycle", "adasasd")
+	require.Error(t, err)
+
+	_, err = entity.NewTask("", "https://www.youtube.com/watch?v=JP-D1In0juw", "", "adasasd")
+	require.Error(t, err)
+
+	_, err = entity.NewTask("nome", "https://www.youtube.com/watch?v=JP-D1In0juw", "", "adasasd")
+	require.Error(t, err)
+
+	_, err = entity.NewTask(" ", "https://www.youtube.com/watch?v=JP-D1In0juw", " ", "adasasd")
+	require.Error(t, err)
+
+	_, err = entity.NewTask(" ", "https://www.youtube.com/watch?v=JP-D1In0juw", "adsaasdd-3rasd_adas", "adasasd")
+	require.Error(t, err)
+
+	_, err = entity.NewTask("kghjghj", "https://www.youtube.com/watch?v=JP-D1In0juw", "  ", "adasasd")
+	require.Error(t, err)
+
+	// if newTask.Title == segTask.Title {
+	// 	t.Error("Task already exists", newTask.Title)
+	// }
+
+	// if newTask.ID == segTask.ID {
+	// 	t.Error("Task already exists", newTask.ID)
+	// }
+
+	// if newTask.Description == "" {
+	// 	t.Error("Description is empty", newTask.Description)
+	// }
 }

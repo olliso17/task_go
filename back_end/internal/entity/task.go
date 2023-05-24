@@ -1,77 +1,73 @@
 package entity
 
 import (
-	"fmt"
 	"regexp"
 	"time"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/google/uuid"
 )
 
 type Task struct {
-	ID          string
-	Title       string
-	Description string
-	Status      bool
-	Priority    bool
-	ListID      string
-	CreatedAt   string
-	UpdatedAt   string
-	DeletedAt   string
-	IsDeleted   bool
-	TimeSelect  string
+	Base        `valid:"required"`
+	Title       string `valid:"alphanum,required" gorm:"unique"`
+	Description string `valid:"-"`
+	Status      bool   `valid:"-"`
+	ListID      string `valid:"alphanum,notnull"`
+	TimeSelect  string `valid:"-"`
 }
 
-func NewTask(title string, description string, priority bool, listId string, timeSelect string) (*Task, error) {
-	timeNow := time.Now()
+func init() {
+	govalidator.SetFieldsRequiredByDefault(true)
+}
+
+func NewTask(title string, description string, listId string, timeSelect string) (*Task, error) {
+
 	task := &Task{
-		ID:          uuid.New().String(),
 		Title:       title,
 		Description: description,
 		Status:      false,
-		Priority:    priority,
 		ListID:      listId,
-		CreatedAt:   timeNow.Local().String(),
-		UpdatedAt:   timeNow.Local().String(),
-		DeletedAt:   timeNow.Local().String(),
-		IsDeleted:   false,
 		TimeSelect:  timeSelect,
 	}
-	isValidate := IsValid(task)
 
-	if isValidate == true {
-		return task, nil
+	err := task.Prepare()
+
+	if err != nil {
+		return nil, err
 	}
-	return &Task{}, fmt.Errorf("Invalid Task")
+	return task, nil
+	// return &Task{}, fmt.Errorf("Invalid Task")
+}
+func (task *Task) Prepare() error {
+	timeNow := time.Now()
+	task.ID = uuid.New().String()
+	task.CreatedAt = timeNow.Local().String()
+	task.UpdatedAt = timeNow.Local().String()
+	task.DeletedAt = timeNow.Local().String()
+	task.IsDeleted = false
+
+	err := task.validate()
+	if err != nil {
+		return err
+	}
+	return nil
+
 }
 
-func IsValid(task *Task) bool {
-
-	if task.Title == "" {
-		fmt.Printf("Title is required\n")
-		return false
+func (task *Task) validate() error {
+	_, err := govalidator.ValidateStruct(task)
+	if err != nil {
+		return err
 	}
-
-	task.IsRegex(map[string]string{
-		"title": task.Title,
-	})
-	return true
+	return nil
 }
 
-func (t *Task) IsRegex(sliceString map[string]string) {
+func IsRegex(str string) string {
+	regex := regexp.MustCompile(`[a-zA-Zà-úÀ-Ú0-9]`)
 
-	for k, v := range sliceString {
-		regex, _ := regexp.MatchString("[a-zA-Zà-úÀ-Ú0-9]", v)
-
-		switch regex {
-		case true:
-			continue
-
-		case false:
-			fmt.Println(k, "Is required caracteres A-Z, a-z or 0-9")
-			break
-		}
-
+	if regex.MatchString(str) {
+		return str
 	}
-
+	return "caracters requireds"
 }
