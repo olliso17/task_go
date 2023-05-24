@@ -11,7 +11,7 @@ import (
 
 type ListEntity struct {
 	Base     `json:"base" valid:"required"`
-	Name     string `json:"name" valid:"alphanum,notnull"`
+	Name     string `json:"name" valid:"alphanum,required"`
 	TypeTask string `json:"tipe_task" valid:"notnull"`
 	UserId   string `json:"user_id" valid:"alphanum,notnull"`
 	Tasks    []Task `json:"tasks" valid:"-"`
@@ -27,7 +27,10 @@ func NewListEntity(name string, user_id string, type_task string) (*ListEntity, 
 		TypeTask: type_task,
 		Name:     name,
 	}
-
+	err := list.Prepare()
+	if err != nil {
+		return nil, err
+	}
 	isValidateList := IsValidateList(list)
 	if isValidateList == true {
 		return list, nil
