@@ -24,6 +24,7 @@ func init() {
 func NewTask(title string, description string, listId string, timeSelect string) (*Task, error) {
 
 	task := &Task{
+		// Base:        Base{},
 		Title:       title,
 		Description: description,
 		Status:      false,
@@ -39,6 +40,7 @@ func NewTask(title string, description string, listId string, timeSelect string)
 	return task, nil
 	// return &Task{}, fmt.Errorf("Invalid Task")
 }
+
 func (task *Task) Prepare() error {
 	timeNow := time.Now()
 	task.ID = uuid.New().String()

@@ -22,7 +22,7 @@ func NewTaskRepository(taskRepository interfaces.TaskRepositoryInterface) *TaskR
 func (c *TaskRepository) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, error) {
 	taskAll, err := c.TaskRepository.FindAll()
 
-	task, _ := entity.NewTask(input.Title, input.Description, input.Priority, input.ListID, input.TimeSelect)
+	task, _ := entity.NewTask(input.Title, input.Description, input.ListID, input.TimeSelect)
 	for _, v := range taskAll {
 		if task.Title == v.Title && v.IsDeleted == false && v.Status != true {
 			err = fmt.Errorf("task already exist")
@@ -41,7 +41,6 @@ func (c *TaskRepository) Execute(input dto.TaskInputDTO) (dto.TaskOutputDTO, err
 	dto := dto.TaskOutputDTO{
 		Title:       task.Title,
 		Description: task.Description,
-		Priority:    task.Priority,
 		ListID:      task.ListID,
 		TimeSelect:  task.TimeSelect,
 	}
@@ -63,7 +62,6 @@ func (c *TaskRepository) FindExceptDeleted() ([]dto.TaskOutputDTO, error) {
 				Title:       valueTask.Title,
 				Description: valueTask.Description,
 				Status:      valueTask.Status,
-				Priority:    valueTask.Priority,
 				ListID:      valueTask.ListID,
 				TimeSelect:  valueTask.TimeSelect,
 				IsDeleted:   valueTask.IsDeleted,
@@ -139,7 +137,6 @@ func (c *TaskRepository) EditTask(task dto.TaskEditInputDTO) (dto.TaskEditOutput
 			v.Title = task.Title
 			v.Description = task.Description
 			v.ListID = task.ListID
-			v.Priority = task.Priority
 			v.UpdatedAt = timesTamp.Local().String()
 			v.TimeSelect = task.TimeSelect
 			taskEdit = v
@@ -151,7 +148,6 @@ func (c *TaskRepository) EditTask(task dto.TaskEditInputDTO) (dto.TaskEditOutput
 		ID:          taskEdit.ID,
 		Title:       taskEdit.Title,
 		Description: taskEdit.Description,
-		Priority:    taskEdit.Priority,
 		ListID:      taskEdit.ListID,
 		TimeSelect:  taskEdit.TimeSelect,
 		UpdatedAt:   taskEdit.UpdatedAt,

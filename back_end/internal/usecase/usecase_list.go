@@ -69,7 +69,6 @@ func (l *ListRepository) FindAll() ([]dto.ListAllOutputDTO, error) {
 					Title:       valueTask.Title,
 					Description: valueTask.Description,
 					Status:      valueTask.Status,
-					Priority:    valueTask.Priority,
 					ListID:      valueTask.ListID,
 					IsDeleted:   valueTask.IsDeleted,
 					TimeSelect:  valueTask.TimeSelect,
@@ -100,7 +99,6 @@ func (l *ListRepository) FindByID(id string) (dto.ListAllOutputDTO, error) {
 			tasksDto.Title = valueTask.Title
 			tasksDto.Description = valueTask.Description
 			tasksDto.Status = valueTask.Status
-			tasksDto.Priority = valueTask.Priority
 			tasksDto.ListID = valueTask.ListID
 			tasksDto.IsDeleted = valueTask.IsDeleted
 			tasksDto.TimeSelect = valueTask.TimeSelect
