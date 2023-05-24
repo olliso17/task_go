@@ -38,15 +38,4 @@ func TestTask(t *testing.T) {
 	_, err = entity.NewTask("kghjghj", "https://www.youtube.com/watch?v=JP-D1In0juw", "  ", "adasasd")
 	require.Error(t, err)
 
-	// if newTask.Title == segTask.Title {
-	// 	t.Error("Task already exists", newTask.Title)
-	// }
-
-	// if newTask.ID == segTask.ID {
-	// 	t.Error("Task already exists", newTask.ID)
-	// }
-
-	// if newTask.Description == "" {
-	// 	t.Error("Description is empty", newTask.Description)
-	// }
 }
