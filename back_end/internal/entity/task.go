@@ -1,7 +1,6 @@
 package entity
 
 import (
-	"regexp"
 	"time"
 
 	"github.com/asaskevich/govalidator"
@@ -24,7 +23,6 @@ func init() {
 func NewTask(title string, description string, listId string, timeSelect string) (*Task, error) {
 
 	task := &Task{
-		// Base:        Base{},
 		Title:       title,
 		Description: description,
 		Status:      false,
@@ -38,7 +36,7 @@ func NewTask(title string, description string, listId string, timeSelect string)
 		return nil, err
 	}
 	return task, nil
-	// return &Task{}, fmt.Errorf("Invalid Task")
+
 }
 
 func (task *Task) Prepare() error {
@@ -63,13 +61,4 @@ func (task *Task) validate() error {
 		return err
 	}
 	return nil
-}
-
-func IsRegex(str string) string {
-	regex := regexp.MustCompile(`[a-zA-Zà-úÀ-Ú0-9]`)
-
-	if regex.MatchString(str) {
-		return str
-	}
-	return "caracters requireds"
 }
