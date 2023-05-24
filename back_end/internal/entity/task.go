@@ -9,12 +9,12 @@ import (
 )
 
 type Task struct {
-	Base        `valid:"required"`
-	Title       string `valid:"alphanum,required" gorm:"unique"`
-	Description string `valid:"-"`
-	Status      bool   `valid:"-"`
-	ListID      string `valid:"alphanum,notnull"`
-	TimeSelect  string `valid:"-"`
+	Base        `json:"base" valid:"required"`
+	Title       string `json:"title" valid:"alphanum,required" gorm:"unique"`
+	Description string `json:"description" valid:"-"`
+	Status      bool   `json:"status" valid:"-"`
+	ListID      string `json:"list_id" valid:"alphanum,notnull"`
+	TimeSelect  string `json:"time_select" valid:"-"`
 }
 
 func init() {

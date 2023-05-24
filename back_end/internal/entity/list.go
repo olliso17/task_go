@@ -5,33 +5,27 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/google/uuid"
 )
 
 type ListEntity struct {
-	ID        string
-	Name      string
-	TypeTask  string
-	CreatedAt string
-	UserId    string
-	Tasks     []Task
-	UpdatedAt string
-	DeletedAt string
-	IsDeleted bool
+	Base     `json:"base" valid:"required"`
+	Name     string `json:"name" valid:"alphanum,notnull"`
+	TypeTask string `json:"tipe_task" valid:"notnull"`
+	UserId   string `json:"user_id" valid:"alphanum,notnull"`
+	Tasks    []Task `json:"tasks" valid:"-"`
 }
 
+func init() {
+	govalidator.SetFieldsRequiredByDefault(true)
+}
 func NewListEntity(name string, user_id string, type_task string) (*ListEntity, error) {
-	timeNow := time.Now()
 
 	list := &ListEntity{
-		ID:        uuid.New().String(),
-		UserId:    user_id,
-		TypeTask:  type_task,
-		Name:      name,
-		CreatedAt: timeNow.Local().String(),
-		UpdatedAt: timeNow.Local().String(),
-		DeletedAt: timeNow.Local().String(),
-		IsDeleted: false,
+		UserId:   user_id,
+		TypeTask: type_task,
+		Name:     name,
 	}
 
 	isValidateList := IsValidateList(list)
@@ -41,6 +35,31 @@ func NewListEntity(name string, user_id string, type_task string) (*ListEntity, 
 
 	return nil, fmt.Errorf("Name list is required")
 }
+
+func (list *ListEntity) Prepare() error {
+	timeNow := time.Now()
+	list.ID = uuid.New().String()
+	list.CreatedAt = timeNow.Local().String()
+	list.UpdatedAt = timeNow.Local().String()
+	list.DeletedAt = timeNow.Local().String()
+	list.IsDeleted = false
+
+	err := list.validate()
+	if err != nil {
+		return err
+	}
+	return nil
+
+}
+
+func (list *ListEntity) validate() error {
+	_, err := govalidator.ValidateStruct(list)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func IsValidateList(list *ListEntity) bool {
 
 	if list.Name == "" {
