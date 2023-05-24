@@ -3,7 +3,7 @@ import { OutputTaskDto } from "@/services/dto/task_dto";
 import { patchTaskCompleted } from "@/services/handler/task_handler";
 import { AccordionPanel, Badge, Box, Card, CardBody, Checkbox, Flex, FormControl, Heading, IconButton, Progress, Radio, Stack, StackDivider, Switch, Text, Toast } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 
 interface Props {
@@ -15,11 +15,14 @@ const ListTasksCheckboxWeb = ({ task }: Props) => {
     const allColors = useColorsPhone();
     const mutation = useMutation({ mutationFn: patchTaskCompleted })
 
+    useEffect(()=>{},[statusCheck])
+
     return (
 
-        <Heading size='xs' textTransform='uppercase'>
+        <Heading size='xs' textTransform='capitalize' color={statusCheck==true?"purple.500":"purple.800"}>
             <Flex justifyContent="space-between">
                 {task.title}
+                {statusCheck==true?<Text color="purple.300" fontSize="sm">completed</Text>:<></>}
 
                 <Flex flexDirection="column" justifyContent="space-between" alignItems="end">
 

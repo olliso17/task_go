@@ -3,7 +3,7 @@ export interface InputCreateTaskDto {
     description?: string;
     priority?: boolean;
     list_id: string;
-    time_select?: string;
+    time_select?: number;
 }
 export interface TaskIdInputDto {
     id: string;
@@ -27,7 +27,7 @@ export interface OutputTaskDto {
     status: boolean;
     priority: boolean;
     list_id: string;
-    time_select: string;
+    time_select: number;
     is_deleted: boolean;
 }
 
