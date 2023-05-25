@@ -12,7 +12,7 @@ type Task struct {
 	Title       string `json:"title" valid:"alphanum,required" gorm:"unique"`
 	Description string `json:"description" valid:"-"`
 	Status      bool   `json:"status" valid:"-"`
-	ListID      string `json:"list_id" valid:"alphanum,notnull"`
+	ListID      string `json:"list_id" valid:"notnull"`
 	TimeSelect  string `json:"time_select" valid:"-"`
 }
 

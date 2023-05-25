@@ -9,7 +9,7 @@ import (
 
 type Login struct {
 	Base         `valid:"required"`
-	UserID       string    `json:"user_id" valid:"alphanum,notnull"`
+	UserID       string    `json:"user_id" valid:"notnull"`
 	SessionToken string    `json:"session_token" valid:"alphanum,notnull"`
 	HostName     string    `json:"host_name" valid:"alphanum,notnull"`
 	IPAddress    int       `json:"ip_address" valid:"notnull"`

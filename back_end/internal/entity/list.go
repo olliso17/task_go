@@ -11,7 +11,7 @@ type ListEntity struct {
 	Base     `json:"base" valid:"required"`
 	Name     string `json:"name" valid:"alphanum,required"`
 	TypeTask string `json:"tipe_task" valid:"alphanum,notnull"`
-	UserId   string `json:"user_id" valid:"alphanum,notnull"`
+	UserId   string `json:"user_id" valid:"notnull"`
 	Tasks    []Task `json:"tasks" valid:"-"`
 }
 
