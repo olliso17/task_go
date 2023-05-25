@@ -1,5 +1,5 @@
 import { OutputTaskDto } from "@/services/dto/task_dto";
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton, Stack } from "@chakra-ui/react";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 
@@ -9,7 +9,7 @@ const useAllHandle = (task: OutputTaskDto, setAlert: Dispatch<SetStateAction<JSX
   const min = timeTask[0]
   const [time, setTime] = useState(parseInt(min) * 60) // 5 minutos em segundos
   const [isActive, setIsActive] = useState(false)
-  
+
   useEffect(() => {
     let intervalId: NodeJS.Timeout
 
@@ -17,22 +17,24 @@ const useAllHandle = (task: OutputTaskDto, setAlert: Dispatch<SetStateAction<JSX
       intervalId = setInterval(() => setTime(time - 1), 1000)
     } else if (isActive && time === 0) {
       setIsActive(false)
-      setAlert(<Alert key={task.id} status='success'>
-        <AlertIcon />
-        <Box>
-          <AlertTitle>{task.title} sucess!</AlertTitle>
-          <AlertDescription>
-            Your completed task.
-          </AlertDescription>
-        </Box>
-        {/* <CloseButton
+      setAlert(<Stack isInline spacing={2}>
+        <Alert key={task.id} status='success'>
+          <AlertIcon />
+          <Box>
+            <AlertTitle>{task.title} sucess!</AlertTitle>
+            <AlertDescription>
+              Your completed task.
+            </AlertDescription>
+          </Box>
+          {/* <CloseButton
           alignSelf='flex-start'
           position='relative'
           right={-1}
           top={-1}
           onClick={onClose}
         /> */}
-      </Alert>)
+        </Alert>
+      </Stack>)
     }
 
     return () => clearInterval(intervalId)
