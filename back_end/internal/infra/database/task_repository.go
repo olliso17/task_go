@@ -17,12 +17,12 @@ func NewTaskRepository(db *sql.DB) *TaskRepository {
 }
 
 func (r *TaskRepository) Create(task *entity.Task) error {
-	stmt, err := r.Db.Prepare("INSERT INTO tasks (id, title, description, status, priority, list_id, created_at, updated_at, deleted_at, isDeleted, time_select) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)")
+	stmt, err := r.Db.Prepare("INSERT INTO tasks (id, title, description, status,  list_id, created_at, updated_at, deleted_at, isDeleted, time_select) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)")
 	if err != nil {
 		fmt.Print("o erro:", err)
 		return err
 	}
-	_, err = stmt.Exec(task.ID, task.Title, task.Description, task.Status, task.Priority, task.ListID, task.CreatedAt, task.UpdatedAt, task.DeletedAt, task.IsDeleted, &task.TimeSelect)
+	_, err = stmt.Exec(task.ID, task.Title, task.Description, task.Status, task.ListID, task.CreatedAt, task.UpdatedAt, task.DeletedAt, task.IsDeleted, &task.TimeSelect)
 	if err != nil {
 		return err
 	}
@@ -32,12 +32,12 @@ func (r *TaskRepository) Create(task *entity.Task) error {
 
 func (r *TaskRepository) FindAll() ([]entity.Task, error) {
 
-	rows, err := r.Db.Query("SELECT id, title, description, status, priority, list_id, created_at, updated_at, deleted_at, isdeleted, time_select FROM tasks")
+	rows, err := r.Db.Query("SELECT id, title, description, status, list_id, created_at, updated_at, deleted_at, isdeleted, time_select FROM tasks")
 	var tasks []entity.Task
 	for rows.Next() {
 		var task entity.Task
 
-		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.Priority, &task.ListID, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt, &task.IsDeleted, &task.TimeSelect); err != nil {
+		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.ListID, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt, &task.IsDeleted, &task.TimeSelect); err != nil {
 			return tasks, err
 		}
 		tasks = append(tasks, task)
@@ -51,12 +51,12 @@ func (r *TaskRepository) FindAll() ([]entity.Task, error) {
 }
 func (r *TaskRepository) FindExceptDeleted() ([]entity.Task, error) {
 
-	rows, err := r.Db.Query("SELECT id, title, description, status, priority, list_id, created_at, updated_at, deleted_at, isdeleted, time_select FROM tasks")
+	rows, err := r.Db.Query("SELECT id, title, description, status, list_id, created_at, updated_at, deleted_at, isdeleted, time_select FROM tasks")
 	var tasks []entity.Task
 	for rows.Next() {
 		var task entity.Task
 
-		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.Priority, &task.ListID, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt, &task.IsDeleted, &task.TimeSelect); err != nil {
+		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.ListID, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt, &task.IsDeleted, &task.TimeSelect); err != nil {
 			return tasks, err
 		}
 		tasks = append(tasks, task)
@@ -74,7 +74,7 @@ func (r *TaskRepository) FindTitle(title string) (entity.Task, error) {
 	rows, err := r.Db.Query("SELECT * FROM tasks WHERE title = $1", title)
 
 	for rows.Next() {
-		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.Priority, &task.ListID, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt, &task.IsDeleted, &task.TimeSelect); err != nil {
+		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.ListID, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt, &task.IsDeleted, &task.TimeSelect); err != nil {
 			return task, err
 		}
 	}
@@ -89,7 +89,7 @@ func (r *TaskRepository) FindByID(id string) (entity.Task, error) {
 
 	rows, err := r.Db.Query("SELECT * FROM tasks WHERE id = $1", id)
 	for rows.Next() {
-		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.Priority, &task.ListID, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt, &task.IsDeleted, &task.TimeSelect); err != nil {
+		if err := rows.Scan(&task.ID, &task.Title, &task.Description, &task.Status, &task.ListID, &task.CreatedAt, &task.UpdatedAt, &task.DeletedAt, &task.IsDeleted, &task.TimeSelect); err != nil {
 			return task, err
 		}
 	}
@@ -100,13 +100,13 @@ func (r *TaskRepository) FindByID(id string) (entity.Task, error) {
 }
 
 func (r *TaskRepository) EditTask(task *entity.Task) error {
-	stmt, err := r.Db.Prepare("UPDATE tasks SET title= $1, description=$2, priority=$3, list_id=$4,  time_select=$5, updated_at=$6 WHERE id = $7")
+	stmt, err := r.Db.Prepare("UPDATE tasks SET title= $1, description=$2, list_id=$3,  time_select=$4, updated_at=$5 WHERE id = $6")
 
 	if err != nil {
 		fmt.Print(err)
 		return err
 	}
-	_, err = stmt.Exec(task.Title, task.Description, task.Priority, task.ListID, task.TimeSelect, task.UpdatedAt, task.ID)
+	_, err = stmt.Exec(task.Title, task.Description, task.ListID, task.TimeSelect, task.UpdatedAt, task.ID)
 	if err != nil {
 		return err
 	}
