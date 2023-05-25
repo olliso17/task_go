@@ -1,7 +1,7 @@
 import { useAllHandle } from "@/hooksPerson/countTasksTime";
 import { OutputTaskDto } from "@/services/dto/task_dto";
-import { AccordionPanel, Box, Button, Card, CardBody, Checkbox, Flex, FormControl, Heading, IconButton, Stack, StackDivider } from "@chakra-ui/react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Heading, IconButton, Stack, ToastId } from "@chakra-ui/react";
+import { useState } from "react";
 import Lottie from "lottie-react";
 import * as playAnimation from "public/play.json";
 import * as pauseAnimation from "public/pause.json";
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const ListTasksTimeweb = ({ task }: Props) => {
-    const [alert, setAlert] = useState(<></>)
+    const [alert, setAlert] = useState<ToastId | undefined>(undefined)
     const handleAll = useAllHandle(task, setAlert)
     const style = { whidth: 55, height: 55 };
     const styleReset = { whidth: 40, height: 40, };
@@ -23,8 +23,6 @@ const ListTasksTimeweb = ({ task }: Props) => {
 
     return (
         <>
-            {alert}
-
             <Heading size='xs' textTransform='uppercase'>
                 {task.title}
             </Heading>

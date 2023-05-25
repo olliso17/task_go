@@ -1,15 +1,15 @@
 import { OutputTaskDto } from "@/services/dto/task_dto";
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton, Stack } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton, Stack, ToastId, useToast, UseToastOptions } from "@chakra-ui/react";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 
 
-const useAllHandle = (task: OutputTaskDto, setAlert: Dispatch<SetStateAction<JSX.Element>>) => {
+const useAllHandle = (task: OutputTaskDto, setAlert: Dispatch<ToastId | undefined>) => {
   const timeTask = task.time_select.split(":")
   const min = timeTask[0]
   const [time, setTime] = useState(parseInt(min) * 60) // 5 minutos em segundos
   const [isActive, setIsActive] = useState(false)
-
+  const toast = useToast()
   useEffect(() => {
     let intervalId: NodeJS.Timeout
 
@@ -17,24 +17,14 @@ const useAllHandle = (task: OutputTaskDto, setAlert: Dispatch<SetStateAction<JSX
       intervalId = setInterval(() => setTime(time - 1), 1000)
     } else if (isActive && time === 0) {
       setIsActive(false)
-      setAlert(<Stack isInline spacing={2}>
-        <Alert key={task.id} status='success'>
-          <AlertIcon />
-          <Box>
-            <AlertTitle>{task.title} sucess!</AlertTitle>
-            <AlertDescription>
-              Your completed task.
-            </AlertDescription>
-          </Box>
-          {/* <CloseButton
-          alignSelf='flex-start'
-          position='relative'
-          right={-1}
-          top={-1}
-          onClick={onClose}
-        /> */}
-        </Alert>
-      </Stack>)
+      setAlert(
+        toast({
+          position: 'top',
+          title: `${task.title} successfully`,
+          status: 'success',
+          isClosable: true,
+        })
+      )
     }
 
     return () => clearInterval(intervalId)

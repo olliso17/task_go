@@ -46,7 +46,7 @@ const ListTasksWeb = ({ task, list_id }: Props) => {
     }
 
     return (
-        <Card backgroundColor={allColors.bg}>
+        <Card margin="0.5vw" backgroundColor={allColors.bg}>
             <CardBody>
                 <Stack divider={<StackDivider />} spacing='4'>
                     <Box>
