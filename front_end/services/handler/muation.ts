@@ -7,7 +7,7 @@ import { postUser } from "./user_handler";
 import { getCookie } from "cookies-next";
 import { patchTaskCompleted, postTask } from "./task_handler";
 import { Dispatch, SetStateAction } from "react";
-import { OutputListDto } from "../../@core/domain/list/list_dto";
+// import { OutputListDto } from "../../@core/domain/list/list_dto";
 
 const useMutationPostList = () => {
   const toast = useToast();
